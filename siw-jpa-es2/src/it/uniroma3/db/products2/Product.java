@@ -29,6 +29,8 @@ public class Product {
 		this.providers = providers;
 	}
 	
+	public Product() {}
+	
 	//	Getters & Setters
 
 	public Long getId() {return this.id; }
