@@ -99,9 +99,9 @@ public class Order {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("Address");
 		sb.append("{id=").append(id);
-		sb.append(", creationTime='").append(creationTime);
-		sb.append(", deliveryDate='").append(deliveryDate);
-		sb.append(", customer='").append(customer);
+		sb.append(", creationTime='").append(creationTime.toString());
+		sb.append(", deliveryDate='").append(deliveryDate.toString());
+		sb.append(", customer='").append(customer.toString());
 		//sb.append(", orderLines='").append(orderLines.toString());
 		sb.append("'}\n");
 		return sb.toString();

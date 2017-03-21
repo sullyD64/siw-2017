@@ -19,7 +19,9 @@ public class Customer {
 	private Date dateOfBirth;
 	@OneToOne
 	private Address address;
+	//@JoinColumn(name = "customer_id")
 	@OneToMany(mappedBy ="customer")
+	@OrderBy("creationTime asc")
 	private List<Order> orders;
 	
 	public Customer(Long id, String firstName, String lastName, String email, Date dateOfBirth, Address address) {
@@ -30,9 +32,11 @@ public class Customer {
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 	}
+		
+	public Customer() {}
 	
 	//	Getters & Setters
-	
+
 	public Long getId() { return this.id; }
 	public String getFirstName() { return this.firstName; }
 	public String getLastName() { return this.lastName; }
@@ -121,7 +125,7 @@ public class Customer {
 		sb.append(", lastName='").append(lastName);
 		sb.append(", email='").append(email);
 		sb.append(", dateOfBirth='").append(dateOfBirth.toString());
-		sb.append(", address='").append(address);
+		sb.append(", address='").append(address.toString());
 		sb.append("'}\n");
 		return sb.toString();
 	}

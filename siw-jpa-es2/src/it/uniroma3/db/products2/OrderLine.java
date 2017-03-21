@@ -10,13 +10,14 @@ public class OrderLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String item;
+	@OneToOne
+	private Product product;
 	private int quantity;
 	private Float price;
 	
-	public OrderLine(Long id, String item, int quantity, Float price) {
+	public OrderLine(Long id, Product product, int quantity, Float price) {
 		this.id = id;
-		this.item = item;
+		this.product = product;
 		this.quantity = quantity;
 		this.price = price;
 	}
@@ -24,12 +25,12 @@ public class OrderLine {
 	// Getters & Setters	
 	
 	public Long getId() { return this.id; }
-	public String getItem() { return this.item; }
+	public Product getProduct() { return this.product; }
 	public int getQuantity() { return this.quantity; } 
 	public Float getPrice() { return this.price; }
 	
 	public void setId(Long id) { this.id = id; }
-	public void setItem(String item) { this.item = item; }
+	public void setItem(Product product) { this.product = product; }
 	public void setQuantity(int quantity) { this.quantity = quantity; }
 	public void setprice(Float price) { this.price = price; }
 
@@ -40,7 +41,7 @@ public class OrderLine {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + quantity;
 		return result;
@@ -60,10 +61,10 @@ public class OrderLine {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (item == null) {
-			if (other.item != null)
+		if (product == null) {
+			if (other.product != null)
 				return false;
-		} else if (!item.equals(other.item))
+		} else if (!product.equals(other.product))
 			return false;
 		if (price == null) {
 			if (other.price != null)
@@ -80,7 +81,7 @@ public class OrderLine {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("OrderLine");
 		sb.append("{id=").append(id);
-		sb.append(", item='").append(item);
+		sb.append(", product='").append(product.toString());
 		sb.append(", quantity='").append(quantity);
 		sb.append(", price='").append(price);
 		sb.append("'}\n");
