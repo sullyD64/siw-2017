@@ -2,8 +2,6 @@ package it.uniroma3.db.products2;
 
 import javax.persistence.*;
 
-
-
 @Entity
 public class Address {
 	@Id
@@ -19,9 +17,7 @@ public class Address {
 	@Column(nullable = false)
 	private String country;
 	
-	public Address(Long id, String street, String city, String state, String zipcode, String country) {
-		super();
-		this.id = id;
+	public Address(String street, String city, String state, String zipcode, String country) {
 		this.street = street;
 		this.city = city;
 		this.state = state;

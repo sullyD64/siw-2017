@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Date;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames={"firstName","lastName"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"firstName","lastName"}))
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,21 +19,17 @@ public class Customer {
 	private Date dateOfBirth;
 	@OneToOne
 	private Address address;
-	//@JoinColumn(name = "customer_id")
 	@OneToMany(mappedBy ="customer")
 	@OrderBy("creationTime asc")
 	private List<Order> orders;
 	
-	public Customer(Long id, String firstName, String lastName, String email, Date dateOfBirth, Address address) {
-		this.id = id;
+	public Customer(String firstName, String lastName, String email, Date dateOfBirth, Address address) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 	}
-		
-	public Customer() {}
 	
 	//	Getters & Setters
 

@@ -2,10 +2,8 @@ package it.uniroma3.db.products2;
 
 import javax.persistence.*;
 
-
-
 @Entity
-@Table(name="order_line")
+@Table(name = "order_line")
 public class OrderLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,8 +13,7 @@ public class OrderLine {
 	private int quantity;
 	private Float price;
 	
-	public OrderLine(Long id, Product product, int quantity, Float price) {
-		this.id = id;
+	public OrderLine(Product product, int quantity, Float price) {
 		this.product = product;
 		this.quantity = quantity;
 		this.price = price;

@@ -1,8 +1,8 @@
 package it.uniroma3.db.products2;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class Provider {
@@ -15,15 +15,14 @@ public class Provider {
 	@OneToOne
 	private Address address;
 	@ManyToMany
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_product_id"))
 	private List<Product> products;
 	
-	public Provider(Long id, String name, String email, Address address, List<Product> products) {
-		super();
-		this.id = id;
+	public Provider(String name, String email, Address address) {
 		this.name = name;
 		this.email = email;
 		this.address = address;
-		this.products = products;
+		this.products = new ArrayList<>();
 	}
 	
 	//	Getters & Setters

@@ -1,8 +1,8 @@
 package it.uniroma3.db.products2;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class Product {
@@ -19,17 +19,9 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	private List<Provider> providers;
 	
-	public Product(Long id, String name, Float price, String description, String code, List<Provider> providers) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.description = description;
-		this.code = code;
-		this.providers = providers;
+	public Product(String name, Float price, String description, String code) {
+		this.providers = new ArrayList<>();
 	}
-	
-	public Product() {}
 	
 	//	Getters & Setters
 

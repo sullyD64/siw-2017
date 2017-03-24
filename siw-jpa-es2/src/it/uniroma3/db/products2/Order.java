@@ -2,6 +2,7 @@ package it.uniroma3.db.products2;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -15,18 +16,14 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private Date deliveryDate;
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name=("fk_customer_id")))
     private Customer customer;
     @OneToMany
-    @JoinColumn(name="orders_id")
+    @JoinColumn(name="orders_id", foreignKey = @ForeignKey(name="fk_orders_id"))
     private List<OrderLine> orderLines;
    
-	public Order(Long id, Date creationTime, Date deliveryDate, Customer customer, List<OrderLine> orderLines) {
-		super();
-		this.id = id;
-		this.creationTime = creationTime;
-		this.deliveryDate = deliveryDate;
-		this.customer = customer;
-		this.orderLines = orderLines;
+	public Order() {
+		this.orderLines = new ArrayList<>();
 	}
 	
 	// Getters & Setters	
@@ -43,8 +40,8 @@ public class Order {
 	public void setCustomer(Customer customer) { this.customer = customer; }
 	public void setOrderLines(List<OrderLine> orderLines) { this.orderLines = orderLines; }
 
-	//	Hashcode, Equals, Tostring
-	
+	// Hashcode, Equals, Tostring
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -93,7 +90,7 @@ public class Order {
 			return false;
 		return true;
 	}
-
+		
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
