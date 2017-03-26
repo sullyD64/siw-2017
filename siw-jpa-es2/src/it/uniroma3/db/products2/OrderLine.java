@@ -9,6 +9,7 @@ public class OrderLine {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@OneToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_product_id"))
 	private Product product;
 	private int quantity;
 	private Float price;

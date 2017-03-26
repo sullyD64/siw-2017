@@ -20,6 +20,10 @@ public class Product {
 	private List<Provider> providers;
 	
 	public Product(String name, Float price, String description, String code) {
+		this.name = name;
+		this.price = price;
+		this.description = description;
+		this.code = code;
 		this.providers = new ArrayList<>();
 	}
 	

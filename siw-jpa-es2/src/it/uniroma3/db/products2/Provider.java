@@ -15,7 +15,6 @@ public class Provider {
 	@OneToOne
 	private Address address;
 	@ManyToMany
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_product_id"))
 	private List<Product> products;
 	
 	public Provider(String name, String email, Address address) {

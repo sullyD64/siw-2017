@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Date;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"firstName","lastName"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"firstName","lastName"}, name = ("uc_name")))
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
