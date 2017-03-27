@@ -22,12 +22,19 @@ public class ProductMain2 {
 	
 		OrderLine ol1 = new OrderLine(p1, 2, 10F);
 		OrderLine ol2 = new OrderLine(p2, 1, 50F);
+		OrderLine ol3 = new OrderLine(p2, 5, 300F);
 		
 		Order o1 = new Order();
+		Order o2 = new Order();
 		
 		o1.setCustomer(c1);
 		o1.getOrderLines().add(ol1);
 		o1.getOrderLines().add(ol2);
+		o1.getOrderLines().add(ol3);
+		
+		o2.setCustomer(c1);
+		o2.getOrderLines().add(ol2);
+		o2.getOrderLines().add(ol3);
 		
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -39,7 +46,9 @@ public class ProductMain2 {
 		em.persist(c1);
 		em.persist(ol1);
 		em.persist(ol2);
+		em.persist(ol3);
 		em.persist(o1);
+		em.persist(o2);
 		
 		tx.commit();
 		
