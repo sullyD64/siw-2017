@@ -8,6 +8,9 @@
 		<class>azienda.Divisione</class>
 		<class>azienda.Impiegato</class>
 		<class>azienda.Progetto</class>
+		<class>magazzino.Prodotto</class>
+		<class>magazzino.Reparto</class>
+		<class>magazzino.Magazziniere</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
