@@ -11,6 +11,7 @@ public class Progetto {
 	private String nome;
 	private Date dataInizio;
 	@OneToMany
+	@JoinColumn(name="impiegato_id")
 	private List<Impiegato> impiegati;
 	
 	public Progetto() {

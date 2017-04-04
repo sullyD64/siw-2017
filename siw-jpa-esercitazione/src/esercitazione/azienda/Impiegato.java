@@ -15,9 +15,6 @@ public class Impiegato {
 	private Date dataDiNascita;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Divisione divisione;
-	@ManyToOne
-	@JoinColumn(name="progetto_id")
-	private Progetto progetto;
 	
 	// Getters & Setters
 	
