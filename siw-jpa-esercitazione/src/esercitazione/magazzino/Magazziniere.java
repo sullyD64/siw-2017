@@ -9,6 +9,7 @@ public class Magazziniere {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String nome;
+	@Temporal(TemporalType.DATE)
 	private Date dataDiNascita;
 	@Column(nullable = false)
 	private String codiceFiscale;
