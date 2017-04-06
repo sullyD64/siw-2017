@@ -11,6 +11,11 @@
 		<class>magazzino.Prodotto</class>
 		<class>magazzino.Reparto</class>
 		<class>magazzino.Magazziniere</class>
+		<class>museo.Artista</class>
+		<class>museo.Curatore</class>
+		<class>museo.Opera</class>
+		<class>museo.Stanza</class>
+		<class></class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
