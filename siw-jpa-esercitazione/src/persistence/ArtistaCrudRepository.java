@@ -8,4 +8,5 @@ public interface ArtistaCrudRepository {
 	public Artista findOne(Long id);
 	public List<Artista> findAll();
 	public void delete(Artista artista);
+	public void deleteAll();
 }

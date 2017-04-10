@@ -8,4 +8,5 @@ public interface OperaCrudRepository {
 	public Opera findOne(Long id);
 	public List<Opera> findAll();
 	public void delete(Opera opera);
+	public void deleteAll();
 }

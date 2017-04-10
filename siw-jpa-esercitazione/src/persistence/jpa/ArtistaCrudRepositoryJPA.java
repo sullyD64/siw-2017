@@ -1,5 +1,6 @@
 package persistence.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import model.Artista;
@@ -7,11 +8,9 @@ import persistence.ArtistaCrudRepository;
 
 public class ArtistaCrudRepositoryJPA implements ArtistaCrudRepository {
 	private EntityManager em;
-	private EntityTransaction tx;
 	
-	public ArtistaCrudRepositoryJPA(EntityManager em, EntityTransaction tx) {
+	public ArtistaCrudRepositoryJPA(EntityManager em) {
 		this.em = em;
-		this.tx = tx;
 	}
 	
 	@Override
@@ -19,26 +18,30 @@ public class ArtistaCrudRepositoryJPA implements ArtistaCrudRepository {
 		if (artista.getId() == null) {
 			em.persist(artista);
 		} else {
-			em.merge(artista);
+			return em.merge(artista);
 		}
 		return artista;
 	}
 
 	@Override
 	public Artista findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Artista.class, id);
 	}
 
 	@Override
 	public List<Artista> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("SELECT a FROM Artista a");
+		return query.getResultList();
 	}
 
 	@Override
 	public void delete(Artista artista) {
-		// TODO Auto-generated method stub
-		
+		em.remove(artista);
+	}
+
+	@Override
+	public void deleteAll() {
+		Query query = em.createQuery("DELETE FROM Artista");
+		query.executeUpdate();
 	}
 }
