@@ -1,8 +1,14 @@
 package esercitazione.main;
 
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 import model.Artista;
+import model.Stanza;
 import persistence.CrudRepository;
 import persistence.jpa.CrudRepositoryJPA;
 
@@ -13,15 +19,24 @@ public class EsercitazioneMain {
 		EntityManager em = emf.createEntityManager();
 
 		Artista a = new Artista();
-		a.setNome("Pablo");
+		a.setNome("Marco");
 		
-		CrudRepository<Artista> crudRepository = new CrudRepositoryJPA<Artista>(em, Artista.class);
+		Stanza s = new Stanza();
+		s.setNome("N11");
+		
+		CrudRepository<Artista> artistaRepository = new CrudRepositoryJPA<Artista>(em, Artista.class);
+		CrudRepository<Stanza> stanzaRepository = new CrudRepositoryJPA<Stanza>(em, Stanza.class);
 		
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-//		artistaRepository.save(a);
+		artistaRepository.save(a);
+		List<Artista> artisti = artistaRepository.findAll();
+		for (Artista artista : artisti) {
+			System.out.println(artista.toString());
+		}
 		
+		stanzaRepository.save(s);
 		
 		tx.commit();
 		

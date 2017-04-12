@@ -34,4 +34,10 @@ public class Artista {
 	public void setOpere(List<Opera> opere) {
 		this.opere = opere;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 }
