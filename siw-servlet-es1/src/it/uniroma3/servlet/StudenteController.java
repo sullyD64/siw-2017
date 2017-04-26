@@ -54,8 +54,8 @@ public class StudenteController extends HttpServlet {
 			out.println("<hr>");
 			out.println("<h1>/operationSuccessful</h1>");
 			out.println("<ul>");
-			out.println("<li>Nome: <b>"+ studente.getNome() +"</b></li>");
-			out.println("<li>Cognome: <b>"+ studente.getCognome() +"</b></li>");
+			out.println("<li>Nome: <b>"+ studente.getNome().toUpperCase() +"</b></li>");
+			out.println("<li>Cognome: <b>"+ studente.getCognome().toUpperCase() +"</b></li>");
 			out.println("<li>Matricola: <b>"+ studente.getMatricola() +"</b></li>");
 			out.println("<li>Data di nascita: <b>"+ studente.getDataNascita() +"</b></li>");
 			out.println("</ul>");
