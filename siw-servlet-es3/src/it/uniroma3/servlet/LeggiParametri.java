@@ -18,15 +18,12 @@ public class LeggiParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// gestione della RICHIESTA
 		Studente studente;
 
 		try {   
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//			SimpleDateFormat sdfparser = new SimpleDateFormat("dd-MM-yyyy");
-//			String date = sdfparser.format(sdf.parse(request.getParameter("dataNascita")));
 			Date date = sdf.parse(request.getParameter("dataNascita"));
-
-			// gestione della RICHIESTA
 
 			// leggo i parametri  
 			studente = new Studente(
@@ -34,9 +31,9 @@ public class LeggiParametri extends HttpServlet {
 					request.getParameter("cognome").toUpperCase(),
 					Integer.parseInt(request.getParameter("matricola")),
 					date); 
-			
 			request.setAttribute("studente", studente);
 
+			// inoltro 
 			ServletContext application  = getServletContext();
 			RequestDispatcher rd = application.getRequestDispatcher("/mostraDati");
 			rd.forward(request, response);

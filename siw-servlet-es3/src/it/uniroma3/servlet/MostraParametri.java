@@ -44,6 +44,7 @@ public class MostraParametri extends HttpServlet {
 		out.println("<li>Data di nascita: <b>"+ studente.getDataNascita().toString() +"</b></li>");
 		out.println("</ul>");
 		out.println("<hr>");
+		out.println("<iframe src=\"//giphy.com/embed/4LWEwOMfbVeYU?html5=true&hideSocial=true\" width=\"200\" height=\"200\" frameBorder=\"0\" class=\"giphy-embed\" allowFullScreen></iframe>");
 		out.println("<hr>");
 		out.println("<h2>/netInfo</h1>");
 		out.println("<br />IP: <b>"+address+"</b>");
