@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1" />
+	<link rel="stylesheet" href="prova.css" />
+	<title>Inserimento Studente</title>
+</head>
+<body>
+	<hr>
+	<h1>/addNewStudent (esercizio 6)</h1>
+	<hr>
+	<form action="processa" method="get">
+	<div align = "center">
+	<table>
+		<tr><td align="right">Nome:</td><td><input type="text" name="nome" size="20" autofocus="autofocus"/></td></tr>
+		<tr><td align="right">Cognome:</td><td><input type="text" name="cognome" size="20"/></td></tr>
+		<tr><td align="right">Matricola:</td><td><input type="text" name="matricola" size="6" maxlength="6" pattern=".{6,}" placeholder="XXXXXX" required/></td></tr>
+		<tr><td align="right">Data nascita:</td><td><input type="date" name="dataNascita" size="20"/></td></tr>
+		</table>
+		<input type="submit" value="INVIA" />
+	</div>
+	</form>
+</body>
+</html>
