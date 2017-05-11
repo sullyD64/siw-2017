@@ -19,7 +19,7 @@
 					<td align="right">Nome:</td>
 					<td><input type="text" name="nome" size="20"
 						autofocus="autofocus"
-						value = '${nome}'/></td>
+						value ="${nome}" /></td>
 				</tr>
 				<tr>
 					<td align="right">Cognome:</td>
@@ -36,6 +36,7 @@
 				<tr>
 					<td align="right">Data nascita:</td>
 					<td><input type="date" name="dataNascita" size="20" 
+						placeholder="AAAA-MM-GG"
 						value="${dataNascita}" /></td>
 				</tr>
 			</table>

@@ -19,7 +19,7 @@ public class StudenteController extends HttpServlet {
 	
 	/* Verifica la correttezza dei valori inseriti.
 	 * Se i valori non sono corretti, aggiunge un attributo alla richiesta
-	 * di nome parametroError, e come valore una stringa con un messaggio di errore.
+	 * di nome parametro Error con valore una stringa con un messaggio di errore.
 	 * */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
