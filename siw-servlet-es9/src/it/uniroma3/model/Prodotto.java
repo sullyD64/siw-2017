@@ -1,10 +1,12 @@
 package it.uniroma3.model;
 
+import java.util.Date;
+
 public class Prodotto {
 	private String nome;
 	private String desc;
-	private String codice;
 	private Float prezzo;
+	private Date dataScadenza;
 	
 	public Prodotto() {
 	}
@@ -15,11 +17,11 @@ public class Prodotto {
 	public String getDesc() {
 		return desc;
 	}
-	public String getCodice() {
-		return codice;
-	}
 	public Float getPrezzo() {
 		return prezzo;
+	}
+	public Date getDataScadenza() {
+		return dataScadenza;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -27,11 +29,11 @@ public class Prodotto {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public void setCodice(String codice) {
-		this.codice = codice;
-	}
 	public void setPrezzo(Float prezzo) {
 		this.prezzo = prezzo;
+	}
+	public void setDataScadenza(Date dataScadenza) {
+		this.dataScadenza = dataScadenza;
 	}
 	
 }
