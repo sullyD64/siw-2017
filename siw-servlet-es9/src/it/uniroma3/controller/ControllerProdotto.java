@@ -1,9 +1,8 @@
 package it.uniroma3.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -25,28 +24,23 @@ public class ControllerProdotto extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			String nextPage;
 			
-			String nomeIns = request.getParameter("nome");
-			String descIns = request.getParameter("descrizione");
-			String prezIns = request.getParameter("prezzo");
-			String dataIns = request.getParameter("dataScadenza");
-			
+			Prodotto prodotto = new Prodotto();
+			request.setAttribute("prodotto", prodotto);
+		
 			ProductValidator validator = new ProductValidator();
 			
+			////
+			List<Prodotto> prodotti = new ArrayList<>();
+			////
+			
 			if (validator.validate(request)) {
-				Prodotto prodotto = new Prodotto();
-				prodotto.setNome(nomeIns);
-				prodotto.setDesc(descIns);
-				prodotto.setPrezzo(Float.parseFloat(prezIns));
-				
-				DateFormat df = new  SimpleDateFormat("dd/mm/yyyy");
-				try {
-					prodotto.setDataScadenza(df.parse(dataIns));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				
 				ProductService service = new ProductService();
 				service.inserisciProdotto(prodotto);
+				
+				////
+				prodotti.add(prodotto);
+				request.setAttribute("prodotti", prodotti);
+				////
 		
 				nextPage = "/prodotti.jsp";
 			} else 
