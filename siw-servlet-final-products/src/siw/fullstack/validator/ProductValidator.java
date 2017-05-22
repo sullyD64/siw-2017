@@ -29,7 +29,7 @@ public class ProductValidator {
 			request.setAttribute("errDesc", "Campo obbligatorio");
 			tuttoOk = false;
 		} else
-			product.setDescription(name);
+			product.setDescription(description);
 		
 		if(price == null || price.equals("")) {
 			request.setAttribute("errPrice", "Campo obbligatorio");

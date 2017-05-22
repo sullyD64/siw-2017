@@ -59,4 +59,18 @@ public class ProductService {
 		emf.close();
 		return p;
 	}
+	
+	public void deleteProduct(Product p) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("products-unit");
+		this.em = emf.createEntityManager();
+		ProductRepository pr = new ProductRepository(this.em);
+		EntityTransaction tx = this.em.getTransaction();
+
+		tx.begin();
+		//		em.remove(em.contains(p) ? p : em.merge(p));
+		pr.delete(p);
+		tx.commit();
+		em.close();
+		emf.close();
+	}
 }

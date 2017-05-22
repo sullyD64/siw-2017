@@ -64,7 +64,7 @@ public class CrudRepositoryJPA<T> implements CrudRepository<T> {
 
 	@Override
 	public void delete(T entity) {
-		em.remove(entity);
+		em.remove(em.contains(entity) ? entity : em.merge(entity));
 	}
 
 	@Override

@@ -12,7 +12,7 @@
 			<li><a href="product?id=${product.id}"> ${product.name} </a>
 				<form action="product" method="post">
 					<input type="hidden" value="${product.id}" name="id" /> <input
-						type="button" value="cancella" name="command" />
+						type="submit" value="cancella" name="command" />
 				</form></li>
 		</c:forEach>
 	</ul>

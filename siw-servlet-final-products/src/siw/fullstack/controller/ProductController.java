@@ -22,18 +22,30 @@ public class ProductController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nextPage;
-		Product product = new Product();
-		request.setAttribute("product", product);
 		
-		ProductValidator validator = new ProductValidator();
-		
-		if (validator.validate(request)) {
+		if (request.getParameter("command") != null) {
+			Long id = Long.parseLong(request.getParameter("id"));
 			ProductService service = new ProductService();
-			service.insertProduct(product);
-			nextPage = "/prodotto.jsp";
-		} else
-			nextPage = "/index.jsp";
+			Product product = service.getOneProduct(id);
+			service.deleteProduct(product);
+			request.setAttribute("products", service.getAllProducts());
+			nextPage = "/prodotti.jsp";
+			
+		} else {
 		
+			Product product = new Product();
+			request.setAttribute("product", product);
+			
+			ProductValidator validator = new ProductValidator();
+			
+			if (validator.validate(request)) {
+				ProductService service = new ProductService();
+				service.insertProduct(product);
+				nextPage = "/prodotto.jsp";
+			} else
+				nextPage = "/index.jsp";
+		}
+			
 		ServletContext application = getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher(nextPage);
 		rd.forward(request, response);
