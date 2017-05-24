@@ -16,5 +16,10 @@
 				</form></li>
 		</c:forEach>
 	</ul>
+	<div align="center">
+		<form action="product" method="post">
+			<input type="submit" value="cancellatutto" name="deleteAll" />
+		</form>
+	</div>
 </body>
 </html>

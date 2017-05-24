@@ -31,6 +31,12 @@ public class ProductController extends HttpServlet {
 			request.setAttribute("products", service.getAllProducts());
 			nextPage = "/prodotti.jsp";
 			
+		} else if (request.getParameter("deleteAll") != null) {
+			ProductService service = new ProductService();
+			service.deleteAllProducts();
+			request.setAttribute("products", service.getAllProducts());
+			nextPage = "/prodotti.jsp";
+				
 		} else {
 		
 			Product product = new Product();
