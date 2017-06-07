@@ -1,4 +1,4 @@
-package it.uniroma3.siw.tricup.tricup;
+package it.uniroma3.threefourfunSite;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TriCupApplicationTests {
+public class ThreeFourFunSiteApplicationTests {
 
 	@Test
 	public void contextLoads() {

@@ -1,12 +1,12 @@
-package it.uniroma3.siw.tricup.tricup;
+package it.uniroma3.threefourfunSite;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TriCupApplication {
+public class ThreeFourFunSiteApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TriCupApplication.class, args);
+		SpringApplication.run(ThreeFourFunSiteApplication.class, args);
 	}
 }
