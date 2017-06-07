@@ -7,8 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TestController {
 	
-	@RequestMapping("/index.html")
-	public ModelAndView firstPage() {
-		return new ModelAndView("welcome");
-	}
+//	@RequestMapping("/index.html")
+//	public ModelAndView firstPage() {
+//		return new ModelAndView("welcome");
+//	}
 }
