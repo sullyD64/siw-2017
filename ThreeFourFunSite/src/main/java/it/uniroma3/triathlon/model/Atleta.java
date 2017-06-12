@@ -17,6 +17,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Atleta {
 
@@ -31,15 +33,20 @@ public class Atleta {
 	@Size(min = 1)
 	@Column(nullable = false)
 	private String cognome;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataNascita;
+	@NotNull
 	@Column(nullable = false)
 	private String sesso;
+	@NotNull
 	@Column(nullable = false)
 	private String nazione;
 	@Min(18)
+	@Column(nullable = false)
 	private Integer eta;
+	@Column(nullable = false)
 	private String categoria;
 	@ManyToOne
 	private Societa societa;

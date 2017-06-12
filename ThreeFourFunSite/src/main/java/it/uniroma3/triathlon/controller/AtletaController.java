@@ -1,5 +1,12 @@
 package it.uniroma3.triathlon.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +31,41 @@ public class AtletaController {
         return "formAtleta";
     }
 	
+	@SuppressWarnings("deprecation")
 	@PostMapping("/atleta")
 	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, BindingResult bindingResult, Model model) {
-		
+				
 	    if (bindingResult.hasErrors()) {
             return "formAtleta";
         } else {
+	    	System.out.print(bindingResult.getFieldValue("nome") + ",");
+	    	System.out.print(bindingResult.getFieldValue("cognome") + ",");
+	    	System.out.print(bindingResult.getFieldValue("dataNascita") + ",");
+	    	System.out.print(bindingResult.getFieldValue("sesso") + ",");
+	    	System.out.println("");
+        	
+        	String dins = (String) bindingResult.getFieldValue("dataNascita");
+	    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	    	Date dataInserita;
+			try {
+				dataInserita = df.parse(dins);
+		
+        	LocalDate today = LocalDate.now();
+        	Integer eta = today.getYear() - (dataInserita.getYear()+1900);
+        	
+        	atleta.setEta(eta);
+        	
+        	model.addAttribute("eta", eta);
+        	
         	model.addAttribute(atleta);
             atletaService.add(atleta); 
+            
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+        
         }
-        return "results";
+        return "formAtleta";
 	}
 }
