@@ -15,6 +15,10 @@ public class AtletaService {
 
 	@Autowired
 	private AtletaRepository atletaRepository;
+	
+    public Iterable<Atleta> findAll() {
+        return this.atletaRepository.findAll();
+    }
 
 	@Transactional
 	public boolean add(final Atleta atleta) {
@@ -26,17 +30,10 @@ public class AtletaService {
 
 		atleta.setNome(atleta.getNome().toUpperCase());
 		atleta.setCognome(atleta.getCognome().toUpperCase());
-
-		if (atleta.getSesso().equals("uomo")) 
-			atleta.setSesso("M");
-		else if(atleta.getSesso().equals("donna"))
-			atleta.setSesso("F");
-
 		atleta.setEta(Calcolatore.calcolaEta(atleta.getDataNascita()));
-		atleta.setCategoria(Calcolatore.calcolaCategoria(atleta.getEta()));
+		atleta.setCategoria(Calcolatore.calcolaCategoria(atleta.getEta(), atleta.getSesso()));
 
 		this.atletaRepository.save(atleta);	
-
 		return true;
 	}
 

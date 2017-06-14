@@ -21,6 +21,7 @@ public class CostantiCategorie {
 	private static final String MASTER_7 = "M7";
 	private static final String MASTER_8 = "M8";
 	
+	public static final String FEMMINILE = "F";
 	public static final NavigableMap<Integer, String> CATEGORIE = getCategorie();
 	
 	public static NavigableMap<Integer, String> getCategorie(){
