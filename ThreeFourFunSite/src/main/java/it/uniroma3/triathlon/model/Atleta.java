@@ -1,6 +1,6 @@
 package it.uniroma3.triathlon.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,49 +11,57 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Min;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"nome","cognome","dataNascita"}))
 public class Atleta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	@NotNull
-	@Size(min = 1)
+	@Size(min = 2, max = 25)
 	@Column(nullable = false)
 	private String nome;
+	
 	@NotNull
-	@Size(min = 1)
+	@Size(min = 2, max = 25)
 	@Column(nullable = false)
 	private String cognome;
+	
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	private Date dataNascita;
+	private LocalDate dataNascita;
+	
 	@NotNull
 	@Column(nullable = false)
 	private String sesso;
+	
 	@NotNull
 	@Column(nullable = false)
 	private String nazione;
-	@Min(18)
+	
 	@Column(nullable = false)
 	private Integer eta;
+
 	@Column(nullable = false)
 	private String categoria;
+	
 	@ManyToOne
 	private Societa societa;
+	
 	@OneToMany(mappedBy = "atletaPartecipante")
 	private List<Risultato> risultati;
 	
-	public Atleta(String nome, String cognome, Date dataNascita, String sesso, String nazione) {
+	public Atleta(String nome, String cognome, LocalDate dataNascita, String sesso, String nazione) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
@@ -74,7 +82,7 @@ public class Atleta {
 		return cognome;
 	}
 
-	public Date getDataNascita() {
+	public LocalDate getDataNascita() {
 		return dataNascita;
 	}
 
@@ -110,7 +118,7 @@ public class Atleta {
 		this.cognome = cognome;
 	}
 
-	public void setDataNascita(Date dataNascita) {
+	public void setDataNascita(LocalDate dataNascita) {
 		this.dataNascita = dataNascita;
 	}
 
