@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>Profilo Società</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<meta name="author" content="Łukasz Holeczek from creativeLabs" />
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="../css/bootstrap.css" rel="stylesheet" />
+<link href="../css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="../css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+   href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+   href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+</head>
+<body>
+   <!--start: Header -->
+   <header th:include="form :: formHeader"> </header>
+   <!--end: Header-->
+
+
+   <!-- start: Wrapper -->
+   <div id="wrapper">
+
+      <!-- start: Container -->
+      <div class="container">
+
+         <!-- start: Row -->
+         <div class="row">
+
+            <!-- start: Contact Info -->
+            <div class="span3">
+               <div class="title">
+                  <h3>SPAZIO LIBERO</h3>
+               </div>
+               <p>Da decidere l'uso</p>
+               <p>
+                  provaprova<i>prova</i>
+               </p>
+            </div>
+            <!-- end: Contact Info -->
+
+            <!-- start: List Società -->
+            <div class="span4">
+               <div class="title">
+                  <h3>Lista delle società</h3>
+               </div>
+               <ul>
+                  <li th:each="entry: ${elencoSocieta}"><b th:text="${entry.key}"></b>
+                     <ul>
+                        <li th:each="soc: ${entry.value}"><a href="/index.html"
+                           th:href="@{/listSocieta/} + ${soc.id}" th:text="${soc.nome}"></a> <!--
+                     <form action="product" method="post">
+                        <input type="hidden" value="${product.id}" name="id" />
+                        <div class="actions">
+                           <button class="btn btn-succes btn-mini" type="submit" name="command">Cancella</button>
+                        </div>
+                     </form>
+                     --></li>
+                     </ul></li>
+               </ul>
+               <div class="actions">
+                  <form action="product" method="post">
+                     <button class="btn btn-succes btn-small" type="submit" name="deleteAll">Cancella
+                        tutto</button>
+                  </form>
+               </div>
+            </div>
+            <!-- end: List Società -->
+
+
+            <!-- start: Società Panel -->
+            <div class="span5" th:if="${societaPanel}">
+               <div class="title">
+                  <h3 th:text="${societa.nome}">NomeSocietà</h3>
+               </div>
+               <div>
+                  <h4>
+                     Regione: <span th:text="${societa.regione}"></span>
+                  </h4>
+               </div>
+               <div>
+                  <h4>
+                     Data di fondazione: <span th:text="${societa.dataFondazione}"></span>
+                  </h4>
+               </div>
+               <hr />
+               <div>
+                  <table th:unless="${#lists.isEmpty(societa.atleti)}">
+                     <tr>
+                        <th align="left">Cognome</th>
+                        <th align="left">Nome</th>
+                        <th align="left">Categoria</th>
+                     </tr>
+                     <tr th:each="atleta : ${societa.atleti}">
+                        <td th:text="${atleta.cognome}"></td>
+                        <td th:text="${atleta.nome}"></td>
+                        <td th:text="${atleta.categoria}"></td>
+                     </tr>
+                  </table>
+                  <span th:if="${#lists.isEmpty(societa.atleti)}">Non ci sono ancora atleti
+                     iscritti in questa società.</span>
+               </div>
+            </div>
+            <!-- end: Società Panel -->
+
+
+         </div>
+         <!-- end: Row -->
+
+      </div>
+      <!-- end: Container -->
+
+   </div>
+   <!-- end: Wrapper  -->
+
+   <!-- start: Footer Menu -->
+   <div th:include="form :: formFooterMenu"></div>
+   <!-- end: Footer Menu -->
+
+   <!-- start: Footer -->
+   <div th:include="form :: formFooter"></div>
+   <!-- end: Footer -->
+
+   <!-- start: Copyright -->
+   <div th:include="form :: formCopyright"></div>
+
+   <!-- start: Java Script -->
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="../js/jquery-1.8.2.js"></script>
+   <script src="../js/bootstrap.js"></script>
+   <script src="../js/flexslider.js"></script>
+   <script src="../js/carousel.js"></script>
+   <script src="../js/jquery.cslider.js"></script>
+   <script src="../js/slider.js"></script>
+   <script defer="defer" src="js/custom.js"></script>
+   <!-- end: Java Script -->
+
+</body>
+</html>

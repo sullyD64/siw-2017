@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.triathlon.model.Societa;
@@ -20,12 +21,27 @@ public class SocietaController {
 	@Autowired
 	private SocietaService societaService;
 
-	@GetMapping("/societa")
-	public String showForm(Societa societa, Model model) {
+	@GetMapping("/addSocieta")
+	public String mostraForm(Societa societa, Model model) {
 		model.addAttribute("formSocieta",true);
 		return "form";
 	}
-
+	
+	@GetMapping("/listSocieta")
+	public String mostraListaSocieta(Model model) {
+		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
+		return "societa";
+	}
+	
+	@GetMapping("/listSocieta/{id}")
+	public String mostraSocieta(@PathVariable("id") Long id, Model model){
+		Societa societa = societaService.findOne(id);
+		model.addAttribute("societa", societa);
+		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
+		model.addAttribute("societaPanel",true);
+		return "societa";
+	}
+	
 	@PostMapping("/societa")
 	public String checkSocietaInfo(@Valid @ModelAttribute Societa societa, BindingResult bindingResult, Model model) {
 		String nextPage = "form";

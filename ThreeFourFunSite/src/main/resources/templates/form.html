@@ -11,9 +11,9 @@
 <!-- end: Meta -->
 
 <!-- start: CSS -->
-<link href="css/bootstrap.css" rel="stylesheet" />
-<link href="css/bootstrap-responsive.css" rel="stylesheet" />
-<link href="css/style.css" rel="stylesheet" />
+<link href="../css/bootstrap.css" rel="stylesheet" />
+<link href="../css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="../css/style.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css"
    href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
@@ -24,7 +24,7 @@
 <body>
 
    <!--start: Header -->
-   <header>
+   <header th:fragment="formHeader">
 
       <!--start: Container -->
       <div class="container">
@@ -35,7 +35,7 @@
             <!--start: Logo -->
             <div class="logo span3">
 
-               <a class="brand" href="/index.html"><img src="img/logo.png" /></a>
+               <a class="brand" href="/index.html"><img src="../../img/logo.png" /></a>
 
             </div>
             <!--end: Logo -->
@@ -141,11 +141,9 @@
                            </div>
                            <span th:if="${#fields.hasErrors('dataNascita')}">Errore</span>
                         </div>
-
                         <div class="clearfix" th:inline="text">
                            Età:<span th:text="*{eta}"></span> Categoria:<span th:text="*{categoria}"></span>
                         </div>
-
                         <div class="clearfix">
                            <label for="sesso"><span>Sesso:</span></label>
                            <div class="input">
@@ -157,8 +155,6 @@
                            </div>
                            <span th:if="${#fields.hasErrors('sesso')}">Errore</span>
                         </div>
-
-
                         <div class="clearfix">
                            <label for="nazione"><span>Nazione:</span></label>
                            <div class="input">
@@ -419,7 +415,6 @@
                            </div>
                            <span th:if="${#fields.hasErrors('nazione')}">Errore</span>
                         </div>
-
                         <div class="clearfix">
                            <label for="societa"><span>Seleziona una società sportiva:</span></label>
                            <div class="input">
@@ -433,9 +428,8 @@
                            </div>
                            <span th:if="${#fields.hasErrors('societa')}">Errore</span>
                         </div>
-
                         <div class="actions">
-                           <button tabindex="6" type="submit" class="btn btn-succes btn-large">Conferma</button>
+                           <button tabindex="7" type="submit" class="btn btn-succes btn-large">Conferma</button>
                         </div>
                      </fieldset>
                      <div class="text-error" th:text="${errore}"></div>
@@ -501,18 +495,6 @@
                            </div>
                            <span th:if="${#fields.hasErrors('regione')}">Errore</span>
                         </div>
-
-                        <!-- 
-                        <div class="clearfix">
-                           <label for="presidente"><span>Seleziona una società sportiva:</span></label>
-                           <div class="input">
-                              <select tabindex="4" th:field="*{presidente}" name="sesso">
-                                 <option value="">&lt;seleziona&gt;</option>
-                              </select>
-                           </div>
-                           <span th:if="${#fields.hasErrors('sesso')}">Errore</span>
-                        </div>
-                        -->
                         <div class="actions">
                            <button tabindex="4" type="submit" class="btn btn-succes btn-large">Conferma</button>
                         </div>
@@ -527,7 +509,6 @@
             <!-- end: Form Società -->
 
             <!-- start: Social Sites -->
-
             <div class="span4">
                <div class="title">
                   <h3>Login placeholder</h3>
@@ -574,7 +555,7 @@
    <!-- end: Wrapper  -->
 
    <!-- start: Footer Menu -->
-   <div id="footer-menu" class="hidden-tablet hidden-phone">
+   <div th:fragment="formFooterMenu" id="footer-menu" class="hidden-tablet hidden-phone">
 
       <!-- start: Container -->
       <div class="container">
@@ -585,7 +566,7 @@
             <!-- start: Footer Menu Logo -->
             <div class="span2">
                <div id="footer-menu-logo">
-                  <a href="#"><img src="img/logo-footer-menu.png" alt="logo" /></a>
+                  <a href="#"><img src="../../img/logo-footer-menu.png" alt="logo" /></a>
                </div>
             </div>
             <!-- end: Footer Menu Logo -->
@@ -632,7 +613,7 @@
    <!-- end: Footer Menu -->
 
    <!-- start: Footer -->
-   <div id="footer">
+   <div th:fragment="formFooter" id="footer">
 
       <!-- start: Container -->
       <div class="container">
@@ -739,7 +720,7 @@
    <!-- end: Footer -->
 
    <!-- start: Copyright -->
-   <div id="copyright">
+   <div th:fragment="formCopyright" id="copyright">
 
       <!-- start: Container -->
       <div class="container"></div>
@@ -750,12 +731,12 @@
 
    <!-- start: Java Script -->
    <!-- Placed at the end of the document so the pages load faster -->
-   <script src="js/jquery-1.8.2.js"></script>
-   <script src="js/bootstrap.js"></script>
-   <script src="js/flexslider.js"></script>
-   <script src="js/carousel.js"></script>
-   <script src="js/jquery.cslider.js"></script>
-   <script src="js/slider.js"></script>
+   <script src="../js/jquery-1.8.2.js"></script>
+   <script src="../js/bootstrap.js"></script>
+   <script src="../js/flexslider.js"></script>
+   <script src="../js/carousel.js"></script>
+   <script src="../js/jquery.cslider.js"></script>
+   <script src="../js/slider.js"></script>
    <script defer="defer" src="js/custom.js"></script>
    <!-- end: Java Script -->
 

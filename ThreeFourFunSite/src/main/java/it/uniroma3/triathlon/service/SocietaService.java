@@ -1,9 +1,10 @@
 package it.uniroma3.triathlon.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,13 +36,12 @@ public class SocietaService {
 		}
 		
 		societa.setNome(societa.getNome().toUpperCase());
-		
 		this.societaRepository.save(societa);
 		return true;
 	}
 
 	public Map<String, List<Societa>> groupedByRegione(Iterable<Societa> elencoSocieta) {
-		Map<String, List<Societa>> regione2societa = new HashMap<>();
+		NavigableMap<String, List<Societa>> regione2societa = new TreeMap<>();
 		List<Societa> societaPerRegione;
 		
 		for (Societa societa : elencoSocieta) {
