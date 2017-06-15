@@ -12,9 +12,10 @@ import static it.uniroma3.triathlon.util.CostantiCategorie.FEMMINILE;
 public class Calcolatore {
 
 	public static boolean convalidaEtaAtleta(LocalDate date) {
-		return !(Period.between(date, LocalDate.now()).getYears() < 14);
+		return (Period.between(LocalDate.of(1900,1,1), date).getDays() > 0) && 
+				!(Period.between(date, LocalDate.now()).getYears() < 14);
 	}
-
+	
 	public static boolean convalidaEtaSocieta(LocalDate date) {
 		return (Period.between(LocalDate.of(1900,1,1), date).getDays() > 0) &&
 				(Period.between(date, LocalDate.now()).getDays() > 0);

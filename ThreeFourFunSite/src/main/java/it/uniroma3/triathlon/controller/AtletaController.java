@@ -31,26 +31,42 @@ public class AtletaController {
 		return "form";
 	}
 
-	@PostMapping("/atleta")
-	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, @RequestParam Long societa, BindingResult bindingResult, Model model) {
+	@PostMapping("/addAtleta")
+	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, @RequestParam(defaultValue="") Long societaID, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("formAtleta",true);
-		
-		atleta.setSocieta(societaService.findOne(societa));
-		System.out.println(atleta.getSocieta());
-		
-		System.out.println(bindingResult.toString());
 
 		if (!bindingResult.hasErrors()) {
-			if (Calcolatore.convalidaEtaAtleta(atleta.getDataNascita())) {
-				if (atletaService.add(atleta)) {
-					model.addAttribute(atleta);
-					model.addAttribute("successo", "Atleta registrato correttamente");
-				} else
-					model.addAttribute("errore", "L'atleta è già presente nel sistema");
-			} else
-				model.addAttribute("errore", "L'atleta deve avere almeno 14 anni");
+			// controllo per binding società
+			if (societaID!=null) {
+				// controllo età minima
+				if (Calcolatore.convalidaEtaAtleta(atleta.getDataNascita())) {
+					if (!atletaService.isDuplicate(atleta)) {
+						/* Attributi manipolati */
+						atleta.setNome(atleta.getNome().toUpperCase());
+						atleta.setCognome(atleta.getCognome().toUpperCase());
 
+						/* Attributi derivati */
+						atleta.setEta(Calcolatore.calcolaEta(atleta.getDataNascita()));
+						atleta.setCategoria(Calcolatore.calcolaCategoria(atleta.getEta(), atleta.getSesso()));
+
+						/* Relazioni */
+						atleta.setSocieta(societaService.findOne(societaID));
+
+						atletaService.add(atleta);
+
+						model.addAttribute(atleta);
+						model.addAttribute("successo", "Atleta registrato correttamente");
+					} else {
+						model.addAttribute("errore", "L'atleta è già presente nel sistema");
+					}
+				} else {
+					model.addAttribute("errore", "L'atleta deve avere almeno 14 anni");
+				}
+			} else {
+				model.addAttribute("errore", "Selezionare una società dall'elenco");
+			}
+			
 			model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		}
 

@@ -27,17 +27,18 @@ public class SocietaService {
     	return this.societaRepository.findOne(id);
     }
 	
-	@Transactional
-	public boolean add(final Societa societa) {
-		Iterable<Societa> elencoSocieta = this.societaRepository.findAll();
+    public boolean isDuplicate(final Societa societa) {
+    	Iterable<Societa> elencoSocieta = this.societaRepository.findAll();
 		for (Societa s : elencoSocieta) {
 			if (s.getNome().equals(societa.getNome()))
-				return false;
+				return true;
 		}
-		
-		societa.setNome(societa.getNome().toUpperCase());
+		return false;
+    }
+    
+	@Transactional
+	public void add(final Societa societa) {
 		this.societaRepository.save(societa);
-		return true;
 	}
 
 	public Map<String, List<Societa>> groupedByRegione(Iterable<Societa> elencoSocieta) {

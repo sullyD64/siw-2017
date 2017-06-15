@@ -42,14 +42,19 @@ public class SocietaController {
 		return "societa";
 	}
 	
-	@PostMapping("/societa")
+	@PostMapping("/addSocieta")
 	public String checkSocietaInfo(@Valid @ModelAttribute Societa societa, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("formSocieta",true);
 
 		if (!bindingResult.hasErrors()) {
 			if (Calcolatore.convalidaEtaSocieta(societa.getDataFondazione())) {
-				if (societaService.add(societa)) {
+				if (!societaService.isDuplicate(societa)) {
+					/*Attributi manipolati*/
+					societa.setNome(societa.getNome().toUpperCase());
+					
+					societaService.add(societa);
+					
 					model.addAttribute(societa);
 					model.addAttribute("successo", "Società registrata correttamente");
 				} else

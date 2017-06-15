@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.triathlon.model.Atleta;
 import it.uniroma3.triathlon.repository.AtletaRepository;
-import it.uniroma3.triathlon.util.Calcolatore;
 
 @Service
 public class AtletaService {
@@ -19,22 +18,19 @@ public class AtletaService {
     public Iterable<Atleta> findAll() {
         return this.atletaRepository.findAll();
     }
-
-	@Transactional
-	public boolean add(final Atleta atleta) {
-		List<Atleta> atleti = this.atletaRepository.findByCognome(atleta.getCognome());
+    
+    public boolean isDuplicate(final Atleta atleta) {
+    	List<Atleta> atleti = this.atletaRepository.findByCognome(atleta.getCognome());
 		for (Atleta a : atleti) {
 			if (a.getNome().equals(atleta.getNome()) && a.getDataNascita().equals(atleta.getDataNascita()))
-				return false;
+				return true;
 		}
+		return false;
+    }
 
-		atleta.setNome(atleta.getNome().toUpperCase());
-		atleta.setCognome(atleta.getCognome().toUpperCase());
-		atleta.setEta(Calcolatore.calcolaEta(atleta.getDataNascita()));
-		atleta.setCategoria(Calcolatore.calcolaCategoria(atleta.getEta(), atleta.getSesso()));
-
-		this.atletaRepository.save(atleta);	
-		return true;
+	@Transactional
+	public void add(final Atleta atleta) {		
+		this.atletaRepository.save(atleta);
 	}
 
 

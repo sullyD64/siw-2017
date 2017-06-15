@@ -54,7 +54,7 @@ public class Atleta {
 
 	@Column(nullable = false)
 	private String categoria;
-	
+
 	@ManyToOne
 	private Societa societa;
 	
