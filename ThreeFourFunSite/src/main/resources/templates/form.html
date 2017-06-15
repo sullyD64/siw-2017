@@ -149,7 +149,7 @@
                         <div class="clearfix">
                            <label for="sesso"><span>Sesso:</span></label>
                            <div class="input">
-                              <select tabindex="4" th:field="*{sesso}" name="sesso">
+                              <select tabindex="4" id="sesso" name="sesso" th:field="*{sesso}">
                                  <option value="">&lt;seleziona&gt;</option>
                                  <option value="M">Uomo</option>
                                  <option value="F">Donna</option>
@@ -158,10 +158,11 @@
                            <span th:if="${#fields.hasErrors('sesso')}">Errore</span>
                         </div>
 
+
                         <div class="clearfix">
                            <label for="nazione"><span>Nazione:</span></label>
                            <div class="input">
-                              <select tabindex="5" th:field="*{nazione}" name="nazione">
+                              <select tabindex="5" id="nazione" th:field="*{nazione}" name="nazione">
                                  <option value="AFG">Afghanistan</option>
                                  <option value="ALA">Åland Islands</option>
                                  <option value="ALB">Albania</option>
@@ -418,17 +419,21 @@
                            </div>
                            <span th:if="${#fields.hasErrors('nazione')}">Errore</span>
                         </div>
-                        <!-- 
+
                         <div class="clearfix">
                            <label for="societa"><span>Seleziona una società sportiva:</span></label>
                            <div class="input">
-                              <select tabindex="6" th:field="*{sesso}" name="sesso">
+                              <select tabindex="6" id="societa" name="societa">
                                  <option value="">&lt;seleziona&gt;</option>
+                                 <optgroup th:each="entry: ${elencoSocieta}" th:label="${entry.key}">
+                                    <option th:each="soc: ${entry.value}" th:value="${soc.id}"
+                                       th:text="${soc.nome}"></option>
+                                 </optgroup>
                               </select>
                            </div>
-                           <span th:if="${#fields.hasErrors('sesso')}">Errore</span>
+                           <span th:if="${#fields.hasErrors('societa')}">Errore</span>
                         </div>
-                        -->
+
                         <div class="actions">
                            <button tabindex="6" type="submit" class="btn btn-succes btn-large">Conferma</button>
                         </div>
@@ -469,7 +474,7 @@
                         <div class="clearfix">
                            <label for="regione"><span>Regione:</span></label>
                            <div class="input">
-                              <select tabindex="3" th:field="*{regione}" name="regione">
+                              <select tabindex="3" id="regione" name="regione" th:field="*{regione}">
                                  <option value="">&lt;seleziona&gt;</option>
                                  <option value="Abruzzo">Abruzzo</option>
                                  <option value="Basilicata">Basilicata</option>

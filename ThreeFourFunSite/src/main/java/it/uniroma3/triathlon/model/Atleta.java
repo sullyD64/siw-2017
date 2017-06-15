@@ -67,11 +67,16 @@ public class Atleta {
 		this.dataNascita = dataNascita;
 		this.sesso = sesso;
 		this.nazione = nazione;
+//		this.societa = societa;
 		this.risultati = new LinkedList<>();
 	}
 	
 	public Atleta() {
 		this.risultati = new LinkedList<>();
+	}
+	
+	public Long getId() {
+		return id;
 	}
 
 	public String getNome() {

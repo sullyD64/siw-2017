@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -52,6 +51,10 @@ public class Societa {
 	
 	public Societa() {
 		this.atleti = new LinkedList<>();
+	}
+	
+	public Long getId() {
+		return id;
 	}
 	
 	public String getNome() {
