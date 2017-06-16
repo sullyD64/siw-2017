@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"nome","cognome","dataNascita"}))
+@Table(name="atleti", uniqueConstraints=@UniqueConstraint(columnNames={"nome","cognome","dataNascita"}))
 public class Atleta {
 
 	@Id
