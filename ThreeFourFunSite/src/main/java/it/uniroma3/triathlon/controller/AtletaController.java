@@ -24,7 +24,7 @@ public class AtletaController {
 	@Autowired
 	private SocietaService societaService;
 
-	@GetMapping("/addAtleta")
+	@GetMapping("/user/newAtleta")
 	public String mostraForm(Atleta atleta, Model model) {
 		model.addAttribute("atleti", true);
 		model.addAttribute("formAtleta",true);
@@ -32,7 +32,7 @@ public class AtletaController {
 		return "form";
 	}
 
-	@PostMapping("/addAtleta")
+	@PostMapping("/user/newAtleta")
 	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, @RequestParam(defaultValue="") Long societaID, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("atleti", true);

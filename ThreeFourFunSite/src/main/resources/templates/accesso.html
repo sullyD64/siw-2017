@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Login/Registrazione</title>
+</head> 
+<body>
+   <div>
+      <h1>Login utente</h1>
+      <form action="#" th:action="@{/login}" th:object="${utente}" method="post">
+         <fieldset>
+            <div>
+               <label for="username"><span>Username*:</span></label>
+               <div>
+                  <input tabindex="1" size="20" id="username" name="username" type="text"
+                     th:field="*{username}" required="required" />
+               </div>
+               <span th:if="${#fields.hasErrors('username')}">Errore: campo obbligatorio</span>
+            </div>
+            <div>
+               <label for="password"><span>Password*:</span></label>
+               <div>
+                  <input tabindex="2" size="20" id="password" name="password" type="password"
+                     th:field="*{password}" required="required" />
+               </div>
+               <span th:if="${#fields.hasErrors('password')}">Errore: campo obbligatorio</span>
+            </div>
+            <div>
+               <button tabindex="3" type="submit">Autentica Utente</button>
+            </div>
+         </fieldset>
+      </form>
+   </div>
+
+
+   <div>
+      <h1>Registrazione utente</h1>
+      <form action="#" th:action="@{/registrazione}" th:object="${utente}" method="post">
+         <fieldset>
+            <div>
+               <label for="username"><span>Username*:</span></label>
+               <div>
+                  <input tabindex="4" size="20" id="username" name="username" type="text"
+                     th:field="*{username}" required="required" />
+               </div>
+               <span th:if="${#fields.hasErrors('username')}">Errore: campo obbligatorio</span>
+            </div>
+            <div>
+               <label for="password"><span>Password*:</span></label>
+               <div>
+                  <input tabindex="5" size="20" id="password" name="password" type="password"
+                     th:field="*{password}" required="required" />
+               </div>
+               <span th:if="${#fields.hasErrors('password')}">Errore: campo obbligatorio</span>
+            </div>
+            <div>
+               <button tabindex="6" type="submit">Registra Utente</button>
+            </div>
+         </fieldset>
+      </form>
+   </div>
+
+   <div>
+      <h3>Riepilogo Informazioni</h3>
+      <div class="text-error" th:text="${errore}"></div>
+      <div class="text-success" th:text="${successo}"></div>
+      <div th:if="${successo}">
+         <hr />
+         <div>
+            <h4>
+               <b>Utente:</b> <span th:text="${utente.username}"></span>
+            </h4>
+            <h4>
+               <b>Password:</b> <span th:text="${utente.password}"></span>
+            </h4>
+         </div>
+      </div>
+   </div>
+
+</body>
+</html>

@@ -12,11 +12,11 @@ public class Utente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Size(min = 5, max = 20)
+	@Size(max = 20)
 	@Column(unique = true)
 	private String username;
 	
-	@Size(min = 5, max = 20)
+	@Size(max = 20)
 	@Column(nullable = false)
 	private String password;
 	
@@ -56,7 +56,4 @@ public class Utente {
 	public String toString() {
 		return "Utente [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled + "]";
 	}
-	
-	
-
 }

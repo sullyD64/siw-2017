@@ -17,24 +17,28 @@ import it.uniroma3.triathlon.service.UtenteService;
 
 @Controller
 public class UtenteController {
-	private static final String ADMIN = "RUOLO_ADMIN";
+//	private static final String ADMIN = "RUOLO_ADMIN";
 	private static final String UTENTE = "RUOLO_UTENTE";
 	
 	@Autowired
 	private UtenteService utenteService;
+	
 	@Autowired
 	private RuoloUtenteService ruoloUtenteService;
 	
-	@GetMapping("/registrazione")
-	public String registrazione(Utente utente, Model model){
-		model.addAttribute("atleti", true);
-		model.addAttribute("formUtente",  true);
-		return "form";
+	@GetMapping("/accedi")
+	public String mostraFormAccesso(Utente utente, Model model) {
+		return "accesso";
+	}
+	
+	@PostMapping("/login")
+	public String loginUtente(@Valid @ModelAttribute Utente utente) {
+		 return "redirect:/utenti/" + utente.getId();
 	}
 	
 	@PostMapping("/registrazione")
-	public String checkUtenteInfo(@Valid @ModelAttribute Utente utente, BindingResult bindingResult, Model model){
-		String nextPage = "form";
+	public String registraUtente(@Valid @ModelAttribute Utente utente, BindingResult bindingResult, Model model){
+		String nextPage = "accesso";
 		model.addAttribute("atleti", true);
 		
 		if (!bindingResult.hasErrors()) {
