@@ -23,13 +23,14 @@ public class SocietaController {
 
 	@GetMapping("/addSocieta")
 	public String mostraForm(Societa societa, Model model) {
+		model.addAttribute("societas", true);
 		model.addAttribute("formSocieta",true);
-		model.addAttribute("societa", true);
 		return "form";
 	}
 
 	@GetMapping("/listSocieta")
 	public String mostraListaSocieta(Model model) {
+		model.addAttribute("societas", true);
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		model.addAttribute("societa", true);
 		return "societa";
@@ -38,7 +39,7 @@ public class SocietaController {
 	@GetMapping("/listSocieta/{id}")
 	public String mostraSocieta(@PathVariable("id") Long id, Model model){
 		Societa societa = societaService.findOne(id);
-		model.addAttribute("societa", societa);
+		model.addAttribute("societas", societa);
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		model.addAttribute("societaPanel",true);
 		return "societa";
@@ -47,8 +48,8 @@ public class SocietaController {
 	@PostMapping("/addSocieta")
 	public String checkSocietaInfo(@Valid @ModelAttribute Societa societa, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
+		model.addAttribute("societas", true);
 		model.addAttribute("formSocieta",true);
-		model.addAttribute("societa", true);
 
 		if (!bindingResult.hasErrors()) {
 			if (Calcolatore.convalidaDataSocieta(societa.getDataFondazione())) {

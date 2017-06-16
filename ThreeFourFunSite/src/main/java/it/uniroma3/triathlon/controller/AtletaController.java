@@ -26,8 +26,8 @@ public class AtletaController {
 
 	@GetMapping("/addAtleta")
 	public String mostraForm(Atleta atleta, Model model) {
-		model.addAttribute("formAtleta",true);
 		model.addAttribute("atleti", true);
+		model.addAttribute("formAtleta",true);
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		return "form";
 	}
@@ -35,8 +35,8 @@ public class AtletaController {
 	@PostMapping("/addAtleta")
 	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, @RequestParam(defaultValue="") Long societaID, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
-		model.addAttribute("formAtleta",true);
 		model.addAttribute("atleti", true);
+		model.addAttribute("formAtleta",true);
 
 		if (!bindingResult.hasErrors()) {
 			// controllo per binding società

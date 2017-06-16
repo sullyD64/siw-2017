@@ -56,8 +56,8 @@
                               <li class="active" th:if="${home}"><a href="index.html">Home</a></li>
                               <li><a href="index.html" th:unless="${classifiche}">Classifiche</a></li>
                               <li class="active" th:if="${classifiche}"><a href="index.html">Classifiche</a></li>
-                              <li><a href="index.html" th:unless="${societa}">Società</a></li>
-                              <li class="active" th:if="${societa}"><a href="index.html">Società</a></li>
+                              <li><a href="index.html" th:unless="${societas}">Società</a></li>
+                              <li class="active" th:if="${societas}"><a href="index.html">Società</a></li>
                               <li><a href="index.html" th:unless="${gare}">Gare</a></li>
                               <li class="active" th:if="${gare}"><a href="index.html">Gare</a></li>
                               <li><a href="index.html" th:unless="${atleti}">Atleti</a></li>
@@ -113,7 +113,7 @@
                            <label for="nome"><span>Nome*:</span></label>
                            <div class="input">
                               <input tabindex="1" size="25" id="nome" name="nome" type="text"
-                                 th:value="*{nome}" required="required" />
+                                 th:field="*{nome}" required="required" />
                            </div>
                            <span th:if="${#fields.hasErrors('nome')}">Errore: campo
                               obbligatorio</span>
@@ -446,7 +446,7 @@
                            <label for="nome"><span>Nome*:</span></label>
                            <div class="input">
                               <input tabindex="1" size="40" id="nome" name="nome" type="text"
-                                 th:value="*{nome}" required="required" />
+                                 th:field="*{nome}" required="required" />
                            </div>
                            <span th:if="${#fields.hasErrors('nome')}">Errore: campo
                               obbligatorio</span>

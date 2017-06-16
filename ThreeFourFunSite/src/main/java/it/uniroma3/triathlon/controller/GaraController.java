@@ -22,16 +22,16 @@ public class GaraController {
 
 	@GetMapping("/addGara")
 	public String mostraForm(Gara gara, Model model) {
-		model.addAttribute("formGara", true);
 		model.addAttribute("gare", true);
+		model.addAttribute("formGara", true);
 		return "form";
 	}
 
 	@PostMapping("/addGara")
 	public String checkGaraInfo(@Valid @ModelAttribute Gara gara, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
-		model.addAttribute("formGara", true);
 		model.addAttribute("gare", true);
+		model.addAttribute("formGara", true);
 		
 		System.out.println(bindingResult.toString());
 
