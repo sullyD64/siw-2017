@@ -26,13 +26,13 @@ public class SocietaController {
 		model.addAttribute("formSocieta",true);
 		return "form";
 	}
-	
+
 	@GetMapping("/listSocieta")
 	public String mostraListaSocieta(Model model) {
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		return "societa";
 	}
-	
+
 	@GetMapping("/listSocieta/{id}")
 	public String mostraSocieta(@PathVariable("id") Long id, Model model){
 		Societa societa = societaService.findOne(id);
@@ -41,28 +41,29 @@ public class SocietaController {
 		model.addAttribute("societaPanel",true);
 		return "societa";
 	}
-	
+
 	@PostMapping("/addSocieta")
 	public String checkSocietaInfo(@Valid @ModelAttribute Societa societa, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("formSocieta",true);
 
 		if (!bindingResult.hasErrors()) {
-			if (Calcolatore.convalidaEtaSocieta(societa.getDataFondazione())) {
+			if (Calcolatore.convalidaDataSocieta(societa.getDataFondazione())) {
 				if (!societaService.isDuplicate(societa)) {
 					/*Attributi manipolati*/
 					societa.setNome(societa.getNome().toUpperCase());
-					
+
 					societaService.add(societa);
-					
+
 					model.addAttribute(societa);
 					model.addAttribute("successo", "Società registrata correttamente");
-				} else
+				} else {
 					model.addAttribute("errore", "La società è già presente nel sistema");
-			} else
+				}
+			} else {
 				model.addAttribute("errore", "Inserire una data di fondazione valida");
+			}
 		}
-
 		return nextPage;
 	}
 }

@@ -1,17 +1,20 @@
 package it.uniroma3.triathlon.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Gara {
@@ -19,16 +22,22 @@ public class Gara {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@NotNull
+	@Size(min = 2, max = 50)
 	@Column(nullable = false)
-	private String luogo;
+	private String nomeLuogo;
+	
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	private Date dataSvolgimento;
-	@OneToMany(mappedBy = "gara")
+	private LocalDate dataSvolgimento;
+	
+	@OneToMany(mappedBy = "gara", cascade={ CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Risultato> risultati;
 	
-	public Gara(String luogo, Date dataSvolgimento) {
-		this.luogo = luogo;
+	public Gara(String nomeLuogo, LocalDate dataSvolgimento) {
+		this.nomeLuogo = nomeLuogo;
 		this.dataSvolgimento = dataSvolgimento;
 		this.risultati = new LinkedList<>();
 	}
@@ -37,19 +46,23 @@ public class Gara {
 		this.risultati = new LinkedList<>();
 	}
 	
-	public String getLuogo() {
-		return luogo;
+	public Long getId() {
+		return id;
 	}
-	public Date getDataSvolgimento() {
+	
+	public String getNomeLuogo() {
+		return nomeLuogo;
+	}
+	public LocalDate getDataSvolgimento() {
 		return dataSvolgimento;
 	}
 	public List<Risultato> getRisultati() {
 		return risultati;
 	}
-	public void setLuogo(String luogo) {
-		this.luogo = luogo;
+	public void setNomeLuogo(String luogo) {
+		this.nomeLuogo = luogo;
 	}
-	public void setDataSvolgimento(Date dataSvolgimento) {
+	public void setDataSvolgimento(LocalDate dataSvolgimento) {
 		this.dataSvolgimento = dataSvolgimento;
 	}
 	public void setRisultati(List<Risultato> risultati) {

@@ -24,8 +24,8 @@ public class AtletaController {
 	@Autowired
 	private SocietaService societaService;
 
-	@GetMapping("/atleta")
-	public String showForm(Atleta atleta, Model model) {
+	@GetMapping("/addAtleta")
+	public String mostraForm(Atleta atleta, Model model) {
 		model.addAttribute("formAtleta",true);
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		return "form";

@@ -87,7 +87,6 @@
    </header>
    <!--end: Header-->
 
-
    <!-- start: Wrapper -->
    <div id="wrapper">
 
@@ -505,7 +504,8 @@
                                  <option value="Veneto">Veneto</option>
                               </select>
                            </div>
-                           <span th:if="${#fields.hasErrors('regione')}">Errore: campo obbligatorio</span>
+                           <span th:if="${#fields.hasErrors('regione')}">Errore: campo
+                              obbligatorio</span>
                         </div>
                         <div class="actions">
                            <button tabindex="4" type="submit" class="btn btn-succes btn-large">Conferma</button>
@@ -519,6 +519,44 @@
 
             </div>
             <!-- end: Form Società -->
+
+            <!-- start: Form Gara -->
+            <div th:if="${formGara}" class="span4">
+               <div class="title">
+                  <h3>Registrazione Gara</h3>
+               </div>
+               <div id="contact-form">
+                  <form action="#" th:action="@{/addGara}" th:object="${gara}" method="post">
+                     <fieldset>
+                        <div class="clearfix">
+                           <label for="nomeLuogo"><span>Nome e luogo dell'evento*:</span></label>
+                           <div class="input">
+                              <input tabindex="1" size="50" id="nomeLuogo" name="nomeLuogo"
+                                 type="text" th:value="*{nomeLuogo}" required="required" />
+                           </div>
+                           <span th:if="${#fields.hasErrors('nomeLuogo')}">Errore: campo
+                              obbligatorio</span>
+                        </div>
+                        <div class="clearfix">
+                           <label for="dataSvolgimento"><span>Data di svolgimento*:</span></label>
+                           <div class="input">
+                              <input tabindex="2" id="dataSvolgimento" name="dataSvolgimento"
+                                 type="date" th:field="*{dataSvolgimento}" required="required" />
+                           </div>
+                           <span th:if="${#fields.hasErrors('dataSvolgimento')}">Errore: campo obbligatorio</span>
+                        </div>
+                        <div class="actions">
+                           <button tabindex="3" type="submit" class="btn btn-succes btn-large">Conferma</button>
+                        </div>
+                     </fieldset>
+                     <div class="text-error" th:text="${errore}"></div>
+                     <div class="text-success" th:text="${successo}"></div>
+                  </form>
+
+               </div>
+
+            </div>
+            <!-- end: Form Gara -->
 
             <!-- start: Social Sites -->
             <div class="span4">
