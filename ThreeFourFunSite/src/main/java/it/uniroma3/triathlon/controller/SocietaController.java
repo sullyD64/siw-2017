@@ -39,8 +39,9 @@ public class SocietaController {
 	@GetMapping("/listSocieta/{id}")
 	public String mostraSocieta(@PathVariable("id") Long id, Model model){
 		Societa societa = societaService.findOne(id);
-		model.addAttribute("societas", societa);
+		model.addAttribute("societas", true);
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
+		model.addAttribute("societa", societa);
 		model.addAttribute("societaPanel",true);
 		return "societa";
 	}
