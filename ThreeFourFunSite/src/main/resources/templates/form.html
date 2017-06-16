@@ -52,11 +52,16 @@
                         </a>
                         <div class="nav-collapse collapse">
                            <ul class="nav">
-                              <li><a href="index.html">Home</a></li>
-                              <li><a href="about.html">Classifiche</a></li>
-                              <li><a href="services.html">Società</a></li>
-                              <li><a href="pricing.html">Gare</a></li>
-                              <li class="active"><a href="contact.html">Atleti</a></li>
+                              <li><a href="index.html" th:unless="${home}">Home</a></li>
+                              <li class="active" th:if="${home}"><a href="index.html">Home</a></li>
+                              <li><a href="index.html" th:unless="${classifiche}">Classifiche</a></li>
+                              <li class="active" th:if="${classifiche}"><a href="index.html">Classifiche</a></li>
+                              <li><a href="index.html" th:unless="${societa}">Società</a></li>
+                              <li class="active" th:if="${societa}"><a href="index.html">Società</a></li>
+                              <li><a href="index.html" th:unless="${gare}">Gare</a></li>
+                              <li class="active" th:if="${gare}"><a href="index.html">Gare</a></li>
+                              <li><a href="index.html" th:unless="${atleti}">Atleti</a></li>
+                              <li class="active" th:if="${atleti}"><a href="index.html">Atleti</a></li>
                               <li class="dropdown"><a href="#" class="dropdown-toggle"
                                  data-toggle="dropdown">Utility <b class="caret"></b>
                               </a>
@@ -95,18 +100,6 @@
 
          <!-- start: Row -->
          <div class="row">
-
-            <!-- start: Contact Info -->
-            <div class="span3">
-               <div class="title">
-                  <h3>SPAZIO LIBERO</h3>
-               </div>
-               <p>Da decidere l'uso</p>
-               <p>
-                  provaprova<i>prova</i>
-               </p>
-            </div>
-            <!-- end: Contact Info -->
 
             <!-- start: Form Atleta -->
             <div th:if="${formAtleta}" class="span4">
@@ -436,17 +429,8 @@
                            <button tabindex="7" type="submit" class="btn btn-succes btn-large">Conferma</button>
                         </div>
                      </fieldset>
-                     <div class="text-error" th:text="${errore}"></div>
-                     <div class="text-success" th:text="${successo}"></div>
-                     <div class="clearfix" th:inline="text" th:if="${successo}">
-                        <b> Età: <span th:text="*{eta}"></span> Categoria: <span
-                           th:text="*{categoria}"></span>
-                        </b>
-                     </div>
                   </form>
-
                </div>
-
             </div>
             <!-- end: Form Atleta  -->
 
@@ -511,8 +495,6 @@
                            <button tabindex="4" type="submit" class="btn btn-succes btn-large">Conferma</button>
                         </div>
                      </fieldset>
-                     <div class="text-error" th:text="${errore}"></div>
-                     <div class="text-success" th:text="${successo}"></div>
                   </form>
 
                </div>
@@ -543,57 +525,77 @@
                               <input tabindex="2" id="dataSvolgimento" name="dataSvolgimento"
                                  type="date" th:field="*{dataSvolgimento}" required="required" />
                            </div>
-                           <span th:if="${#fields.hasErrors('dataSvolgimento')}">Errore: campo obbligatorio</span>
+                           <span th:if="${#fields.hasErrors('dataSvolgimento')}">Errore:
+                              campo obbligatorio</span>
                         </div>
                         <div class="actions">
                            <button tabindex="3" type="submit" class="btn btn-succes btn-large">Conferma</button>
                         </div>
                      </fieldset>
-                     <div class="text-error" th:text="${errore}"></div>
-                     <div class="text-success" th:text="${successo}"></div>
                   </form>
-
                </div>
 
             </div>
             <!-- end: Form Gara -->
 
-            <!-- start: Social Sites -->
+            <!-- start: Riepilogo Info -->
             <div class="span4">
                <div class="title">
-                  <h3>Login placeholder</h3>
+                  <h3>Riepilogo Informazioni</h3>
                </div>
-
-               <div id="contact-form" th:if="${ciao}">
-
-                  <form action="#" th:action="@{/atlet}" th:object="${atleta}" method="post">
-                     <fieldset>
-                        <div class="clearfix">
-                           <label for="nome"><span>Name:</span></label>
-                           <div class="input">
-                              <input tabindex="1" size="18" id="nome" name="nome" type="text"
-                                 th:value="*{nome}" />
-                           </div>
-                           <span th:if="${#fields.hasErrors('nome')}">Errore</span>
-                        </div>
-                        <div class="clearfix">
-                           <label for="cognome"><span>Cognome:</span></label>
-                           <div class="input">
-                              <input size="18" id="cognome" name="cognome" type="text"
-                                 th:field="*{cognome}" />
-                           </div>
-                        </div>
-                        <div class="actions">
-                           <button tabindex="5" type="submit" class="btn btn-succes btn-large">Conferma</button>
-                        </div>
-                     </fieldset>
-
-                  </form>
-
+               <div class="text-error" th:text="${errore}"></div>
+               <div class="text-success" th:text="${successo}"></div>
+               <div th:if="${successo}">
+                  <hr />
+                  <div class="clearfix" th:inline="text">
+                     <div th:if="${formAtleta}">
+                        <h4>
+                           <b>Nome:</b> <span th:text="${atleta.nome}"></span>
+                        </h4>
+                        <h4>
+                           <b>Cognome:</b> <span th:text="${atleta.cognome}"></span>
+                        </h4>
+                        <h4>
+                           <b>Sesso:</b> <span th:text="${atleta.sesso}"></span>
+                        </h4>
+                        <h4>
+                           <b>Nazionalità:</b> <span th:text="${atleta.nazione}"></span>
+                        </h4>
+                        <h4>
+                           <b>Società:</b> <span th:text="${atleta.societa.nome}"></span>
+                        </h4>
+                        <h4>
+                           Età: <span th:text="${atleta.eta}"></span>
+                        </h4>
+                        <h4>
+                           <b>Categoria:</b> <span th:text="${atleta.categoria}"></span>
+                        </h4>
+                     </div>
+                     <div th:if="${formSocieta}">
+                        <h4>
+                           <b>Nome:</b> <span th:text="${societa.nome}"></span>
+                        </h4>
+                        <h4>
+                           <b>Data di Fondazione:</b> <span th:text="${societa.dataFondazione}"></span>
+                        </h4>
+                        <h4>
+                           <b>Regione:</b> <span th:text="${societa.regione}"></span>
+                        </h4>
+                        <h4>Ora è possibile aggiungere atleti alla società</h4>
+                     </div>
+                     <div th:if="${formGara}">
+                        <h4>
+                           <b>Nome e Luogo:</b> <span th:text="${gara.nomeLuogo}"></span>
+                        </h4>
+                        <h4>
+                           <b>Data di Svolgimento</b> <span th:text="${gara.dataSvolgimento}"></span>
+                        </h4>
+                        <h4>Ora è possibile iscriversi alla gara</h4>
+                     </div>
+                  </div>
                </div>
-
             </div>
-            <!-- end: Social Sites -->
+            <!-- end: Riepilogo Info -->
 
          </div>
          <!-- end: Row -->
@@ -781,13 +783,15 @@
 
    <!-- start: Java Script -->
    <!-- Placed at the end of the document so the pages load faster -->
-   <script src="../js/jquery-1.8.2.js"></script>
-   <script src="../js/bootstrap.js"></script>
-   <script src="../js/flexslider.js"></script>
-   <script src="../js/carousel.js"></script>
-   <script src="../js/jquery.cslider.js"></script>
-   <script src="../js/slider.js"></script>
-   <script defer="defer" src="js/custom.js"></script>
+   <div th:fragment="javascript">
+      <script src="../js/jquery-1.8.2.js"></script>
+      <script src="../js/bootstrap.js"></script>
+      <script src="../js/flexslider.js"></script>
+      <script src="../js/carousel.js"></script>
+      <script src="../js/jquery.cslider.js"></script>
+      <script src="../js/slider.js"></script>
+      <script defer="defer" src="../js/custom.js"></script>
+   </div>
    <!-- end: Java Script -->
 
 </body>

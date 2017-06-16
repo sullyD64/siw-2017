@@ -23,6 +23,7 @@ public class GaraController {
 	@GetMapping("/addGara")
 	public String mostraForm(Gara gara, Model model) {
 		model.addAttribute("formGara", true);
+		model.addAttribute("gare", true);
 		return "form";
 	}
 
@@ -30,6 +31,7 @@ public class GaraController {
 	public String checkGaraInfo(@Valid @ModelAttribute Gara gara, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("formGara", true);
+		model.addAttribute("gare", true);
 		
 		System.out.println(bindingResult.toString());
 
