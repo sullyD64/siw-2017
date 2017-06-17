@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="gare")
-public class Gara {
+public class Gara implements Comparable<Gara>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -69,6 +69,11 @@ public class Gara {
 	}
 	public void setRisultati(List<Risultato> risultati) {
 		this.risultati = risultati;
+	}
+
+	@Override
+	public int compareTo(Gara o) {
+		return this.getDataSvolgimento().compareTo(o.getDataSvolgimento());
 	}
 	
 	
