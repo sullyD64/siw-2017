@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1"/>
+<meta charset="UTF-8" />
 <title>Login/Registrazione</title>
-</head> 
+</head>
 <body>
    <div>
       <h1>Login utente</h1>
-      <form action="#" th:action="@{/login}" th:object="${utente}" method="post">
+      <div th:if="${param.error}">Invalid username and password.</div>
+      <form action="#" th:action="@{/accedi}" th:object="${utente}" method="post">
          <fieldset>
             <div>
                <label for="username"><span>Username*:</span></label>
@@ -64,17 +65,6 @@
       <h3>Riepilogo Informazioni</h3>
       <div class="text-error" th:text="${errore}"></div>
       <div class="text-success" th:text="${successo}"></div>
-      <div th:if="${successo}">
-         <hr />
-         <div>
-            <h4>
-               <b>Utente:</b> <span th:text="${utente.username}"></span>
-            </h4>
-            <h4>
-               <b>Password:</b> <span th:text="${utente.password}"></span>
-            </h4>
-         </div>
-      </div>
    </div>
 
 </body>

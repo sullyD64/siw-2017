@@ -21,7 +21,7 @@ public class SocietaController {
 	@Autowired
 	private SocietaService societaService;
 
-	@GetMapping("/addSocieta")
+	@GetMapping("/utente/addSocieta")
 	public String mostraForm(Societa societa, Model model) {
 		model.addAttribute("societas", true);
 		model.addAttribute("formSocieta",true);
@@ -46,7 +46,7 @@ public class SocietaController {
 		return "societa";
 	}
 
-	@PostMapping("/addSocieta")
+	@PostMapping("/utente/addSocieta")
 	public String checkSocietaInfo(@Valid @ModelAttribute Societa societa, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("societas", true);

@@ -33,7 +33,8 @@ public class AtletaController {
 	}
 
 	@PostMapping("/user/newAtleta")
-	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, @RequestParam(defaultValue="") Long societaID, BindingResult bindingResult, Model model) {
+	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, 
+			@RequestParam(defaultValue="") Long societaID, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("atleti", true);
 		model.addAttribute("formAtleta",true);

@@ -12,19 +12,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import static it.uniroma3.triathlon.util.CostantiRuoli.UTENTE;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	private final String usersQuery = "SELECT username, password, enabled FROM users WHERE username = ?";
-	private final String rolesQuery = "SELECT u.username, ruoli.role authority" +
+	private final String usersQuery = "SELECT username, password, 1 FROM utenti WHERE username = ?";
+	private final String rolesQuery = "SELECT u.username, ruoli.ruolo authority " +
 			"FROM utenti u JOIN ruoli_utente ruoli ON u.id = ruoli.utente_id WHERE u.username = ?";
-
+	
 	@Qualifier("dataSource")
 	@Autowired
 	private DataSource dataSource;
 
 	@Autowired
-	private RedirectLoginSuccessHandler successHandler;
+	private RedirectLoginSuccessHandler loginSuccessHandler;
+	
+	@Autowired
+	private RedirectLogoutSuccessHandler logoutSuccessHandler;
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -41,19 +46,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		String[] paginePubbliche = new String[]{"/", "/accesso", "../css/**", "../js/**"};
+		String[] paginePubbliche = new String[]{"/", "/accesso", "/logout", "../css/**", "../js/**"};
 		http.csrf().disable()
 		.formLogin()
 		.loginPage("/accedi")
 		.permitAll()
-		.successHandler(successHandler)
+		.successHandler(loginSuccessHandler)
 		.and()
 		.authorizeRequests()
 		.antMatchers(paginePubbliche).permitAll()
-		.antMatchers("/utente/**").hasRole("UTENTE")
+		.antMatchers("/utente/**").hasRole(UTENTE)
 		.anyRequest().permitAll()
 		.and()
-		.logout().permitAll();
+		.logout().permitAll()
+		.logoutSuccessHandler(logoutSuccessHandler);
 	}
 
 	@Autowired

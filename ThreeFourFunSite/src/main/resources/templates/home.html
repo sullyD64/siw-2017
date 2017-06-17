@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" 
+   xmlns:th="http://www.thymeleaf.org" 
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8"/>
 <title>Three.Four.Fun</title>
 </head>
 <body>
    <h1>Hello Spring!</h1>
+   
+   <div sec:authorize="isAuthenticated()">Benvenuto, <span sec:authentication="name">[generic user]</span>
+   <form action="/logout" method="post"><input id ="logout" type="submit" value="[Logout]"/></form></div><hr/>
+   
    <p><a href="/utente/newAtleta">Registra un nuovo atleta</a></p>
  <!-- <p><a href="/atleta?show=listAll">Visualizza il profilo di un atleta [TO-DO]</a></p> --> 
-  <p><a href="/utente/addSocieta">Registra una nuova società</a></p>
-  <p><a href="/utente/listSocieta">Visualizza l'elenco delle società</a></p>
+  <p><a href="/utente/addSocieta">Registra una nuova societÃ </a></p>
+  <p><a href="/utente/listSocieta">Visualizza l'elenco delle societÃ </a></p>
   
   <p><a href="/admin/addGara">Registra una nuova gara</a></p>
   <p><a href="/index.html">Aggiorna la classifica di una gara [TO-DO]</a></p>
