@@ -1,50 +1,177 @@
 <!DOCTYPE html>
-<html lang="en" 
-   xmlns:th="http://www.thymeleaf.org" 
-   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head>
-<meta charset="UTF-8"/>
-<title>Three.Four.Fun</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="layout :: headerFragment (pageTitle='Three Four Fun Site')">
 </head>
 <body>
-   <h1>Hello Spring!</h1>
+	
+	<!-- 
+	<div sec:authorize="isAuthenticated()">
+		Benvenuto, <span sec:authentication="name">[generic user]</span>
+		<form action="/logout" method="post">
+			<input id="logout" type="submit" value="[Logout]" />
+		</form>
 
-   <div sec:authorize="isAuthenticated()">
-      Benvenuto, <span sec:authentication="name">[generic user]</span>
-      <form action="/logout" method="post">
-         <input id="logout" type="submit" value="[Logout]" />
-      </form>
+		<div th:if="${utente.atletaGestito}">
+			I tuoi dati da atleta: <span
+				th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"></span>
+		</div>
+		<div th:unless="${utente.atletaGestito}">
+			Non hai <b>ancora</b> registrato un profilo atleta. <a href="/utente/newAtleta">Registralo
+				ora!</a>
+		</div>
 
-      <div th:if="${utente.atletaGestito}">
-         I tuoi dati da atleta: <span
-            th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"></span>
-      </div>
-      <div th:unless="${utente.atletaGestito}">
-         Non hai <b>ancora</b> registrato un profilo atleta. <a href="/utente/newAtleta">Registralo ora!</a>
-      </div>
+		<div th:if="${utente.societaGestita}">
+			La tua società: <span th:text="${utente.societaGestita.nome}"></span>
+		</div>
+		<div th:unless="${utente.societaGestita}">
+			Non hai una società registrata a tuo carico. <a href="/utente/newSocieta">Registrala ora!</a> <span
+				th:text="${erroreNewSocieta}"></span>
+		</div>
+	</div>
+	<hr />
+	
+			<span th:text="${erroreNewAtleta}"></span>
+		<span th:text="${erroreNewSocieta}"></span>
+	-->
 
-      <div th:if="${utente.societaGestita}">
-         La tua società: <span
-            th:text="${utente.societaGestita.nome}"></span>
-      </div>
-      <div th:unless="${utente.societaGestita}">
-         Non hai una società registrata a tuo carico. <a href="/utente/newSocieta">Registrala ora!</a> 
-         <span th:text="${erroreNewSocieta}"></span>
-      </div>
-   </div>
-   <hr />
-   
-  <p><a href="/utente/newAtleta">Registra il tuo profilo atleta (utente)</a> <span th:text="${erroreNewAtleta}"></span></p>
-  <p><a href="/utente/newSocieta">Registra una nuova società (utente) </a> <span th:text="${erroreNewSocieta}"></span></p>
-  
-  <p><a href="listSocieta">Visualizza l'elenco delle società</a></p>
-  
-  <p><a href="/admin/newGara">Registra una nuova gara (admin)</a></p>
-  <p><a href="/index.html">Aggiorna la classifica di una gara [TO-DO]</a></p>
-  <p><a href="/index.html">Visualizza le classifiche [TO-DO]</a></p>
-  
-  <hr/>
-  <p><a href="/accedi">Accedi all'area riservata</a></p>
-  <hr/>
+	<header th:include="layout :: Header"></header>
+	
+
+	<!-- start: Slider -->
+	<div class="slider-wrapper">
+		<div id="da-slider" class="da-slider">
+			<div class="da-slide">
+				<h2>Miglior Runner</h2>
+				<p>Tempi - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="http://www.pngmart.com/files/1/Usain-Bolt-PNG-File.png" alt="image01" />
+				</div>
+			</div>
+			<div class="da-slide">
+				<h2>Miglior Biker</h2>
+				<p>Tempi- Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="http://pngimg.com/uploads/bicycle/bicycle_PNG5392.png" alt="image02" />
+				</div>
+			</div>
+			<div class="da-slide">
+				<h2>Miglior Nuotatore</h2>
+				<p>Tempi - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="https://www.abbytriclub.com/wp-content/uploads/2016/09/triathlete-brighton.png"
+						alt="image03" />
+				</div>
+			</div>
+			<div class="da-slide">
+				<h2>Miglior Donna</h2>
+				<p>Tempi - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="http://pngimg.com/uploads/running_man/running_man_PNG11679.png" alt="image04" />
+				</div>
+			</div>
+			<nav class="da-arrows">
+				<span class="da-arrows-prev"></span> <span class="da-arrows-next"></span>
+			</nav>
+		</div>
+	</div>
+	<!-- end: Slider -->
+
+	<!--start: Wrapper-->
+	<div id="wrapper">
+
+		<!--start: Container -->
+		<div class="container">
+
+			<!-- start: Slogan-->
+			<div class="hero-unit">
+				<p>Welcome to an extraordinary triathlon experience.Every year millions of people travel
+					around the globe to see the Coliseum, the Imperial Fora, Caracalla Baths and so on…. but only
+					FEW ELECTED triathletes will have the privilege to ride around them.</p>
+				<p>
+					<a class="btn btn-success btn-large">Learn more &raquo;</a>
+				</p>
+			</div>
+			<!-- end: Slogan -->
+
+			<!-- start: Prossime Gare -->
+			<div class="row">
+				<div class="span4">
+					<div class="icons-box">
+						<i class="ico-ok circle big"></i>
+						<div class="title">
+							<h3>Prossima gara 1</h3>
+						</div>
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+							tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+						<div class="clear"></div>
+					</div>
+				</div>
+
+				<div class="span4">
+					<div class="icons-box">
+						<i class="ico-ipad circle big"></i>
+						<div class="title">
+							<h3>Prossima gara 2</h3>
+						</div>
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+							tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+						<div class="clear"></div>
+					</div>
+				</div>
+
+				<div class="span4">
+					<div class="icons-box">
+						<i class="ico-heart circle big"></i>
+						<div class="title">
+							<h3>Prossima gara 3</h3>
+						</div>
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+							tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+						<div class="clear"></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- end: Prossime Gare -->
+
+			<hr></hr>
+			<!-- start: Foto -->
+			<div class="clients-carousel">
+				<ul class="slides clients">
+					<li><img src="img/atleti/a.jpg" alt="" /></li>
+					<li><img src="img/atleti/b.jpg" alt="" /></li>
+					<li><img src="img/atleti/c.jpg" alt="" /></li>
+					<li><img src="img/atleti/d.jpg" alt="" /></li>
+					<li><img src="img/atleti/e.jpg" alt="" /></li>
+					<li><img src="img/atleti/f.jpg" alt="" /></li>
+					<li><img src="img/atleti/g.jpg" alt="" /></li>
+					<li><img src="img/atleti/a.jpg" alt="" /></li>
+					<li><img src="img/atleti/b.jpg" alt="" /></li>
+					<li><img src="img/atleti/c.jpg" alt="" /></li>
+				</ul>
+			</div>
+			<!-- end: Foto -->
+			<hr></hr>
+
+			<div class="row" th:include="layout :: InfoBox"></div>
+			<hr></hr>
+		</div>
+		<!--end: Container-->
+	</div>
+	<!-- end: Wrapper  -->
+
+	<div th:include="layout :: FooterMenu"></div>
+	<div th:include="layout :: Footer"></div>
+	<div th:include="layout :: Copyright"></div>
+	<div th:include="layout :: javascript"></div>
 </body>
 </html>

@@ -26,12 +26,14 @@ public class UtenteController {
 
 	@RequestMapping("/accedi")
 	public String accedi(@Valid @ModelAttribute Utente utente, Model model) {
+		model.addAttribute("navAccesso", "active");
 		return "accesso";
 	}
 	
 	@PostMapping("/registrazione")
 	public String registraUtente(@Valid @ModelAttribute Utente utente, BindingResult bindingResult, Model model){
 		String nextPage = "accesso";
+		model.addAttribute("navAccesso", "active");
 		
 		if (!bindingResult.hasErrors()) {
 			if (!utenteService.alreadyExists(utente.getUsername())) {

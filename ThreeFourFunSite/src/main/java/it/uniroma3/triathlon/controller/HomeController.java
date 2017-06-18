@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import it.uniroma3.triathlon.model.Utente;
+import it.uniroma3.triathlon.service.GaraService;
 import it.uniroma3.triathlon.service.UtenteService;
 
 @Controller
@@ -18,6 +19,8 @@ public class HomeController {
 	
 	@Autowired
 	private UtenteService utenteService;
+	@Autowired
+	private GaraService garaService;
 
 	@GetMapping("/")
 	public String homepage(Model model) {
@@ -27,6 +30,8 @@ public class HomeController {
 		    model.addAttribute(utente);
 		    model.addAttribute("current_username", utente.getUsername());
 		}
+		model.addAttribute("navHome", "active");
+		model.addAttribute("gareRecenti", garaService.getLastThree());
 		return "home";
 	}
 }

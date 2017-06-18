@@ -41,7 +41,7 @@ public class AtletaController {
 			nextPage = "redirect:/";
 		}
 			
-		model.addAttribute("pannelloAtleti", true);
+		model.addAttribute("navAtleti", "active");
 		model.addAttribute("formAtleta",true);
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		return nextPage;
@@ -53,7 +53,7 @@ public class AtletaController {
 			@SessionAttribute(name="current_username") String username,
 			BindingResult bindingResult, Model model) {
 		String nextPage = "form";
-		model.addAttribute("pannelloAtleti", true);
+		model.addAttribute("navAtleti", "active");
 		model.addAttribute("formAtleta",true);
 
 		if (!bindingResult.hasErrors()) {

@@ -15,130 +15,116 @@
 <link href="../css/bootstrap-responsive.css" rel="stylesheet" />
 <link href="../css/style.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css"
-   href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
 <link rel="stylesheet" type="text/css"
-   href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
 </head>
 <body>
-   <!--start: Header -->
-   <header th:include="form :: formHeader"> </header>
-   <!--end: Header-->
+	<!--start: Header -->
+	<header th:include="form :: formHeader"> </header>
+	<!--end: Header-->
 
 
-   <!-- start: Wrapper -->
-   <div id="wrapper">
+	<!-- start: Wrapper -->
+	<div id="wrapper">
 
-      <!-- start: Container -->
-      <div class="container">
+		<!-- start: Container -->
+		<div class="container">
 
-         <!-- start: Row -->
-         <div class="row">
+			<!-- start: Row -->
+			<div class="row">
 
-            <!-- start: Contact Info -->
-            <div class="span3">
-               <div class="title">
-                  <h3>SPAZIO LIBERO</h3>
-               </div>
-               <p>Da decidere l'uso</p>
-               <p>
-                  provaprova<i>prova</i>
-               </p>
-            </div>
-            <!-- end: Contact Info -->
+				<!-- start: Contact Info -->
+				<div class="span3">
+					<div class="title">
+						<h3>SPAZIO LIBERO</h3>
+					</div>
+					<p>Da decidere l'uso</p>
+					<p>
+						provaprova<i>prova</i>
+					</p>
+				</div>
+				<!-- end: Contact Info -->
 
-            <!-- start: List Società -->
-            <div class="span4">
-               <div class="title">
-                  <h3>Lista delle società</h3>
-               </div>
-               <ul>
-                  <li th:each="entry: ${elencoSocieta}"><b th:text="${entry.key}"></b>
-                     <ul>
-                        <li th:each="soc: ${entry.value}"><a href="/index.html"
-                           th:href="@{/listSocieta/} + ${soc.id}" th:text="${soc.nome}"></a> 
-                           <!--
+				<!-- start: List Società -->
+				<div class="span4">
+					<div class="title">
+						<h3>Lista delle società</h3>
+					</div>
+					<ul>
+						<li th:each="entry: ${elencoSocieta}"><b th:text="${entry.key}"></b>
+							<ul>
+								<li th:each="soc: ${entry.value}"><a href="/index.html"
+									th:href="@{/listSocieta/} + ${soc.id}" th:text="${soc.nome}"></a> <!--
                      <form action="product" method="post">
                         <input type="hidden" value="${product.id}" name="id" />
                         <div class="actions">
                            <button class="btn btn-succes btn-mini" type="submit" name="command">Cancella</button>
                         </div>
                      </form>
-                     -->
-                     </li>
-                     </ul></li>
-               </ul>
-               <div class="actions">
-                  <form action="product" method="post">
-                     <button class="btn btn-succes btn-small" type="submit" name="deleteAll">Cancella
-                        tutto</button>
-                  </form>
-               </div>
-            </div>
-            <!-- end: List Società -->
+                     --></li>
+							</ul></li>
+					</ul>
+					<div class="actions">
+						<form action="product" method="post">
+							<button class="btn btn-succes btn-small" type="submit" name="deleteAll">Cancella
+								tutto</button>
+						</form>
+					</div>
+				</div>
+				<!-- end: List Società -->
 
 
-            <!-- start: Società Panel -->
-            <div class="span5" th:if="${societaPanel}">
-               <div class="title">
-                  <h3 th:text="${societa.nome}">NomeSocietà</h3>
-               </div>
-               <div>
-                  <h4>
-                     Regione: <span th:text="${societa.regione}"></span>
-                  </h4>
-               </div>
-               <div>
-                  <h4>
-                     Data di fondazione: <span th:text="${societa.dataFondazione}"></span>
-                  </h4>
-               </div>
-               <hr />
-               <div>
-                  <table th:unless="${#lists.isEmpty(societa.atleti)}">
-                     <tr>
-                        <th align="left">Cognome</th>
-                        <th align="left">Nome</th>
-                        <th align="left">Categoria</th>
-                     </tr>
-                     <tr th:each="atleta : ${societa.atleti}">
-                        <td th:text="${atleta.cognome}"></td>
-                        <td th:text="${atleta.nome}"></td>
-                        <td th:text="${atleta.categoria}"></td>
-                     </tr>
-                  </table>
-                  <span th:if="${#lists.isEmpty(societa.atleti)}">Non ci sono ancora atleti
-                     iscritti in questa società.</span>
-               </div>
-            </div>
-            <!-- end: Società Panel -->
+				<!-- start: Società Panel -->
+				<div class="span5" th:if="${societaPanel}">
+					<div class="title">
+						<h3 th:text="${societa.nome}">NomeSocietà</h3>
+					</div>
+					<div>
+						<h4>
+							Regione: <span th:text="${societa.regione}"></span>
+						</h4>
+					</div>
+					<div>
+						<h4>
+							Data di fondazione: <span th:text="${societa.dataFondazione}"></span>
+						</h4>
+					</div>
+					<hr />
+					<div>
+						<table th:unless="${#lists.isEmpty(societa.atleti)}">
+							<tr>
+								<th align="left">Cognome</th>
+								<th align="left">Nome</th>
+								<th align="left">Categoria</th>
+							</tr>
+							<tr th:each="atleta : ${societa.atleti}">
+								<td th:text="${atleta.cognome}"></td>
+								<td th:text="${atleta.nome}"></td>
+								<td th:text="${atleta.categoria}"></td>
+							</tr>
+						</table>
+						<span th:if="${#lists.isEmpty(societa.atleti)}">Non ci sono ancora atleti iscritti in
+							questa società.</span>
+					</div>
+				</div>
+				<!-- end: Società Panel -->
 
 
-         </div>
-         <!-- end: Row -->
+			</div>
+			<!-- end: Row -->
 
-      </div>
-      <!-- end: Container -->
+		</div>
+		<!-- end: Container -->
 
-   </div>
-   <!-- end: Wrapper  -->
+	</div>
+	<!-- end: Wrapper  -->
 
-   <!-- start: Footer Menu -->
-   <div th:include="form :: formFooterMenu"></div>
-   <!-- end: Footer Menu -->
-
-   <!-- start: Footer -->
-   <div th:include="form :: formFooter"></div>
-   <!-- end: Footer -->
-
-   <!-- start: Copyright -->
-   <div th:include="form :: formCopyright"></div>
-
-   <!-- start: Java Script -->
-   <!-- Placed at the end of the document so the pages load faster -->
-   <div th:include="form :: javascript"></div>
-   <!-- end: Java Script -->
-
+	<div th:include="layout :: FooterMenu"></div>
+	<div th:include="layout :: Footer"></div>
+	<div th:include="layout :: Copyright"></div>
+	<div th:include="layout :: javascript"></div>
 </body>
 </html>

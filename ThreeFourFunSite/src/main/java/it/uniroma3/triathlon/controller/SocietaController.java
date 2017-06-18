@@ -27,7 +27,7 @@ public class SocietaController {
 
 	@GetMapping("/listSocieta")
 	public String mostraListaSocieta(Model model) {
-		model.addAttribute("pannelloSocieta", true);
+		model.addAttribute("navSocieta", "active");
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		model.addAttribute("societa", true);
 		return "societa";
@@ -36,7 +36,7 @@ public class SocietaController {
 	@GetMapping("/listSocieta/{id}")
 	public String mostraSocieta(@PathVariable("id") Long id, Model model){
 		Societa societa = societaService.findOne(id);
-		model.addAttribute("pannelloSocieta", true);
+		model.addAttribute("navSocieta", "active");
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
 		model.addAttribute("societa", societa);
 		model.addAttribute("societaPanel",true);
@@ -62,7 +62,7 @@ public class SocietaController {
 			nextPage = "redirect:/";
 		}
 		
-		model.addAttribute("pannelloSocieta", true);
+		model.addAttribute("navSocieta", "active");
 		model.addAttribute("formSocieta",true);
 		return nextPage;
 	}
@@ -72,7 +72,7 @@ public class SocietaController {
 			@SessionAttribute(name="current_username") String username,
 			BindingResult bindingResult, Model model) {
 		String nextPage = "form";
-		model.addAttribute("pannelloSocieta", true);
+		model.addAttribute("navSocieta", "active");
 		model.addAttribute("formSocieta",true);
 
 		if (!bindingResult.hasErrors()) {
