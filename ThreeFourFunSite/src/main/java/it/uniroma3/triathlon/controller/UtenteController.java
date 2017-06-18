@@ -23,7 +23,7 @@ public class UtenteController {
 
 	@Autowired
 	private RuoloUtenteService ruoloUtenteService;
-
+	
 	@RequestMapping("/accedi")
 	public String accedi(@Valid @ModelAttribute Utente utente, Model model) {
 		model.addAttribute("navAccesso", "active");

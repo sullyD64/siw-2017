@@ -83,9 +83,9 @@
 									<span th:if="${#fields.hasErrors('nazione')}">Errore: campo obbligatorio</span>
 								</div>
 								<div class="clearfix">
-									<label for="societa"><span>Seleziona una società sportiva*:</span></label>
+									<label for="societa"><span>Seleziona una società sportiva:</span></label>
 									<div class="input">
-										<select tabindex="6" id="societa" name="societaID" required="required">
+										<select tabindex="6" id="societa" name="societaID">
 											<option value="">&lt;seleziona&gt;</option>
 											<optgroup th:each="entry: ${elencoSocieta}" th:label="${entry.key}">
 												<option th:each="soc: ${entry.value}" th:value="${soc.id}" th:text="${soc.nome}"></option>
@@ -107,6 +107,8 @@
 					<div class="title">
 						<h3>Registrazione Società</h3>
 					</div>
+					<div class="text-error">N.B: se sei già iscritto ad una società, fondarne una propria
+						comporterà la tua disiscrizione da questa.</div>
 					<div id="contact-form">
 						<form action="#" th:action="@{/utente/newSocieta}" th:object="${societa}" method="post">
 							<fieldset>
@@ -138,9 +140,7 @@
 								</div>
 							</fieldset>
 						</form>
-
 					</div>
-
 				</div>
 				<!-- end: Form Società -->
 
@@ -185,6 +185,12 @@
 					</div>
 					<div class="text-error" th:text="${errore}"></div>
 					<div class="text-success" th:text="${successo}"></div>
+					<div class="text-error" th:if="${societaNonSelezionata}">
+						Attualmente non sei iscritto a nessuna società. Puoi comunque modificare i tuoi dati atleta
+						dalla tua area personale e sceglierne una, oppure puoi creare una tua società alla quale
+						risulterai iscritto.<br /> <b>Ricorda che è necessario far parte di una società per
+							iscriversi ad una gara!!!</b>
+					</div>
 					<div th:if="${successo}">
 						<hr />
 						<div class="clearfix" th:inline="text">
@@ -202,13 +208,13 @@
 									<b>Nazionalità:</b> <span th:text="${atleta.nazione}"></span>
 								</h4>
 								<h4>
-									<b>Società:</b> <span th:text="${atleta.societa.nome}"></span>
-								</h4>
-								<h4>
-									Età: <span th:text="${atleta.eta}"></span>
+									<b>Età:</b> <span th:text="${atleta.eta}"></span>
 								</h4>
 								<h4>
 									<b>Categoria:</b> <span th:text="${atleta.categoria}"></span>
+								</h4>
+								<h4 th:if="${atleta.societa}">
+									<b>Società:</b> <span th:text="${atleta.societa.nome}"></span>
 								</h4>
 							</div>
 							<div th:if="${formSocieta}">
@@ -221,7 +227,13 @@
 								<h4>
 									<b>Regione:</b> <span th:text="${societa.regione}"></span>
 								</h4>
-								<h4>Ora è possibile aggiungere atleti alla società</h4>
+								<h4>
+									<b>Presidente:</b> <span
+										th:text="${societa.presidente.nome} +' '+${societa.presidente.cognome}"></span>
+								</h4>
+								<h4>
+									Ora è possibile aggiungere atleti alla società.
+								</h4>
 							</div>
 							<div th:if="${formGara}">
 								<h4>
@@ -246,12 +258,6 @@
 	</div>
 	<!-- end: Wrapper  -->
 
-
-	<!--
-	<div th:include="layout :: FooterMenu"></div>
-	<div th:include="layout :: Footer"></div>
-	<div th:include="layout :: Copyright"></div>
 	<div th:include="layout :: javascript"></div>
-	-->
 </body>
 </html>

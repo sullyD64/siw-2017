@@ -4,7 +4,7 @@
 <head>
 <!-- start: Meta -->
 <meta charset="utf-8" />
-<title>Lista società</title>
+<title>Profilo Atleta</title>
 <meta name="description" content="GotYa Free Bootstrap Theme" />
 <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
 <!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
@@ -31,37 +31,21 @@
 		<div class="container">
 			<!-- start: Row -->
 			<div class="row">
-				<!-- start: List Società -->
-				<div class="span4">
+				<!-- start: Profilo Atleta -->
+				<div class="span5">
 					<div class="title">
-						<h3>Lista delle società</h3>
+						<h3 th:text="${atleta.nome} +' '+ ${atleta.cognome}"></h3>
 					</div>
-					<ul>
-						<li th:each="entry: ${elencoSocieta}"><b th:text="${entry.key}"></b>
-							<ul>
-								<li th:each="soc: ${entry.value}"><a th:href="@{/listSocieta/} + ${soc.id}"
-									th:text="${soc.nome}"></a> <!--
-                     <form action="product" method="post">
-                        <input type="hidden" value="${product.id}" name="id" />
-                        <div class="actions">
-                           <button class="btn btn-succes btn-mini" type="submit" name="command">Cancella</button>
-                        </div>
-                     </form>
-                     --></li>
-							</ul></li>
-					</ul>
-				</div>
-				<!-- end: List Società -->
-				<!-- start: Società Panel -->
-				<div class="span5" th:if="${societaPanel}">
-					<div class="title">
-						<h3 th:text="${societa.nome}"></h3>
-					</div>
-					<h4 th:text="'Regione: ' + ${societa.regione}"></h4>
-					<h4 th:text="'Data di fondazione: ' + ${societa.dataFondazione}"></h4>
-					<h4 th:text="'Presidente: ' + ${societa.presidente.nome} +' '+ ${societa.presidente.cognome}"></h4>
+					<h4 th:text="'Data di nascita: ' + ${atleta.dataNascita}"></h4>
+					<h4 th:text="'Sesso: ' + ${atleta.sesso}"></h4>
+					<h4 th:text="'Nazione: ' + ${atleta.nazione}"></h4>
+					<h4 th:text="'Età ' + ${atleta.eta}"></h4>
+					<h4 th:text="'Categoria: ' + ${atleta.categoria}"></h4>
+					<h4 th:if="${atleta.societa}" th:text="'Società di appartenenza: ' + ${atleta.societa.nome}"></h4>
+					<h4 th:unless="${atleta.societa}">L'atleta non è ancora iscritto ad una società.</h4>
 
 					<hr />
+					<!--
 					<table th:unless="${#lists.isEmpty(societa.atleti)}">
 						<tr>
 							<th align="left">Cognome</th>
@@ -76,8 +60,28 @@
 					</table>
 					<span th:if="${#lists.isEmpty(societa.atleti)}">Non ci sono ancora atleti registrati a
 						questa società.</span>
+					-->
+					<div class="clearfix" sec:authorize="hasRole('ROLE_ADMIN')">
+						<hr />
+						[Pannello Amministratore]
+						<form th:action="@{/admin/deleteAtleta/} + ${atleta.id}" method="post">
+							<div class="input">
+								<input type="submit" value="Elimina atleta" />
+							</div>
+						</form>
+					</div>
 				</div>
-				<!-- end: Società Panel -->
+				<!-- end: Profilo Atleta -->
+				<!-- start: Riepilogo Info -->
+				<div class="span4" th:if="${successo}">
+					<div class="title">
+						<h3>Riepilogo Informazioni</h3>
+					</div>
+					<div class="span4">
+						<span class="text-success" th:text="${successo}"></span>
+					</div>
+				</div>
+				<!-- end: Riepilogo Info -->
 			</div>
 			<!-- end: Row -->
 		</div>

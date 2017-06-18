@@ -81,7 +81,6 @@
 					</div>
 
 					<div id="contact-form">
-						<div th:if="${param.error}">Invalid username and password.</div>
 						<form action="#" th:action="@{/registrazione}" th:object="${utente}" method="post">
 							<fieldset>
 								<div class="clearfix">
@@ -133,11 +132,7 @@
 	</div>
 	<!-- end: Wrapper  -->
 
-	<!--
-	<div th:include="layout :: FooterMenu"></div>
-	<div th:include="layout :: Footer"></div>
-	<div th:include="layout :: Copyright"></div>
+
 	<div th:include="layout :: javascript"></div>
-	-->
 </body>
 </html>

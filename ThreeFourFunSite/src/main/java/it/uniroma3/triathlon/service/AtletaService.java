@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.triathlon.model.Atleta;
+import it.uniroma3.triathlon.model.Societa;
 import it.uniroma3.triathlon.model.Utente;
 import it.uniroma3.triathlon.repository.AtletaRepository;
 
@@ -18,9 +19,16 @@ public class AtletaService {
 	@Autowired
 	private UtenteService utenteService;
 	
-	
     public Iterable<Atleta> findAll() {
         return this.atletaRepository.findAll();
+    }
+    
+    public Atleta findOne(Long id) {
+    	return this.atletaRepository.findOne(id);
+    }
+    
+    public void deleteById(Long id) {
+    	this.atletaRepository.delete(id);
     }
     
     public boolean isDuplicate(final Atleta atleta) {
@@ -41,9 +49,15 @@ public class AtletaService {
 		utenteGestore.setAtletaGestito(atleta);
 		utenteService.save(utenteGestore);
 	}
+    
+    public void setIscrittoASocieta(String username, Societa societa) {
+		Atleta atletaIscritto = utenteService.findByUsername(username).getAtletaGestito();
+		atletaIscritto.setSocieta(societa);
+		save(atletaIscritto);
+	}
 
 	@Transactional
-	public void add(final Atleta atleta) {		
+	public void save(final Atleta atleta) {		
 		this.atletaRepository.save(atleta);
 	}
 }

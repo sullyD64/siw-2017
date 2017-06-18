@@ -22,7 +22,7 @@ public class HomeController {
 	@Autowired
 	private GaraService garaService;
 
-	@GetMapping("/")
+	@GetMapping(value={"/", "/utente", "/admin"})
 	public String homepage(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {

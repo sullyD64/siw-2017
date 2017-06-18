@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.triathlon.model.Societa;
+import it.uniroma3.triathlon.service.AtletaService;
 import it.uniroma3.triathlon.service.SocietaService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
 @SessionAttributes("current_username")
 public class SocietaController {
-
+	
+	@Autowired
+	private AtletaService atletaService;
 	@Autowired
 	private SocietaService societaService;
 
@@ -29,8 +32,7 @@ public class SocietaController {
 	public String mostraListaSocieta(Model model) {
 		model.addAttribute("navSocieta", "active");
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
-		model.addAttribute("societa", true);
-		return "societa";
+		return "view_societa";
 	}
 
 	@GetMapping("/listSocieta/{id}")
@@ -38,9 +40,9 @@ public class SocietaController {
 		Societa societa = societaService.findOne(id);
 		model.addAttribute("navSocieta", "active");
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
+		model.addAttribute("societaPanel", true);
 		model.addAttribute("societa", societa);
-		model.addAttribute("societaPanel",true);
-		return "societa";
+		return "view_societa";
 	}
 	
 	@GetMapping("/utente/newSocieta")
@@ -49,24 +51,24 @@ public class SocietaController {
 			RedirectAttributes redir,
 			Model model) {
 		String nextPage = "form";
-		
+
 		// Redirect se l'utente non ha un profilo atleta registrato
 		if (!societaService.utenteIsGestoreAtleta(username)) {
 			redir.addFlashAttribute("erroreNewSocieta", "Puoi registrare una società solo dopo aver registrato il tuo profilo atleta");
 			nextPage = "redirect:/";
 		}
-		
+
 		// Redirect se l'utente ha già registrato una società
 		if (societaService.utenteIsGestoreSocieta(username)) {
 			redir.addFlashAttribute("erroreNewSocieta", "Hai già registrato una società, non puoi registrarne altre!");
 			nextPage = "redirect:/";
 		}
-		
+
 		model.addAttribute("navSocieta", "active");
 		model.addAttribute("formSocieta",true);
 		return nextPage;
 	}
-	
+
 	@PostMapping("/utente/newSocieta")
 	public String checkSocietaInfo(@Valid @ModelAttribute Societa societa, 
 			@SessionAttribute(name="current_username") String username,
@@ -81,14 +83,15 @@ public class SocietaController {
 				if (!societaService.isDuplicate(societa)) {
 					/*Attributi manipolati*/
 					societa.setNome(societa.getNome().toUpperCase());
-					
+
 					// Service
 					societaService.setAtletaPresidente(username, societa);
-					societaService.add(societa);
 					societaService.setUtenteGestore(username, societa);
-					
+					societaService.save(societa);
+					atletaService.setIscrittoASocieta(username, societa);
+
 					model.addAttribute(societa);
-					model.addAttribute("successo", "Società registrata correttamente");
+					model.addAttribute("successo", "Società registrata correttamente. Da ora sei il presidente della società e ne risulti iscritto in quanto atleta.");
 				} else {
 					model.addAttribute("errore", "La società è già presente nel sistema");
 				}
@@ -97,5 +100,14 @@ public class SocietaController {
 			}
 		}
 		return nextPage;
+	}
+
+	@PostMapping("/admin/deleteSocieta/{id}")
+	public String eliminaSocieta(@PathVariable("id") Long id, Model model){
+		societaService.deleteById(id);
+		model.addAttribute("navSocieta", "active");
+		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
+		model.addAttribute("successo", "La società è stata rimossa dal sistema");
+		return "view_societa";
 	}
 }

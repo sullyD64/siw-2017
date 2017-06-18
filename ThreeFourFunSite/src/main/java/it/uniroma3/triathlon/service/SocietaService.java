@@ -30,6 +30,10 @@ public class SocietaService {
     public Societa findOne(Long id) {
     	return this.societaRepository.findOne(id);
     }
+    
+    public void deleteById(Long id) {
+    	societaRepository.delete(id);
+    }
 	
     public boolean isDuplicate(final Societa societa) {
     	Iterable<Societa> elencoSocieta = this.societaRepository.findAll();
@@ -60,7 +64,7 @@ public class SocietaService {
 	}
 	
 	@Transactional
-	public void add(final Societa societa) {
+	public void save(final Societa societa) {
 		this.societaRepository.save(societa);
 	}
 
@@ -80,7 +84,6 @@ public class SocietaService {
 			}
 			regione2societa.put(r, societaPerRegione);
 		}
-		
 		return regione2societa;
 	}
 }
