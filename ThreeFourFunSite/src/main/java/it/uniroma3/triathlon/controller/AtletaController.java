@@ -102,9 +102,10 @@ public class AtletaController {
 	}
 
 	@PostMapping("/admin/deleteAtleta/{id}")
-	public String eliminaAtleta(@PathVariable("id") Long id, Model model){
+	public String eliminaAtleta(@PathVariable("id") Long id, 
+			RedirectAttributes redir, Model model){
 		atletaService.deleteById(id);
-		model.addAttribute("successo", "L'atleta è stato rimosso dal sistema");
-		return "view_atleta";
+		redir.addFlashAttribute("successo", "L'atleta è stato rimosso dal sistema");
+		return "redirect:/";
 	}
 }

@@ -4,7 +4,7 @@
 <head>
 <!-- start: Meta -->
 <meta charset="utf-8" />
-<title>Profilo Atleta</title>
+<title>Lista Gare</title>
 <meta name="description" content="GotYa Free Bootstrap Theme" />
 <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
 <!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
@@ -31,47 +31,36 @@
 		<div class="container">
 			<!-- start: Row -->
 			<div class="row">
-				<!-- start: Profilo Atleta -->
-				<div class="span5">
+				<!-- start: List Gare -->
+				<div class="span4">
 					<div class="title">
-						<h3 th:text="${atleta.nome} +' '+ ${atleta.cognome}"></h3>
+						<h3>Lista delle gare</h3>
 					</div>
-					<h4 th:text="'Data di nascita: ' + ${atleta.dataNascita}"></h4>
-					<h4 th:text="'Sesso: ' + ${atleta.sesso}"></h4>
-					<h4 th:text="'Nazione: ' + ${atleta.nazione}"></h4>
-					<h4 th:text="'Età ' + ${atleta.eta}"></h4>
-					<h4 th:text="'Categoria: ' + ${atleta.categoria}"></h4>
-					<h4 th:if="${atleta.societa}" th:text="'Società di appartenenza: ' + ${atleta.societa.nome}"></h4>
-					<h4 th:unless="${atleta.societa}">L'atleta non è ancora iscritto ad una società.</h4>
-
-					<hr />
-					<!--
-					<table th:unless="${#lists.isEmpty(societa.atleti)}">
-						<tr>
-							<th align="left">Cognome</th>
-							<th align="left">Nome</th>
-							<th align="left">Categoria</th>
-						</tr>
-						<tr th:each="atleta : ${societa.atleti}">
-							<td th:text="${atleta.cognome}"></td>
-							<td th:text="${atleta.nome}"></td>
-							<td th:text="${atleta.categoria}"></td>
-						</tr>
-					</table>
-					<span th:if="${#lists.isEmpty(societa.atleti)}">Non ci sono ancora atleti registrati a
-						questa società.</span>
-					-->
-					<div class="clearfix" sec:authorize="hasRole('ROLE_ADMIN')">
-						<hr />
-						[Pannello Amministratore]
-						<form th:action="@{/admin/deleteAtleta/} + ${atleta.id}" method="post">
-							<div class="input">
-								<input type="submit" value="Elimina atleta" />
-							</div>
-						</form>
+					<div class="clearfix">
+						<table th:unless="${#lists.isEmpty(elencoGare)}">
+							<tr>
+								<th><b>Data di svolgimento</b></th>
+								<th><b>Nome dell'evento</b></th>
+								<th sec:authorize="hasRole('ROLE_ADMIN')">[Pannello Amministratore]</th>
+							</tr>
+							<tr th:each="gara : ${elencoGare}">
+								<td th:text="${gara.dataSvolgimento}" align="center"></td>
+								<td th:text="${gara.nomeLuogo}"></td>
+								<td sec:authorize="hasRole('ROLE_UTENTE')" class="text-success">Iscriviti</td>
+								<td sec:authorize="hasRole('ROLE_ADMIN')">
+									<form th:action="@{/admin/deleteGara/} + ${gara.id}" method="post">
+										<div class="input">
+											<input type="submit" value="Elimina evento" />
+										</div>
+									</form>
+								</td>
+							</tr>
+						</table>
+						<span th:if="${#lists.isEmpty(elencoGare)}">Al momento non ci sono gare in programma.</span>
 					</div>
 				</div>
-				<!-- end: Profilo Atleta -->
+				<!-- end: List Gare -->
+
 				<!-- start: Riepilogo Info -->
 				<div class="span4" th:if="${successo}">
 					<div class="title">
@@ -88,7 +77,6 @@
 		<!-- end: Container -->
 	</div>
 	<!-- end: Wrapper  -->
-
 	<div th:include="layout :: javascript"></div>
 </body>
 </html>

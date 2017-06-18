@@ -2,6 +2,7 @@ package it.uniroma3.triathlon.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,16 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.triathlon.model.Gara;
 import it.uniroma3.triathlon.repository.GaraRepository;
+
 @Service
 public class GaraService {
 
 	@Autowired
 	private GaraRepository garaRepository;
-
-	@Transactional
-	public void add(final Gara gara) {
-		this.garaRepository.save(gara);
-	}
 
 	public boolean isDuplicateSameDate(final Gara gara) {
 		Iterable<Gara> elencoGare = this.garaRepository.findAll();
@@ -35,6 +32,13 @@ public class GaraService {
 		return this.garaRepository.findAll();
 	}
 
+	public Gara findOne(Long id){
+		return this.garaRepository.findOne(id);
+	}
+
+	public void deleteById(Long id) {
+		garaRepository.delete(id);
+	}
 
 	public List<Gara> getSortedByDate(){
 		Iterable<Gara> elencoGare = findAll();
@@ -50,20 +54,20 @@ public class GaraService {
 	public List<Gara> getLastThree(){
 		List<Gara> gare = getSortedByDate();
 		List<Gara> lastThree = new ArrayList<>();
+		Iterator<Gara> iter = gare.iterator();
 
-		if (gare!=null && gare.size() > 0) {
-			Gara[] lastTemp = new Gara[3];
-			for(int i = 0; i<lastTemp.length; i++) {
-				lastTemp[i]=gare.get(i);
-			}
-
-			for(Gara g : lastTemp){
-				lastThree.add(g);
+		if (gare!=null) {
+			for (int i=0; i < 3; i++) {
+				if (iter.hasNext())
+					lastThree.add(iter.next());
+				else break;
 			}
 		}
 		return lastThree;
-
 	}
 
-
+	@Transactional
+	public void add(final Gara gara) {
+		this.garaRepository.save(gara);
+	}
 }

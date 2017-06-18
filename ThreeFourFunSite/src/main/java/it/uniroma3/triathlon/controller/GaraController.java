@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.triathlon.model.Gara;
 import it.uniroma3.triathlon.service.GaraService;
@@ -19,7 +21,14 @@ public class GaraController {
 
 	@Autowired
 	private GaraService garaService;
-
+	
+	@GetMapping("/listGare")
+	public String mostraListaSocieta(Model model) {
+		model.addAttribute("navGare", "active");
+		model.addAttribute("elencoGare", garaService.getSortedByDate());
+		return "view_gare";
+	}
+	
 	@GetMapping("/admin/newGara")
 	public String mostraForm(Gara gara, Model model) {
 		model.addAttribute("navGare", "active");
@@ -54,7 +63,14 @@ public class GaraController {
 				model.addAttribute("errore", "Inserire una data di svolgimento valida (successiva ad oggi)");
 			}
 		}
-		
 		return nextPage;
+	}
+	
+	@PostMapping("/admin/deleteGara/{id}")
+	public String eliminaGara(@PathVariable("id") Long id, 
+			RedirectAttributes redir, Model model){
+		garaService.deleteById(id);
+		redir.addFlashAttribute("successo", "La gara è stata rimossa dal sistema");
+		return "redirect:/listGare";
 	}
 }

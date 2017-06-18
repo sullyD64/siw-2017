@@ -103,11 +103,10 @@ public class SocietaController {
 	}
 
 	@PostMapping("/admin/deleteSocieta/{id}")
-	public String eliminaSocieta(@PathVariable("id") Long id, Model model){
+	public String eliminaSocieta(@PathVariable("id") Long id, 
+			RedirectAttributes redir, Model model){
 		societaService.deleteById(id);
-		model.addAttribute("navSocieta", "active");
-		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
-		model.addAttribute("successo", "La società è stata rimossa dal sistema");
-		return "view_societa";
+		redir.addFlashAttribute("successo", "La società è stata rimossa dal sistema");
+		return "redirect:/listSocieta";
 	}
 }

@@ -91,42 +91,17 @@
 
 			<!-- start: Prossime Gare -->
 			<div class="row">
-				<div class="span4">
+				<h2>Gare imminenti</h2>
+				<div class="span4" th:each="gara : ${gareRecenti}">
 					<div class="icons-box">
 						<i class="ico-ok circle big"></i>
 						<div class="title">
-							<h3>Prossima gara 1</h3>
+							<h3 th:text="${gara.nomeLuogo}"></h3>
 						</div>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-							tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+						<h4 th:text="${gara.dataSvolgimento}"></h4>
 						<div class="clear"></div>
 					</div>
 				</div>
-
-				<div class="span4">
-					<div class="icons-box">
-						<i class="ico-ipad circle big"></i>
-						<div class="title">
-							<h3>Prossima gara 2</h3>
-						</div>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-							tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-						<div class="clear"></div>
-					</div>
-				</div>
-
-				<div class="span4">
-					<div class="icons-box">
-						<i class="ico-heart circle big"></i>
-						<div class="title">
-							<h3>Prossima gara 3</h3>
-						</div>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-							tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-						<div class="clear"></div>
-					</div>
-				</div>
-
 			</div>
 			<!-- end: Prossime Gare -->
 

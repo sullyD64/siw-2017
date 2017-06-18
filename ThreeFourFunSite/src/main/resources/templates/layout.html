@@ -61,7 +61,7 @@
 											data-toggle="dropdown">Gare<b class="caret"></b>
 										</a>
 											<ul class="dropdown-menu">
-												<li><a href="/listGare">Visualizza le gare</a></li>
+												<li><a th:href="@{/listGare}">Visualizza l'elenco delle gare</a></li>
 												<li><a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/newGara">Registra
 														una nuova gara <b>[Admin]</b></a></li>
 											</ul></li>
