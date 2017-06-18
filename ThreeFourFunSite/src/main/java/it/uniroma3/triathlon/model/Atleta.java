@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="atleti", uniqueConstraints=@UniqueConstraint(columnNames={"nome","cognome","dataNascita"}))
+@Table(name="atleti", uniqueConstraints = @UniqueConstraint(columnNames={"nome","cognome","dataNascita"}))
 public class Atleta {
 
 	@Id
@@ -55,7 +55,7 @@ public class Atleta {
 
 	@Column(nullable = false)
 	private String categoria;
-
+	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Societa societa;
 	
@@ -68,7 +68,6 @@ public class Atleta {
 		this.dataNascita = dataNascita;
 		this.sesso = sesso;
 		this.nazione = nazione;
-//		this.societa = societa;
 		this.risultati = new LinkedList<>();
 	}
 	

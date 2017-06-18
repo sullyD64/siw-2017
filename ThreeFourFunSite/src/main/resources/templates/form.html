@@ -35,7 +35,7 @@
             <!--start: Logo -->
             <div class="logo span3">
 
-               <a class="brand" href="/index.html"><img src="../../img/logo.png" /></a>
+               <a class="brand" href="/"><img src="../../img/logo.png" /></a>
 
             </div>
             <!--end: Logo -->
@@ -54,14 +54,14 @@
                            <ul class="nav">
                               <li><a href="index.html" th:unless="${home}">Home</a></li>
                               <li class="active" th:if="${home}"><a href="index.html">Home</a></li>
-                              <li><a href="index.html" th:unless="${classifiche}">Classifiche</a></li>
-                              <li class="active" th:if="${classifiche}"><a href="index.html">Classifiche</a></li>
-                              <li><a href="index.html" th:unless="${societas}">Società</a></li>
-                              <li class="active" th:if="${societas}"><a href="index.html">Società</a></li>
-                              <li><a href="index.html" th:unless="${gare}">Gare</a></li>
-                              <li class="active" th:if="${gare}"><a href="index.html">Gare</a></li>
-                              <li><a href="index.html" th:unless="${atleti}">Atleti</a></li>
-                              <li class="active" th:if="${atleti}"><a href="index.html">Atleti</a></li>
+                              <li><a href="index.html" th:unless="${pannelloClassifiche}">Classifiche</a></li>
+                              <li class="active" th:if="${pannelloClassifiche}"><a href="index.html">Classifiche</a></li>
+                              <li><a href="index.html" th:unless="${pannelloSocieta}">Società</a></li>
+                              <li class="active" th:if="${pannelloSocieta}"><a href="index.html">Società</a></li>
+                              <li><a href="index.html" th:unless="${pannelloGare}">Gare</a></li>
+                              <li class="active" th:if="${pannelloGare}"><a href="index.html">Gare</a></li>
+                              <li><a href="index.html" th:unless="${pannelloAtleti}">Atleti</a></li>
+                              <li class="active" th:if="${pannelloAtleti}"><a href="index.html">Atleti</a></li>
                               <li class="dropdown"><a href="#" class="dropdown-toggle"
                                  data-toggle="dropdown">Utility <b class="caret"></b>
                               </a>
@@ -107,7 +107,7 @@
                   <h3>Registrazione Atleta</h3>
                </div>
                <div id="contact-form">
-                  <form action="#" th:action="@{/addAtleta}" th:object="${atleta}" method="post">
+                  <form action="#" th:action="@{/utente/newAtleta}" th:object="${atleta}" method="post">
                      <fieldset>
                         <div class="clearfix">
                            <label for="nome"><span>Nome*:</span></label>
@@ -440,7 +440,7 @@
                   <h3>Registrazione Società</h3>
                </div>
                <div id="contact-form">
-                  <form action="#" th:action="@{/addSocieta}" th:object="${societa}" method="post">
+                  <form action="#" th:action="@{/utente/newSocieta}" th:object="${societa}" method="post">
                      <fieldset>
                         <div class="clearfix">
                            <label for="nome"><span>Nome*:</span></label>
@@ -508,7 +508,7 @@
                   <h3>Registrazione Gara</h3>
                </div>
                <div id="contact-form">
-                  <form action="#" th:action="@{/addGara}" th:object="${gara}" method="post">
+                  <form action="#" th:action="@{/utente/newGara}" th:object="${gara}" method="post">
                      <fieldset>
                         <div class="clearfix">
                            <label for="nomeLuogo"><span>Nome e luogo dell'evento*:</span></label>

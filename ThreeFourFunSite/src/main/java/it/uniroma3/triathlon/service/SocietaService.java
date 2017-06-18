@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.uniroma3.triathlon.model.Atleta;
 import it.uniroma3.triathlon.model.Societa;
+import it.uniroma3.triathlon.model.Utente;
 import it.uniroma3.triathlon.repository.SocietaRepository;
 
 @Service
@@ -18,6 +20,8 @@ public class SocietaService {
 
 	@Autowired
 	private SocietaRepository societaRepository;
+	@Autowired
+	private UtenteService utenteService;
 
     public Iterable<Societa> findAll() {
         return this.societaRepository.findAll();
@@ -36,6 +40,25 @@ public class SocietaService {
 		return false;
     }
     
+	public boolean utenteIsGestoreAtleta(String username) {
+		return utenteService.findByUsername(username).hasAtletaGestito();
+	}
+    
+	public boolean utenteIsGestoreSocieta(String username) {
+		return utenteService.findByUsername(username).hasSocietaGestita();
+	}
+	
+	public void setUtenteGestore(String username, Societa societa) {
+		Utente utenteGestore = utenteService.findByUsername(username);
+		utenteGestore.setSocietaGestita(societa);
+		utenteService.save(utenteGestore);
+	}
+	
+	public void setAtletaPresidente(String username, Societa societa) {
+		Atleta atletaPresidente = utenteService.findByUsername(username).getAtletaGestito();
+		societa.setPresidente(atletaPresidente);
+	}
+	
 	@Transactional
 	public void add(final Societa societa) {
 		this.societaRepository.save(societa);
@@ -60,6 +83,4 @@ public class SocietaService {
 		
 		return regione2societa;
 	}
-
-
 }

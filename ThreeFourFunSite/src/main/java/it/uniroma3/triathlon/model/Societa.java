@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,8 +38,8 @@ public class Societa {
 	@Column(nullable = false)
 	private String regione;
 
-	//	@OneToOne
-	//	private Atleta presidente;
+	@OneToOne(optional = false)
+	private Atleta presidente;
 
 	@OneToMany(mappedBy = "societa", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Atleta> atleti;
@@ -47,7 +48,6 @@ public class Societa {
 		this.nome = nome;
 		this.dataFondazione = dataFondazione;
 		this.regione = regione;
-		//		this.presidente = presidente;
 		this.atleti = new LinkedList<>();
 	}
 
@@ -58,7 +58,7 @@ public class Societa {
 	public Long getId() {
 		return id;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
@@ -68,9 +68,9 @@ public class Societa {
 	public String getRegione() {
 		return regione;
 	}
-	//	public Atleta getPresidente() {
-	//		return presidente;
-	//	}
+	public Atleta getPresidente() {
+		return presidente;
+	}
 	public List<Atleta> getAtleti() {
 		return atleti;
 	}
@@ -83,9 +83,9 @@ public class Societa {
 	public void setRegione(String regione) {
 		this.regione = regione;
 	}
-	//	public void setPresidente(Atleta presidente) {
-	//		this.presidente = presidente;
-	//	}
+	public void setPresidente(Atleta presidente) {
+		this.presidente = presidente;
+	}
 	public void setAtleti(List<Atleta> atleti) {
 		this.atleti = atleti;
 	}

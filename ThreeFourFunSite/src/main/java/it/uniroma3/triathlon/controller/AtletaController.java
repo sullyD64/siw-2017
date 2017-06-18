@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.triathlon.model.Atleta;
 import it.uniroma3.triathlon.service.AtletaService;
@@ -17,6 +20,7 @@ import it.uniroma3.triathlon.service.SocietaService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
+@SessionAttributes("current_username")
 public class AtletaController {
 
 	@Autowired
@@ -24,19 +28,32 @@ public class AtletaController {
 	@Autowired
 	private SocietaService societaService;
 
-	@GetMapping("/user/newAtleta")
-	public String mostraForm(Atleta atleta, Model model) {
-		model.addAttribute("atleti", true);
+	@GetMapping("/utente/newAtleta")
+	public String mostraForm(Atleta atleta, 
+			@SessionAttribute(name="current_username") String username,
+			RedirectAttributes redir,
+			Model model) {	
+		String nextPage = "form";
+		
+		// Redirect se l'utente ha già registrato un atleta
+		if (atletaService.hasUtenteGestore(username)) {
+			redir.addFlashAttribute("erroreNewAtleta", "Hai già registrato il tuo profilo atleta, non puoi registrarne altri!");
+			nextPage = "redirect:/";
+		}
+			
+		model.addAttribute("pannelloAtleti", true);
 		model.addAttribute("formAtleta",true);
 		model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
-		return "form";
+		return nextPage;
 	}
 
-	@PostMapping("/user/newAtleta")
+	@PostMapping("/utente/newAtleta")
 	public String checkAtletaInfo(@Valid @ModelAttribute Atleta atleta, 
-			@RequestParam(defaultValue="") Long societaID, BindingResult bindingResult, Model model) {
+			@RequestParam(defaultValue="") Long societaID, 
+			@SessionAttribute(name="current_username") String username,
+			BindingResult bindingResult, Model model) {
 		String nextPage = "form";
-		model.addAttribute("atleti", true);
+		model.addAttribute("pannelloAtleti", true);
 		model.addAttribute("formAtleta",true);
 
 		if (!bindingResult.hasErrors()) {
@@ -55,8 +72,10 @@ public class AtletaController {
 
 						/* Relazioni */
 						atleta.setSocieta(societaService.findOne(societaID));
-
+						
+						// Service
 						atletaService.add(atleta);
+						atletaService.setUtenteGestore(username, atleta);
 
 						model.addAttribute(atleta);
 						model.addAttribute("successo", "Atleta registrato correttamente");

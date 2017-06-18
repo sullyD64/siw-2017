@@ -5,9 +5,10 @@
 <title>Login/Registrazione</title>
 </head>
 <body>
+   <h4><a href="/">Torna alla home</a></h4>
    <div>
       <h1>Login utente</h1>
-      <div th:if="${param.error}">Invalid username and password.</div>
+      <div th:if="${param.error}">Username o password non corretti.</div>
       <form action="#" th:action="@{/accedi}" th:object="${utente}" method="post">
          <fieldset>
             <div>

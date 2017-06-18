@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.triathlon.model.Atleta;
+import it.uniroma3.triathlon.model.Utente;
 import it.uniroma3.triathlon.repository.AtletaRepository;
 
 @Service
@@ -14,6 +15,9 @@ public class AtletaService {
 
 	@Autowired
 	private AtletaRepository atletaRepository;
+	@Autowired
+	private UtenteService utenteService;
+	
 	
     public Iterable<Atleta> findAll() {
         return this.atletaRepository.findAll();
@@ -27,11 +31,19 @@ public class AtletaService {
 		}
 		return false;
     }
+    
+    public boolean hasUtenteGestore(String username) {
+		return utenteService.findByUsername(username).hasAtletaGestito();
+	}
+    
+    public void setUtenteGestore(String username, Atleta atleta) {
+		Utente utenteGestore = utenteService.findByUsername(username);
+		utenteGestore.setAtletaGestito(atleta);
+		utenteService.save(utenteGestore);
+	}
 
 	@Transactional
 	public void add(final Atleta atleta) {		
 		this.atletaRepository.save(atleta);
 	}
-
-
 }

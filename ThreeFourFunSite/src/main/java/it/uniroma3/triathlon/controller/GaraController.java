@@ -20,17 +20,17 @@ public class GaraController {
 	@Autowired
 	private GaraService garaService;
 
-	@GetMapping("/admin/addGara")
+	@GetMapping("/admin/newGara")
 	public String mostraForm(Gara gara, Model model) {
-		model.addAttribute("gare", true);
+		model.addAttribute("pannelloGare", true);
 		model.addAttribute("formGara", true);
 		return "form";
 	}
 
-	@PostMapping("/admin/addGara")
+	@PostMapping("/admin/newGara")
 	public String checkGaraInfo(@Valid @ModelAttribute Gara gara, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
-		model.addAttribute("gare", true);
+		model.addAttribute("pannelloGare", true);
 		model.addAttribute("formGara", true);
 		
 		System.out.println(bindingResult.toString());

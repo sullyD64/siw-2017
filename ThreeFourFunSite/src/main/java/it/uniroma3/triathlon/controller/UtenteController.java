@@ -1,7 +1,5 @@
 package it.uniroma3.triathlon.controller;
 
-import static it.uniroma3.triathlon.util.CostantiRuoli.UTENTE;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,6 @@ public class UtenteController {
 	@RequestMapping("/accedi")
 	public String accedi(@Valid @ModelAttribute Utente utente, Model model) {
 		return "accesso";
-//		 return "redirect:/utenti/" + utente.getUsername();
 	}
 	
 	@PostMapping("/registrazione")
@@ -40,7 +37,7 @@ public class UtenteController {
 			if (!utenteService.alreadyExists(utente.getUsername())) {
 				utenteService.save(utente);
 
-				RuoloUtente ruolo = new RuoloUtente(utente, UTENTE);
+				RuoloUtente ruolo = new RuoloUtente(utente, "ROLE_UTENTE");
 				ruoloUtenteService.add(ruolo);
 				
 				model.addAttribute("utente", new Utente());

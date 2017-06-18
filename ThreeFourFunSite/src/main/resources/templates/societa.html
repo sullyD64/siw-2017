@@ -57,14 +57,16 @@
                   <li th:each="entry: ${elencoSocieta}"><b th:text="${entry.key}"></b>
                      <ul>
                         <li th:each="soc: ${entry.value}"><a href="/index.html"
-                           th:href="@{/listSocieta/} + ${soc.id}" th:text="${soc.nome}"></a> <!--
+                           th:href="@{/listSocieta/} + ${soc.id}" th:text="${soc.nome}"></a> 
+                           <!--
                      <form action="product" method="post">
                         <input type="hidden" value="${product.id}" name="id" />
                         <div class="actions">
                            <button class="btn btn-succes btn-mini" type="submit" name="command">Cancella</button>
                         </div>
                      </form>
-                     --></li>
+                     -->
+                     </li>
                      </ul></li>
                </ul>
                <div class="actions">
