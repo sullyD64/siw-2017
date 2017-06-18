@@ -107,13 +107,15 @@
 					<div class="title">
 						<h3>Registrazione Società</h3>
 					</div>
-					<div class="text-error">N.B: se sei già iscritto ad una società, fondarne una propria
-						comporterà la tua disiscrizione da questa.</div>
+					<div class="text-error">
+						<font size="3">N.B: se sei già iscritto ad una società, crearne una nuova comporterà la
+							tua disiscrizione da quella precedente.</font>
+					</div>
 					<div id="contact-form">
 						<form action="#" th:action="@{/utente/newSocieta}" th:object="${societa}" method="post">
 							<fieldset>
 								<div class="clearfix">
-									<label for="nome"><span>Nome*:</span></label>
+									<label for="nome"><span>Nome della società*:</span></label>
 									<div class="input">
 										<input tabindex="1" size="40" id="nome" name="nome" type="text" th:field="*{nome}"
 											required="required" />
@@ -184,7 +186,8 @@
 						<h3>Riepilogo Informazioni</h3>
 					</div>
 					<div class="text-error" th:text="${errore}"></div>
-					<div class="text-success" th:text="${successo}"></div>
+					<font size="3"> <span class="text-success" th:text="${successo}"></span><br />
+					</font>
 					<div class="text-error" th:if="${societaNonSelezionata}">
 						Attualmente non sei iscritto a nessuna società. Puoi comunque modificare i tuoi dati atleta
 						dalla tua area personale e sceglierne una, oppure puoi creare una tua società alla quale
@@ -231,9 +234,8 @@
 									<b>Presidente:</b> <span
 										th:text="${societa.presidente.nome} +' '+${societa.presidente.cognome}"></span>
 								</h4>
-								<h4>
-									Ora è possibile aggiungere atleti alla società.
-								</h4>
+								<hr />
+								<h4>Ora è possibile aggiungere atleti alla società.</h4>
 							</div>
 							<div th:if="${formGara}">
 								<h4>
@@ -242,6 +244,7 @@
 								<h4>
 									<b>Data di Svolgimento</b> <span th:text="${gara.dataSvolgimento}"></span>
 								</h4>
+								<hr />
 								<h4>Ora è possibile iscriversi alla gara</h4>
 							</div>
 						</div>

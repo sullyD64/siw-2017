@@ -47,7 +47,7 @@ public class AtletaController {
 		// Redirect se l'utente ha già registrato un atleta
 		if (atletaService.hasUtenteGestore(username)) {
 			redir.addFlashAttribute("erroreNewAtleta", "Hai già registrato il tuo profilo atleta, non puoi registrarne altri!");
-			nextPage = "redirect:/";
+			nextPage = "redirect:/utente/" + username;
 		}
 
 		model.addAttribute("navAtleti", "active");

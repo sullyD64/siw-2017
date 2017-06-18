@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.triathlon.model.Gara;
@@ -17,6 +18,7 @@ import it.uniroma3.triathlon.service.GaraService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
+@SessionAttributes("current_username")
 public class GaraController {
 
 	@Autowired

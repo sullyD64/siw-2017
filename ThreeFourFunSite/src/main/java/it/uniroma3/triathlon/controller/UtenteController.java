@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import it.uniroma3.triathlon.model.RuoloUtente;
 import it.uniroma3.triathlon.model.Utente;
@@ -16,6 +20,7 @@ import it.uniroma3.triathlon.service.RuoloUtenteService;
 import it.uniroma3.triathlon.service.UtenteService;
 
 @Controller
+@SessionAttributes("current_username")
 public class UtenteController {
 
 	@Autowired
@@ -23,6 +28,15 @@ public class UtenteController {
 
 	@Autowired
 	private RuoloUtenteService ruoloUtenteService;
+	
+	@GetMapping("/utente/{username}")
+	public String mostraUtente(@PathVariable("username") String user, 
+			@SessionAttribute(name="current_username") String username, Model model){
+		Utente utente = utenteService.findByUsername(username);
+		model.addAttribute("navAccesso", "active");
+		model.addAttribute(utente);
+		return "area_riservata";
+	}
 	
 	@RequestMapping("/accedi")
 	public String accedi(@Valid @ModelAttribute Utente utente, Model model) {

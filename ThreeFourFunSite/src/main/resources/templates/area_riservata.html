@@ -4,7 +4,7 @@
 <head>
 <!-- start: Meta -->
 <meta charset="utf-8" />
-<title>Lista Gare</title>
+<title>Profilo Atleta</title>
 <meta name="description" content="GotYa Free Bootstrap Theme" />
 <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
 <!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
@@ -31,35 +31,36 @@
 		<div class="container">
 			<!-- start: Row -->
 			<div class="row">
-				<!-- start: List Gare -->
-				<div class="span4">
+				<!-- start: Pannello Utente-->
+				<div class="span5">
 					<div class="title">
-						<h3>Lista delle gare</h3>
+						<h3>
+							Pannello utente di <span sec:authentication="name"></span>
+						</h3>
 					</div>
 					<div class="clearfix">
-						<table th:unless="${#lists.isEmpty(elencoGare)}">
-							<tr>
-								<th><b>Data di svolgimento</b></th>
-								<th><b>Nome dell'evento</b></th>
-								<th sec:authorize="hasRole('ROLE_ADMIN')">[Pannello Amministratore]</th>
-							</tr>
-							<tr th:each="gara : ${elencoGare}">
-								<td th:text="${gara.dataSvolgimento}" align="center"></td>
-								<td th:text="${gara.nomeLuogo}"></td>
-								<td sec:authorize="hasRole('ROLE_UTENTE')" class="text-success">Iscriviti</td>
-								<td sec:authorize="hasRole('ROLE_ADMIN')">
-									<form th:action="@{/admin/deleteGara/} + ${gara.id}" method="post">
-										<div class="input">
-											<input type="submit" value="Elimina evento" />
-										</div>
-									</form>
-								</td>
-							</tr>
-						</table>
-						<span th:if="${#lists.isEmpty(elencoGare)}"><font size="3">Al momento non ci sono gare in programma.</font></span>
+						<font size="3"> <span th:if="${utente.atletaGestito}"> Hai registrato un profilo
+								atleta: <span th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"></span>
+								<br />
+						</span> <span th:unless="${utente.atletaGestito}"> Non hai <b>ancora</b> registrato un profilo
+								atleta. <a th:href="@{/utente/newAtleta}">Registralo ora!</a> <br /></span> <span
+							th:if="${utente.societaGestita}"> Hai registrato una società: <span
+								th:text="${utente.societaGestita.nome}"></span> <br /></span> <span
+							th:unless="${utente.societaGestita}"> Non hai una società registrata a tuo carico. <a
+								th:href="@{/utente/newSocieta}">Registrala ora!</a> <br /></span>
+						</font>
+						<hr th:if="${erroreNewAtleta} or ${erroreNewSocieta}" />
+						<font size="3"><span class="text-error" th:text="${erroreNewAtleta}"></span><br /> <span
+							class="text-error" th:text="${erroreNewSocieta}"></span> </font>
 					</div>
 				</div>
-				<!-- end: List Gare -->
+				<!-- end: Pannello Utente -->
+
+				<!-- start: Pannello Atleta -->
+
+				<!-- end: Pannello Atleta -->
+
+
 
 				<!-- start: Riepilogo Info -->
 				<div class="span4" th:if="${successo}">
@@ -67,7 +68,7 @@
 						<h3>Riepilogo Informazioni</h3>
 					</div>
 					<div class="span4">
-						<font size="3"> <span class="text-success" th:text="${successo}"></span></font>
+						<span class="text-success" th:text="${successo}"></span>
 					</div>
 				</div>
 				<!-- end: Riepilogo Info -->
@@ -77,6 +78,7 @@
 		<!-- end: Container -->
 	</div>
 	<!-- end: Wrapper  -->
+
 	<div th:include="layout :: javascript"></div>
 </body>
 </html>

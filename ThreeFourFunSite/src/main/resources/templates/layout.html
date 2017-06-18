@@ -51,9 +51,10 @@
 											data-toggle="dropdown">Classifiche<b class="caret"></b>
 										</a>
 											<ul class="dropdown-menu">
-												<li><a href="/listClassifiche">Visualizza le classifiche generali</a></li>
-												<li><a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/aggiornaClassifica">Aggiorna
-														le classifiche <b>[Admin]</b></a></li>
+												<li><a th:href="@{/listClassifiche}">Visualizza le classifiche generali</a></li>
+												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/aggiornaClassifica}">Aggiorna
+														le classifiche <b>[Admin]</b>
+												</a></li>
 											</ul></li>
 
 										<!--  Gare -->
@@ -62,65 +63,56 @@
 										</a>
 											<ul class="dropdown-menu">
 												<li><a th:href="@{/listGare}">Visualizza l'elenco delle gare</a></li>
-												<li><a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/newGara">Registra
-														una nuova gara <b>[Admin]</b></a></li>
+												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/newGara}">Registra una
+														nuova gara <b>[Admin]</b>
+												</a></li>
 											</ul></li>
 
 										<!--  Atleti -->
-										<li th:class="'dropdown '+ ${navAtleti}"><a href="#" class="dropdown-toggle"
+										<!-- <li th:class="'dropdown '+ ${navAtleti}"><a href="#" class="dropdown-toggle"
 											data-toggle="dropdown">Atleti<b class="caret"></b>
 										</a>
 											<ul class="dropdown-menu">
-												<li><a href="/utente/newAtleta">Registra il tuo profilo atleta</a></li>
-												<li><a href="/utente/">Visualizza il tuo profilo atleta</a></li>
-												<li class="text-error" th:text="${erroreNewAtleta}"></li>
 											</ul></li>
+											-->
 
 										<!--  Società -->
 										<li th:class="'dropdown '+ ${navSocieta}"><a href="#" class="dropdown-toggle"
 											data-toggle="dropdown">Società<b class="caret"></b>
 										</a>
 											<ul class="dropdown-menu">
-												<li><a href="/utente/newSocieta">Registra una nuova società</a></li>
-												<li><a href="/404">Visualizza il profilo della tua società</a></li>
 												<li><a href="/listSocieta">Visualizza l'elenco delle società</a></li>
-												<li class="text-error" th:text="${erroreNewSocieta}"></li>
 											</ul></li>
 
-										<!--  Area Riservata -->
-										<li sec:authorize="!isAuthenticated()" th:class="'dropdown '+ ${navAccesso}"><a
-											href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-												th:class="${navAccesso}">Area Riservata</span><b class="caret"></b> </a>
+										<!--  Area Utenti -->
+										<li th:class="'dropdown '+ ${navAccesso}"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown"><span th:class="${navAccesso}">Utenti</span><b
+												class="caret"></b> </a>
 											<ul class="dropdown-menu">
-												<li><a href="/accedi">Login/Registrazione</a></li>
+												<li sec:authorize="!isAuthenticated()">
+													<div class="actions" align="center">
+														<form th:action="@{/accedi}" method="get">
+															<input id="accedi" type="submit" value="Login/Registrazione" />
+														</form>
+													</div>
+												</li>
+												<li><a th:href="@{/utente/newAtleta}">Registra il tuo profilo atleta</a></li>
+												<li><a th:href="@{/utente/newSocieta}">Registra una nuova società</a></li>
+												<li><a th:if="${current_username}" sec:authorize="hasRole('ROLE_UTENTE')" th:href="@{/utente/} + ${current_username}">Visualizza e gestisci le tue informazioni</a></li>
+												<li class="text-error" th:text="${erroreNewAtleta}"></li>
+												<li class="text-error" th:text="${erroreNewSocieta}"></li>
 											</ul></li>
 
 										<!--  Utente Autenticato -->
 										<li sec:authorize="isAuthenticated()">
-											<div class = "contact-form">
+											<div class="contact-form">
 												Benvenuto, <b sec:authentication="name">[generic user]</b>!
-												<!-- 
-													<div th:if="${utente.atletaGestito}">
-														I tuoi dati da atleta: <span
-															th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"></span>
+												<form action="/logout" method="post">
+													<div class="actions">
+														<input id="logout" type="submit" value="Logout" />
 													</div>
-													<div th:unless="${utente.atletaGestito}">
-														Non hai <b>ancora</b> registrato un profilo atleta. <a href="/utente/newAtleta">Registralo
-															ora!</a> <span th:text="${erroreNewAtleta}"></span>
-													</div>
-
-													<div th:if="${utente.societaGestita}">
-														La tua società : <span th:text="${utente.societaGestita.nome}"></span>
-													</div>
-													<div th:unless="${utente.societaGestita}">
-														Non hai una società registrata a tuo carico. <a href="/utente/newSocieta">Registrala
-															ora!</a> <span th:text="${erroreNewSocieta}"></span>
-													</div>
-													-->
+												</form>
 											</div>
-											<form action="/logout" method="post">
-												<input id="logout" type="submit" value="Logout" />
-											</form>
 										</li>
 									</ul>
 								</div>

@@ -54,14 +54,14 @@ public class SocietaController {
 
 		// Redirect se l'utente non ha un profilo atleta registrato
 		if (!societaService.utenteIsGestoreAtleta(username)) {
-			redir.addFlashAttribute("erroreNewSocieta", "Puoi registrare una società solo dopo aver registrato il tuo profilo atleta");
-			nextPage = "redirect:/";
+			redir.addFlashAttribute("erroreNewSocieta", "Puoi registrare una società solo dopo aver registrato il tuo profilo atleta!");
+			nextPage = "redirect:/utente/" + username;
 		}
 
 		// Redirect se l'utente ha già registrato una società
 		if (societaService.utenteIsGestoreSocieta(username)) {
 			redir.addFlashAttribute("erroreNewSocieta", "Hai già registrato una società, non puoi registrarne altre!");
-			nextPage = "redirect:/";
+			nextPage = "redirect:/utente/" + username;
 		}
 
 		model.addAttribute("navSocieta", "active");

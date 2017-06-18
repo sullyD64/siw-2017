@@ -32,7 +32,7 @@
 			<!-- start: Row -->
 			<div class="row">
 				<!-- start: Profilo Atleta -->
-				<div class="span5">
+				<div class="span5" th:fragment="profiloAtleta">
 					<div class="title">
 						<h3 th:text="${atleta.nome} +' '+ ${atleta.cognome}"></h3>
 					</div>
@@ -43,24 +43,7 @@
 					<h4 th:text="'Categoria: ' + ${atleta.categoria}"></h4>
 					<h4 th:if="${atleta.societa}" th:text="'Società di appartenenza: ' + ${atleta.societa.nome}"></h4>
 					<h4 th:unless="${atleta.societa}">L'atleta non è ancora iscritto ad una società.</h4>
-
 					<hr />
-					<!--
-					<table th:unless="${#lists.isEmpty(societa.atleti)}">
-						<tr>
-							<th align="left">Cognome</th>
-							<th align="left">Nome</th>
-							<th align="left">Categoria</th>
-						</tr>
-						<tr th:each="atleta : ${societa.atleti}">
-							<td th:text="${atleta.cognome}"></td>
-							<td th:text="${atleta.nome}"></td>
-							<td th:text="${atleta.categoria}"></td>
-						</tr>
-					</table>
-					<span th:if="${#lists.isEmpty(societa.atleti)}">Non ci sono ancora atleti registrati a
-						questa società.</span>
-					-->
 					<div class="clearfix" sec:authorize="hasRole('ROLE_ADMIN')">
 						<hr />
 						[Pannello Amministratore]
@@ -78,7 +61,8 @@
 						<h3>Riepilogo Informazioni</h3>
 					</div>
 					<div class="span4">
-						<span class="text-success" th:text="${successo}"></span>
+						<font size="3"> <span class="text-success" th:text="${successo}"></span>
+						</font>
 					</div>
 				</div>
 				<!-- end: Riepilogo Info -->
