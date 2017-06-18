@@ -2,19 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-
 <!-- start: Meta -->
 <meta charset="utf-8" />
-<title>Three Four Fun</title>
+<title>Lista società</title>
 <meta name="description" content="GotYa Free Bootstrap Theme" />
 <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
-<meta name="author" content="Łukasz Holeczek from creativeLabs" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
 <!-- end: Meta -->
-
-<!-- start: Mobile Specific -->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<!-- end: Mobile Specific -->
-
 
 <!-- start: CSS -->
 <link href="../css/bootstrap.css" rel="stylesheet" />
@@ -26,324 +20,124 @@
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
 <link rel="stylesheet" type="text/css"
 	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
-
+<!-- end: CSS -->
 </head>
 <body>
-	<<<<<<< HEAD
-	<h4>
-		<a href="/">Torna alla home</a>
-	</h4>
-	<div>
-		<h1>Login utente</h1>
-		<div th:if="${param.error}">Username o password non corretti.</div>
-		<form action="#" th:action="@{/accedi}" th:object="${utente}" method="post">
-			<fieldset>
-				<div>
-					<label for="username"><span>Username*:</span></label>
-					<div>
-						<input tabindex="1" size="20" id="username" name="username" type="text" th:field="*{username}"
-							required="required" /> =======
+	<header th:include="layout :: Header"></header>
+	
+	<!-- start: Wrapper -->
+	<div id="wrapper">
 
-						<!--start: Header -->
-						<header>
+		<!-- start: Container -->
+		<div class="container">
 
-							<!--start: Container -->
-							<div class="container">
+			<!-- start: Row -->
+			<div class="row">
 
-								<!--start: Row -->
-								<div class="row">
+				<!-- start: Form Login Utente-->
+				<div class="span4">
+					<div class="title">
+						<h3>Login Utente</h3>
+					</div>
 
-									<!--start: Logo -->
-									<div class="logo span3">
-
-										<a class="brand" href="http://google.it"><img src="img/logo.png" /></a>
-
+					<div id="contact-form">
+						<div class="text-error" th:if="${param.error}">Username o password non validi.</div>
+						<form action="#" th:action="@{/accedi}" th:object="${utente}" method="post">
+							<fieldset>
+								<div class="clearfix">
+									<label for="username"><span>Username*:</span></label>
+									<div class="input">
+										<input tabindex="1" size="20" id="username" name="username" type="text"
+											th:field="*{username}" required="required" />
 									</div>
-									<!--end: Logo -->
-
-									<!--start: Navigation -->
-									<div class="span9">
-
-										<div class="navbar navbar-inverse">
-											<div class="navbar-inner">
-												<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span
-													class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-												</a>
-												<div class="nav-collapse collapse">
-													<ul class="nav">
-														<li class="active"><a href="index.html">Home</a></li>
-														<li><a href="classifiche.html">Classifiche</a></li>
-														<li><a href="societa.html">Società</a></li>
-														<li class="dropdown"><a href="gare.html" class="dropdown-toggle"
-															data-toggle="dropdown">Gare <b class="caret"></b>
-														</a>
-															<ul class="dropdown-menu">
-																<li><a href="/admin/addGara">Registra Gara</a></li>
-																<li><a href="#">Aggiorna Classifica Gare</a></li>
-
-															</ul></li>
-														<li><a href="#">Atleti</a></li>
-														<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Utility
-																<b class="caret"></b>
-														</a>
-															<ul class="dropdown-menu">
-																<li><a href="/utente/newAtleta">Iscrizione Atleta</a></li>
-																<li><a href="/utente/addSocieta">Iscrizione Società</a></li>
-																<li><a href="/utente/listSocieta">Visualizza Elenco Societa</a></li>
-																<li class="divider"></li>
-																<li class="nav-header">Restricted Area</li>
-																<li><form action="/logout" method="post">
-																		<input id="logout" type="submit" value="[Logout]" />
-																	</form></li>
-																<li><a href="/accedi">Accesso Utente</a></li>
-																<li><a href="/loginAdmin">Login Admin</a></li>
-															</ul></li>
-													</ul>
-												</div>
-											</div>
-											>>>>>>> 5939415c06a32a2b5c0618340420c089b77e7700
-										</div>
-
-									</div>
-									<!--end: Navigation -->
-
+									<span th:if="${#fields.hasErrors('username')}">Errore: campo obbligatorio</span>
 								</div>
-								<!--end: Row -->
-
-							</div>
-							<!--end: Container-->
-
-						</header>
-						<!--end: Header-->
-
-
-						<!-- start: Wrapper -->
-						<div id="wrapper">
-
-							<!-- start: Container -->
-							<div class="container">
-
-								<!-- start: Row -->
-								<div class="row">
-
-									<!-- start: Registrazione Atleta -->
-
-									<div class="span4">
-										<div class="title">
-											<h3>Autentica Utente</h3>
-										</div>
-
-										<div id="contact-form">
-											<div th:if="${param.error}">Invalid username and password.</div>
-											<form action="#" th:action="@{/accedi}" th:object="${utente}" method="post">
-												<fieldset>
-													<div class="clearfix">
-														<label for="username"><span>Username*:</span></label>
-														<div class="input">
-															<input tabindex="1" size="20" id="username" name="username" type="text"
-																th:field="*{username}" required="required" />
-														</div>
-														<span th:if="${#fields.hasErrors('username')}">Errore: campo obbligatorio</span>
-													</div>
-													<div class="clearfix">
-														<label for="password"><span>Password:</span></label>
-														<div class="input">
-															<input tabindex="2" size="20" id="password" name="password" type="password"
-																th:field="*{password}" required="required" />
-														</div>
-														<span th:if="${#fields.hasErrors('password')}">Errore</span>
-													</div>
-
-													<div class="actions">
-														<button tabindex="3" type="submit" class="btn btn-succes btn-large">Autentica
-															Utente</button>
-													</div>
-												</fieldset>
-
-											</form>
-
-										</div>
-
+								<div class="clearfix">
+									<label for="password"><span>Password:</span></label>
+									<div class="input">
+										<input tabindex="2" size="20" id="password" name="password" type="password"
+											th:field="*{password}" required="required" />
 									</div>
-									<!-- end: login Utente Form -->
-
-									<!-- start: Registrazione utente -->
-
-									<div class="span4">
-										<div class="title">
-											<h3>Registra Utente</h3>
-										</div>
-
-										<div id="contact-form">
-											<div th:if="${param.error}">Invalid username and password.</div>
-											<form action="#" th:action="@{/registrazione}" th:object="${utente}" method="post">
-												<fieldset>
-													<div class="clearfix">
-														<label for="username"><span>Username*:</span></label>
-														<div class="input">
-															<input tabindex="4" size="20" id="username" name="username" type="text"
-																th:field="*{username}" required="required" />
-														</div>
-														<span th:if="${#fields.hasErrors('username')}">Errore: campo obbligatorio</span>
-													</div>
-													<div class="clearfix">
-														<label for="password"><span>Password:</span></label>
-														<div class="input">
-															<input tabindex="5" size="20" id="password" name="password" type="password"
-																th:field="*{password}" required="required" />
-														</div>
-														<span th:if="${#fields.hasErrors('password')}">Errore</span>
-													</div>
-
-													<div class="actions">
-														<button tabindex="6" type="submit" class="btn btn-succes btn-large">Registra
-															Utente</button>
-													</div>
-												</fieldset>
-
-											</form>
-
-										</div>
-
-									</div>
-									<!-- end: registrazione utente -->
-
-									<!-- start: riepilogo utente-->
-
-									<div class="span4">
-										<div class="title">
-											<h3>Riepilogo Informazioni</h3>
-										</div>
-										<div class="text-error" th:text="${errore}"></div>
-										<div class="text-success" th:text="${successo}"></div>
-									</div>
-
-									<!-- end: riepilogo utente-->
-
+									<span th:if="${#fields.hasErrors('password')}">Errore</span>
 								</div>
-								<!-- end: Row -->
 
-							</div>
-							<!-- end: Container -->
-
-						</div>
-						<!-- end: Wrapper  -->
-
-						<!-- start: Footer Menu -->
-						<div id="footer-menu" class="hidden-tablet hidden-phone">
-
-							<!-- start: Container -->
-							<div class="container">
-
-								<!-- start: Row -->
-								<div class="row">
-
-									<!-- start: Footer Menu Logo -->
-									<div class="span2">
-										<div id="footer-menu-logo">
-											<a href="#"><img src="img/logo-footer-menu.png" alt="logo" /></a>
-										</div>
-									</div>
-									<!-- end: Footer Menu Logo -->
-
-									<!-- start: Footer Menu Links-->
-									<div class="span9">
-
-										<div id="footer-menu-links">
-
-											<ul id="footer-nav">
-
-												<li><a href="index.html">Home</a></li>
-
-												<li><a href="about.html">Classifiche</a></li>
-
-												<li><a href="services.html">Società</a></li>
-
-												<li><a href="pricing.html">Gare</a></li>
-
-											</ul>
-
-										</div>
-
-									</div>
-									<!-- end: Footer Menu Links-->
-
-									<!-- start: Footer Menu Back To Top -->
-									<div class="span1">
-
-										<div id="footer-menu-back-to-top">
-											<a href="#"></a>
-										</div>
-
-									</div>
-									<!-- end: Footer Menu Back To Top -->
-
+								<div class="actions">
+									<button tabindex="3" type="submit" class="btn btn-succes btn-large">Autentica
+										Utente</button>
 								</div>
-								<!-- end: Row -->
+							</fieldset>
 
-							</div>
-							<!-- end: Container  -->
+						</form>
 
-						</div>
-						<!-- end: Footer Menu -->
+					</div>
 
-						<!-- start: Footer -->
-						<div id="footer">
+				</div>
+				<!-- end: Form Login Utente -->
 
-							<!-- start: Container -->
-							<div class="container">
+				<!-- start: Form Registrazione Utente -->
+				<div class="span4">
+					<div class="title">
+						<h3>Registra Utente</h3>
+					</div>
 
-								<!-- start: Row -->
-								<div class="row">
-
-									<!-- start: About -->
-									<div class="span3">
-
-										<h3>About Us</h3>
-										<p>
-											Progetto per l'esame di <b>Sistemi Informativi sul Web (AA 2016-2017)</b>, Università
-											degli Studi di Roma Tre - Dipartimento di Ingegneria Informatica<br> Realizzato da <i>Lorenzo
-												Guidaldi</i> e <i>Maria Elena Madon</i>
-										</p>
-
+					<div id="contact-form">
+						<div th:if="${param.error}">Invalid username and password.</div>
+						<form action="#" th:action="@{/registrazione}" th:object="${utente}" method="post">
+							<fieldset>
+								<div class="clearfix">
+									<label for="username"><span>Username*:</span></label>
+									<div class="input">
+										<input tabindex="4" size="20" id="username" name="username" type="text"
+											th:field="*{username}" required="required" />
 									</div>
-									<!-- end: About -->
+									<span th:if="${#fields.hasErrors('username')}">Errore: campo obbligatorio</span>
 								</div>
-								<!-- end: Row -->
+								<div class="clearfix">
+									<label for="password"><span>Password:</span></label>
+									<div class="input">
+										<input tabindex="5" size="20" id="password" name="password" type="password"
+											th:field="*{password}" required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('password')}">Errore</span>
+								</div>
 
-							</div>
-							<!-- end: Container  -->
+								<div class="actions">
+									<button tabindex="6" type="submit" class="btn btn-succes btn-large">Registra
+										Utente</button>
+								</div>
+							</fieldset>
 
-						</div>
-						<!-- end: Footer -->
+						</form>
 
-						<!-- start: Copyright -->
-						<div id="copyright">
+					</div>
 
-							<!-- start: Container -->
-							<div class="container">
+				</div>
+				<!-- end: Form Registrazione Utente -->
 
-								<p>
-									&copy; 2013, creativeLabs. <a href="http://bootstrapmaster.com" alt="Bootstrap Themes">Bootstrap
-										Themes</a> designed by BootstrapMaster in Poland <img src="img/poland2.png" alt="Poland"
-										style="margin-top: -4px" />
-								</p>
+				<!-- start: Riepilogo Utente -->
+				<div class="span4">
+					<div class="title">
+						<h3>Riepilogo Informazioni</h3>
+					</div>
+					<div class="text-error" th:text="${errore}"></div>
+					<div class="text-success" th:text="${successo}"></div>
+				</div>
+				<!-- end: Riepilogo Utente -->
 
-							</div>
-							<!-- end: Container  -->
+			</div>
+			<!-- end: Row -->
 
-						</div>
-						<!-- end: Copyright -->
+		</div>
+		<!-- end: Container -->
 
-						<!-- start: Java Script -->
-						<!-- Placed at the end of the document so the pages load faster -->
-						<script src="js/jquery-1.8.2.js"></script>
-						<script src="js/bootstrap.js"></script>
-						<script src="js/flexslider.js"></script>
-						<script src="js/carousel.js"></script>
-						<script src="js/jquery.cslider.js"></script>
-						<script src="js/slider.js"></script>
-						<!-- <script def src="js/custom.js"></script> -->
-						<!-- end: Java Script -->
+	</div>
+	<!-- end: Wrapper  -->
+
+	<!--
+	<div th:include="layout :: FooterMenu"></div>
+	<div th:include="layout :: Footer"></div>
+	<div th:include="layout :: Copyright"></div>
+	<div th:include="layout :: javascript"></div>
+	-->
 </body>
 </html>

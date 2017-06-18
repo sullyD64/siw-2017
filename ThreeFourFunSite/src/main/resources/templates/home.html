@@ -1,42 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="layout :: headerFragment (pageTitle='Three Four Fun Site')">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>ThreeFourFun [siw-2017]</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="../css/bootstrap.css" rel="stylesheet" />
+<link href="../css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="../css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
 </head>
 <body>
-	
-	<!-- 
-	<div sec:authorize="isAuthenticated()">
-		Benvenuto, <span sec:authentication="name">[generic user]</span>
-		<form action="/logout" method="post">
-			<input id="logout" type="submit" value="[Logout]" />
-		</form>
-
-		<div th:if="${utente.atletaGestito}">
-			I tuoi dati da atleta: <span
-				th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"></span>
-		</div>
-		<div th:unless="${utente.atletaGestito}">
-			Non hai <b>ancora</b> registrato un profilo atleta. <a href="/utente/newAtleta">Registralo
-				ora!</a>
-		</div>
-
-		<div th:if="${utente.societaGestita}">
-			La tua società: <span th:text="${utente.societaGestita.nome}"></span>
-		</div>
-		<div th:unless="${utente.societaGestita}">
-			Non hai una società registrata a tuo carico. <a href="/utente/newSocieta">Registrala ora!</a> <span
-				th:text="${erroreNewSocieta}"></span>
-		</div>
-	</div>
-	<hr />
-	
-			<span th:text="${erroreNewAtleta}"></span>
-		<span th:text="${erroreNewSocieta}"></span>
-	-->
-
 	<header th:include="layout :: Header"></header>
-	
 
 	<!-- start: Slider -->
 	<div class="slider-wrapper">
@@ -94,7 +81,7 @@
 			<!-- start: Slogan-->
 			<div class="hero-unit">
 				<p>Welcome to an extraordinary triathlon experience.Every year millions of people travel
-					around the globe to see the Coliseum, the Imperial Fora, Caracalla Baths and so on…. but only
+					around the globe to see the Coliseum, the Imperial Fora, Caracalla Baths and so on!. but only
 					FEW ELECTED triathletes will have the privilege to ride around them.</p>
 				<p>
 					<a class="btn btn-success btn-large">Learn more &raquo;</a>

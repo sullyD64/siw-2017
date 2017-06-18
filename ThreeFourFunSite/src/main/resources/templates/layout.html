@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:fragment="headerFragment (pageTitle)">
+<head>
 <!-- start: Meta -->
 <meta charset="utf-8" />
-<title th:text="${pageTitle}">[Titolo del Template (viene rimpiazzato)]</title>
+<title>ThreeFourFun [siw-2017]</title>
 <meta name="description" content="GotYa Free Bootstrap Theme" />
 <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
 <!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
@@ -30,7 +30,7 @@
 			<div class="row">
 				<!--start: Logo -->
 				<div class="logo span3">
-					<a class="brand" href="/"><img src="img/logo.png" alt="Logo" /></a>
+					<a class="brand" href="/"><img src="../img/logo.png" alt="Logo" /></a>
 				</div>
 				<!--end: Logo -->
 				<!--start: Navbar -->
@@ -53,9 +53,9 @@
 											<ul class="dropdown-menu">
 												<li><a href="/listClassifiche">Visualizza le classifiche generali</a></li>
 												<li><a sec:authorize="hasRole('RUOLO_ADMIN')" href="/admin/aggiornaClassifica">Aggiorna
-														le classifiche [Admin]</a></li>
+														le classifiche <b>[Admin]</b></a></li>
 											</ul></li>
-											
+
 										<!--  Gare -->
 										<li th:class="'dropdown '+ ${navGare}"><a href="#" class="dropdown-toggle"
 											data-toggle="dropdown">Gare<b class="caret"></b>
@@ -63,44 +63,65 @@
 											<ul class="dropdown-menu">
 												<li><a href="/listGare">Visualizza le gare</a></li>
 												<li><a sec:authorize="hasRole('RUOLO_ADMIN')" href="/admin/newGara">Registra
-														una nuova gara [Admin]</a></li>
+														una nuova gara <b>[Admin]</b></a></li>
 											</ul></li>
-											
-										<!--  Atleti -->							
+
+										<!--  Atleti -->
 										<li th:class="'dropdown '+ ${navAtleti}"><a href="#" class="dropdown-toggle"
 											data-toggle="dropdown">Atleti<b class="caret"></b>
 										</a>
 											<ul class="dropdown-menu">
-												<li><a href="/utente/newAtleta">Registra il tuo profilo atleta [Utente]</a></li>
-												<li><a href="/404">Visualizza il tuo profilo atleta [Utente]</a></li>
+												<li><a href="/utente/newAtleta">Registra il tuo profilo atleta</a></li>
+												<li><a href="/404">Visualizza il tuo profilo atleta</a></li>
+												<li class="text-error" th:text="${erroreNewAtleta}"></li>
 											</ul></li>
-										
+
 										<!--  Società -->
 										<li th:class="'dropdown '+ ${navSocieta}"><a href="#" class="dropdown-toggle"
 											data-toggle="dropdown">Società<b class="caret"></b>
 										</a>
 											<ul class="dropdown-menu">
-												<li><a href="/utente/newSocieta">Registra una nuova società [Utente]</a></li>
-												<li><a href="/404">Visualizza il profilo della tua società [Utente]</a></li>
+												<li><a href="/utente/newSocieta">Registra una nuova società</a></li>
+												<li><a href="/404">Visualizza il profilo della tua società</a></li>
 												<li><a href="/listSocieta">Visualizza l'elenco delle società</a></li>
+												<li class="text-error" th:text="${erroreNewSocieta}"></li>
 											</ul></li>
 
-										<li class="divider"></li>
-										
 										<!--  Area Riservata -->
-										<li sec:authorize="!isAuthenticated()" th:class="'dropdown '+ ${navAccesso}"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown">Area Riservata<b class="caret"></b>
-										</a>
+										<li sec:authorize="!isAuthenticated()" th:class="'dropdown '+ ${navAccesso}"><a
+											href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+												th:class="${navAccesso}">Area Riservata</span><b class="caret"></b> </a>
 											<ul class="dropdown-menu">
 												<li><a href="/accedi">Login/Registrazione</a></li>
 											</ul></li>
-										
-										<!--  Logout -->
-										<li><div sec:authorize="isAuthenticated()" class="input">
-												<form action="/logout" method="post">
-													<input id="logout" type="submit" value="[Logout]" />
-												</form>
-											</div></li>
+
+										<!--  Utente Autenticato -->
+										<li sec:authorize="isAuthenticated()">
+											<div>
+												Benvenuto, <b sec:authentication="name">[generic user]</b>!
+												<!-- 
+													<div th:if="${utente.atletaGestito}">
+														I tuoi dati da atleta: <span
+															th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"></span>
+													</div>
+													<div th:unless="${utente.atletaGestito}">
+														Non hai <b>ancora</b> registrato un profilo atleta. <a href="/utente/newAtleta">Registralo
+															ora!</a> <span th:text="${erroreNewAtleta}"></span>
+													</div>
+
+													<div th:if="${utente.societaGestita}">
+														La tua società : <span th:text="${utente.societaGestita.nome}"></span>
+													</div>
+													<div th:unless="${utente.societaGestita}">
+														Non hai una società registrata a tuo carico. <a href="/utente/newSocieta">Registrala
+															ora!</a> <span th:text="${erroreNewSocieta}"></span>
+													</div>
+													-->
+											</div>
+											<form action="/logout" method="post">
+												<input id="logout" type="submit" value="Logout" />
+											</form>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -181,7 +202,7 @@
 				</div>
 				<!-- end: Footer Menu Logo -->
 				<!-- start: Footer Menu Links-->
-					<!-- <div class="span9">
+				<!-- <div class="span9">
 						<div id="footer-menu-links">
 							<ul id="footer-nav">
 								<li><a href="/">Home</a></li>
@@ -214,7 +235,7 @@
 					<h3>About Us</h3>
 					<p>
 						Progetto per l'esame di <b>Sistemi Informativi sul Web (AA 2016-2017)</b>, Università degli
-						Studi di Roma Tre - Dipartimento di Ingegneria Informatica<br/> Realizzato da <i>Lorenzo
+						Studi di Roma Tre - Dipartimento di Ingegneria Informatica<br /> Realizzato da <i>Lorenzo
 							Guidaldi</i> e <i>Maria Elena Madon</i>
 					</p>
 				</div>
@@ -234,7 +255,7 @@
 	<!-- end: Footer -->
 
 	<!-- start: Copyright -->
-	<div th:fragment="formCopyright" id="copyright">
+	<div th:fragment="Copyright" id="copyright">
 		<div class="container">
 			<p>
 				&copy; 2013, creativeLabs. <a href="http://bootstrapmaster.com" alt="Bootstrap Themes">Bootstrap
