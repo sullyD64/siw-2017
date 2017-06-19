@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import it.uniroma3.triathlon.model.RuoloUtente;
 import it.uniroma3.triathlon.model.Utente;
-import it.uniroma3.triathlon.service.RisultatoService;
 import it.uniroma3.triathlon.service.RuoloUtenteService;
 import it.uniroma3.triathlon.service.SocietaService;
 import it.uniroma3.triathlon.service.UtenteService;

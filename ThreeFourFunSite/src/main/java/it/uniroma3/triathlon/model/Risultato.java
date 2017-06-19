@@ -1,6 +1,6 @@
 package it.uniroma3.triathlon.model;
 
-import java.util.Date;
+import java.time.LocalTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,44 +11,54 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="risultati", uniqueConstraints = @UniqueConstraint(columnNames={"atletaPartecipante","gara"}))
-public class Risultato {
-
+public class Risultato implements Comparable<Risultato> {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	@Column(nullable = false)
-	private boolean garaEffettuata;
+	private boolean valido;
+	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name = "atletaPartecipante")
 	private Atleta atletaPartecipante;
+	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name = "gara")
 	private Gara gara;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tempoNuoto;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tempoBici;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tempoCorsa;
+	
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+	private LocalTime tempoSwim;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+	private LocalTime tempoBike;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+	private LocalTime tempoRun;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+	private LocalTime tempoTot;
 	
 	public Risultato(Atleta atletaPartecipante, Gara gara) {
 		this.atletaPartecipante = atletaPartecipante;
 		this.gara = gara;
-		this.garaEffettuata = false;
+		this.valido = false;
 	}
 	
 	public Risultato() {
-		this.garaEffettuata = false;
+		this.valido = false;
 	}
 	
-	public boolean isGaraEffettuata() {
-		return garaEffettuata;
+	public Long getId() {
+		return id;
+	}
+	
+	public boolean isValido() {
+		return valido;
 	}
 	public Atleta getAtletaPartecipante() {
 		return atletaPartecipante;
@@ -56,17 +66,20 @@ public class Risultato {
 	public Gara getGara() {
 		return gara;
 	}
-	public Date getTempoNuoto() {
-		return tempoNuoto;
+	public LocalTime getTempoSwim() {
+		return tempoSwim;
 	}
-	public Date getTempoBici() {
-		return tempoBici;
+	public LocalTime getTempoBike() {
+		return tempoBike;
 	}
-	public Date getTempoCorsa() {
-		return tempoCorsa;
+	public LocalTime getTempoRun() {
+		return tempoRun;
 	}
-	public void setGaraEffettuata(boolean garaEffettuata) {
-		this.garaEffettuata = garaEffettuata;
+	public LocalTime getTempoTot() {
+		return tempoTot;
+	}
+	public void setValido(boolean valido) {
+		this.valido = valido;
 	}
 	public void setAtletaPartecipante(Atleta atletaPartecipante) {
 		this.atletaPartecipante = atletaPartecipante;
@@ -74,13 +87,21 @@ public class Risultato {
 	public void setGara(Gara gara) {
 		this.gara = gara;
 	}
-	public void setTempoNuoto(Date tempoNuoto) {
-		this.tempoNuoto = tempoNuoto;
+	public void setTempoSwim(LocalTime tempoNuoto) {
+		this.tempoSwim = tempoNuoto;
 	}
-	public void setTempoBici(Date tempoBici) {
-		this.tempoBici = tempoBici;
+	public void setTempoBike(LocalTime tempoBike) {
+		this.tempoBike = tempoBike;
 	}
-	public void setTempoCorsa(Date tempoCorsa) {
-		this.tempoCorsa = tempoCorsa;
+	public void setTempoRun(LocalTime tempoRun) {
+		this.tempoRun = tempoRun;
+	}	
+	public void setTempoTot(LocalTime tempoTot) {
+		this.tempoTot = tempoTot;
+	}
+
+	@Override
+	public int compareTo(Risultato that) {
+		return this.getId().compareTo(that.getId());
 	}
 }

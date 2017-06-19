@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -98,6 +99,17 @@ public class SocietaController {
 			}
 		}
 		return nextPage;
+	}
+	
+	@PostMapping("/utente/addAtletaASocieta/{id}")
+	public String aggiungiAtletaASocieta(@PathVariable("id") Long id,
+			@SessionAttribute("current_username") String username,
+			@RequestParam(defaultValue="") Long societaID, 
+			RedirectAttributes redir, Model model) {
+		atletaService.setIscrittoASocieta(username, societaService.findOne(societaID));
+		
+		redir.addFlashAttribute("successo", "L'atleta ora è iscritto ad una società e può partecipare alle gare");
+		return "redirect:/utente/" + username;
 	}
 
 	@PostMapping("/admin/deleteSocieta/{id}")

@@ -4,16 +4,16 @@
 <head>
 <!-- start: Meta -->
 <meta charset="utf-8" />
-<title>Form di registrazione</title>
+<title>Three.Four.Fun [siw-2017]</title>
 <meta name="description" content="GotYa Free Bootstrap Theme" />
 <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
 <!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
 <!-- end: Meta -->
 
 <!-- start: CSS -->
-<link href="../css/bootstrap.css" rel="stylesheet" />
-<link href="../css/bootstrap-responsive.css" rel="stylesheet" />
-<link href="../css/style.css" rel="stylesheet" />
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css"
 	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
@@ -23,6 +23,19 @@
 <!-- end: CSS -->
 </head>
 <body>
+	<style>
+DIV.table {
+	display: table;
+}
+
+FORM.tr, DIV.tr {
+	display: table-row;
+}
+
+SPAN.td {
+	display: table-cell;
+}
+</style>
 	<header th:include="layout :: Header"></header>
 	<!-- start: Wrapper -->
 	<div id="wrapper">
@@ -177,18 +190,109 @@
 							</fieldset>
 						</form>
 					</div>
-
 				</div>
 				<!-- end: Form Gara -->
+
+
+				<!-- start: Form Classifica -->
+				<div th:if="${formClassifica} and not ${editorClassifica}" class="span4">
+					<div class="title">
+						<h3>Elenco delle gare svolte</h3>
+					</div>
+					<div class="clearfix">
+						Qui sotto vengono mostrate tutte le gare che sono state svolte, ma per le quali non sono
+						ancora stati registrati risultati. Scegline una per aprire l'editor delle classifiche e
+						aggiornare i risultati di ciascun atleta partecipante.
+						<hr />
+					</div>
+					<div class="clearfix">
+						<font size="3">
+							<table th:if="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}">
+								<tr>
+									<th><b>Data di svolgimento</b></th>
+									<th><b>Nome dell'evento</b></th>
+								</tr>
+								<tr th:each="gara : ${gareDaAggiornare}">
+									<td th:text="${gara.dataSvolgimento}"></td>
+									<td><a th:href="@{/admin/newClassifica/} + ${gara.id}" th:text="${gara.nomeLuogo}"></a></td>
+								</tr>
+							</table>
+						</font>
+						<span th:unless="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}">
+							<font size="3">Non c'è nessuna gara da aggiornare.</font>
+						</span>
+					</div>
+				</div>
+
+				<div th:if="${editorClassifica}" class="span12">
+					<div class="title">
+						<h3>Editor Classifica</h3>
+					</div>
+					<div class="clearfix">
+						<font size="3">Inserisci i risultati di tutti gli atleti partecipanti alla gara <b><span
+									th:text="${gara.nomeLuogo}"></span></b>:
+						</font>
+						<hr />
+						<div class="table">
+							<div class="tr">
+								<span class="td">
+									<b>Atleta</b>
+								</span>
+								<span class="td">
+									<b>Tempo Nuoto</b>
+								</span>
+								<span class="td">
+									<b>Tempo Bici</b>
+								</span>
+								<span class="td">
+									<b>Tempo Corsa</b>
+								</span>
+								<span class="td">
+									<b>Totale</b>
+								</span>
+							</div>
+							<th:block th:each="risultato : ${gara.risultati}">
+								<form class="tr" th:object="${risultato}" th:action="@{addRisultato/} + ${risultato.id}"
+									method="post">
+									<span class="td" th:text="*{atletaPartecipante.nome} +' '+*{atletaPartecipante.cognome}"></span>
+									<span class="td">
+										<input type="time" step="1" th:disabled="*{valido}" id="tempoSwim" name="tempoSwim"
+											required="required" th:value="*{tempoSwim}"></input>
+									</span>
+									<span class="td">
+										<input type="time" step="1" th:disabled="*{valido}" id="tempoBike" name="tempoBike"
+											required="required" th:value="*{tempoBike}"></input>
+									</span>
+									<span class="td">
+										<input type="time" step="1" th:disabled="*{valido}" id="tempoRun" name="tempoRun"
+											required="required" th:value="*{tempoRun}"></input>
+									</span>
+									<span class="td">
+										<span th:text="*{tempoTot}"></span>
+									</span>
+									<span class="td" th:if="!*{valido}">
+										<input type="submit" name="comando" value="Registra" class="btn btn-succes btn-small" />
+									</span>
+									<span class="td" th:if="*{valido}">
+										<input type="submit" name="comando" value="Modifica" class="btn btn-succes btn-small" />
+									</span>
+								</form>
+							</th:block>
+						</div>
+					</div>
+				</div>
+				<!-- end: Form Classifica -->
+
+
+
 
 				<!-- start: Riepilogo Info -->
 				<div class="span4" th:if="${successo} or ${errore}">
 					<div class="title">
 						<h3>Riepilogo Informazioni</h3>
 					</div>
-					<div class="text-error" th:text="${errore}"></div>
-					<font size="3"> <span class="text-success" th:text="${successo}"></span><br />
-					</font>
+					<font size="3"><span class="text-error" th:text="${errore}"></span> <span
+							class="text-success" th:text="${successo}"></span><br /> </font>
 					<div class="text-error" th:if="${societaNonSelezionata}">
 						Attualmente non sei iscritto a nessuna società. Puoi comunque modificare i tuoi dati atleta
 						dalla tua area personale e sceglierne una, oppure puoi creare una tua società alla quale
@@ -201,50 +305,62 @@
 						<div class="clearfix" th:inline="text">
 							<div th:if="${formAtleta}">
 								<h4>
-									<b>Nome:</b> <span th:text="${atleta.nome}"></span>
+									<b>Nome:</b>
+									<span th:text="${atleta.nome}"></span>
 								</h4>
 								<h4>
-									<b>Cognome:</b> <span th:text="${atleta.cognome}"></span>
+									<b>Cognome:</b>
+									<span th:text="${atleta.cognome}"></span>
 								</h4>
 								<h4>
-									<b>Sesso:</b> <span th:text="${atleta.sesso}"></span>
+									<b>Sesso:</b>
+									<span th:text="${atleta.sesso}"></span>
 								</h4>
 								<h4>
-									<b>Nazionalità:</b> <span th:text="${atleta.nazione}"></span>
+									<b>Nazionalità:</b>
+									<span th:text="${atleta.nazione}"></span>
 								</h4>
 								<h4>
-									<b>Età:</b> <span th:text="${atleta.eta}"></span>
+									<b>Età:</b>
+									<span th:text="${atleta.eta}"></span>
 								</h4>
 								<h4>
-									<b>Categoria:</b> <span th:text="${atleta.categoria}"></span>
+									<b>Categoria:</b>
+									<span th:text="${atleta.categoria}"></span>
 								</h4>
 								<h4 th:if="${atleta.societa}">
-									<b>Società:</b> <span th:text="${atleta.societa.nome}"></span>
+									<b>Società:</b>
+									<span th:text="${atleta.societa.nome}"></span>
 								</h4>
 							</div>
 							<div th:if="${formSocieta}">
 								<h4>
-									<b>Nome:</b> <span th:text="${societa.nome}"></span>
+									<b>Nome:</b>
+									<span th:text="${societa.nome}"></span>
 								</h4>
 								<h4>
-									<b>Data di Fondazione:</b> <span th:text="${societa.dataFondazione}"></span>
+									<b>Data di Fondazione:</b>
+									<span th:text="${societa.dataFondazione}"></span>
 								</h4>
 								<h4>
-									<b>Regione:</b> <span th:text="${societa.regione}"></span>
+									<b>Regione:</b>
+									<span th:text="${societa.regione}"></span>
 								</h4>
 								<h4>
-									<b>Presidente:</b> <span
-										th:text="${societa.presidente.nome} +' '+${societa.presidente.cognome}"></span>
+									<b>Presidente:</b>
+									<span th:text="${societa.presidente.nome} +' '+${societa.presidente.cognome}"></span>
 								</h4>
 								<hr />
 								<h4>Ora altri utenti potranno iscriversi alla tua società.</h4>
 							</div>
 							<div th:if="${formGara}">
 								<h4>
-									<b>Nome e Luogo:</b> <span th:text="${gara.nomeLuogo}"></span>
+									<b>Nome e Luogo:</b>
+									<span th:text="${gara.nomeLuogo}"></span>
 								</h4>
 								<h4>
-									<b>Data di Svolgimento</b> <span th:text="${gara.dataSvolgimento}"></span>
+									<b>Data di Svolgimento</b>
+									<span th:text="${gara.dataSvolgimento}"></span>
 								</h4>
 								<hr />
 								<h4>Ora gli utenti potranno iscriversi alla gara.</h4>
@@ -253,6 +369,7 @@
 					</div>
 				</div>
 				<!-- end: Riepilogo Info -->
+
 
 			</div>
 			<!-- end: Row -->
@@ -264,5 +381,6 @@
 	<!-- end: Wrapper  -->
 
 	<div th:include="layout :: javascript"></div>
+
 </body>
 </html>

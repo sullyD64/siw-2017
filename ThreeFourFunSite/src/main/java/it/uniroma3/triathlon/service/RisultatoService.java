@@ -1,5 +1,7 @@
 package it.uniroma3.triathlon.service;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +19,14 @@ public class RisultatoService {
 		return risultatoRepository.findByAtletaPartecipanteAndGara(
 				risultato.getAtletaPartecipante(), risultato.getGara())!=null;
 	}
+	
+	public Risultato findOne(Long id) {
+		return this.risultatoRepository.findOne(id);
+	}
 
 	@Transactional
 	public void save(final Risultato risultato) {
 		this.risultatoRepository.save(risultato);
+		Collections.sort(risultato.getGara().getRisultati());
 	}
 }

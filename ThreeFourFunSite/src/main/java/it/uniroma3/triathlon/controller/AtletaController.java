@@ -100,17 +100,6 @@ public class AtletaController {
 		}
 		return nextPage;
 	}
-	
-	@PostMapping("/utente/addAtletaASocieta/{id}")
-	public String aggiungiAtletaASocieta(@PathVariable("id") Long id,
-			@SessionAttribute("current_username") String username,
-			@RequestParam(defaultValue="") Long societaID, 
-			RedirectAttributes redir, Model model) {
-		atletaService.setIscrittoASocieta(username, societaService.findOne(societaID));
-		
-		redir.addFlashAttribute("successo", "L'atleta ora è iscritto ad una società e può partecipare alle gare");
-		return "redirect:/utente/" + username;
-	}
 
 	@PostMapping("/admin/deleteAtleta/{id}")
 	public String eliminaAtleta(@PathVariable("id") Long id, 

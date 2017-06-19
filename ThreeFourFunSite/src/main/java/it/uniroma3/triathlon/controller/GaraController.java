@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,7 +25,7 @@ import it.uniroma3.triathlon.service.UtenteService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
-@SessionAttributes("current_username")
+@SessionAttributes({"current_username", "gara"})
 public class GaraController {
 
 	@Autowired
@@ -33,14 +34,21 @@ public class GaraController {
 	private RisultatoService risultatoService;
 	@Autowired
 	private UtenteService utenteService;
-	
+
 	@GetMapping("/listGare")
 	public String mostraListaSocieta(Model model) {
 		model.addAttribute("navGare", "active");
 		model.addAttribute("elencoGare", garaService.getSortedByDate());
 		return "view_gare";
 	}
-	
+
+	//	@GetMapping("/listClassifiche")
+	//	public String mostraClassifiche(Model model) {
+	//		model.addAttribute("navClassifiche", "active");
+	//		model.addAttribute("");
+	//		return "view_classifiche";
+	//	}
+
 	@GetMapping("/admin/newGara")
 	public String mostraForm(Gara gara, Model model) {
 		model.addAttribute("navGare", "active");
@@ -48,13 +56,68 @@ public class GaraController {
 		return "form";
 	}
 
+	@GetMapping("/admin/newClassifica")
+	public String mostraFormClassifica(Model model) {
+		model.addAttribute("navClassifiche", "active");
+		model.addAttribute("formClassifica", true);
+		model.addAttribute("gareDaAggiornare", garaService.getGareDaAggiornare());
+		return "form";
+	}
+
+	@GetMapping("/admin/newClassifica/{id}")
+	public String mostraFormClassificaGara(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("navClassifiche", "active");
+		model.addAttribute("formClassifica", true);
+		model.addAttribute("editorClassifica", true);
+		model.addAttribute("gara", garaService.findOne(id));
+		return "form";
+	}
+
+	@PostMapping("/admin/newClassifica/addRisultato/{id}")
+	public String addTempiRisultato(@PathVariable("id") Long id,
+			@RequestParam("comando") String comando,
+			@SessionAttribute("gara") Gara gara, 
+			@Valid @ModelAttribute Risultato ris, 
+			BindingResult bindingResult, Model model) {
+		
+		String nextPage = "redirect:/admin/newClassifica/" + gara.getId();
+		Risultato risultato = risultatoService.findOne(id);
+		
+		if (comando.equalsIgnoreCase("registra")) {
+			if (bindingResult.hasErrors()) {
+				model.addAttribute("errore", "Inserire un tempo valido");
+				return nextPage;
+			}
+			risultato.setTempoSwim(ris.getTempoSwim());
+			risultato.setTempoBike(ris.getTempoBike());
+			risultato.setTempoRun(ris.getTempoRun());
+			risultato.setTempoTot(Calcolatore.calcolaTempoTot(risultato));
+			risultato.setValido(true);
+			risultatoService.save(risultato);
+			
+		} else if (comando.equalsIgnoreCase("modifica")) {
+			if (risultato.isValido())
+				risultato.setValido(false);
+			risultatoService.save(risultato);
+		}
+		return nextPage;
+	}
+	
+	@PostMapping("/admin/newClassifica/confermaRisultati")
+	public String confermaRisultati(@SessionAttribute("gara") Gara gara, Model model) {
+		String nextPage = "redirect:/admin/newClassifica/" + gara.getId();
+		
+		
+		
+		return nextPage;
+	}
+	
+
 	@PostMapping("/admin/newGara")
 	public String checkGaraInfo(@Valid @ModelAttribute Gara gara, BindingResult bindingResult, Model model) {
 		String nextPage = "form";
 		model.addAttribute("navGare", "active");
 		model.addAttribute("formGara", true);
-		
-		System.out.println(bindingResult.toString());
 
 		if (!bindingResult.hasErrors()) {
 			// controllo data futura
@@ -77,13 +140,13 @@ public class GaraController {
 		}
 		return nextPage;
 	}
-	
+
 	@PostMapping("/utente/iscriviAGara/{id}")
 	public String iscriviAtleta(@PathVariable("id") Long id,
 			@SessionAttribute("current_username") String username,
 			RedirectAttributes redir, Model model) {
 		Utente utente = utenteService.findByUsername(username);
-		
+
 		// Errore: l'utente non ha un profilo atleta registrato
 		if (!utente.hasAtletaGestito()) {
 			redir.addFlashAttribute("errore", "Devi aver registrato un profilo atleta per partecipare alla gara.");
@@ -95,11 +158,11 @@ public class GaraController {
 			} else {
 				Gara gara = garaService.findOne(id);
 				Risultato risultato = new Risultato(atleta, gara);
-				
+
 				// Errore: l'atleta è già iscritto alla gara
 				if (risultatoService.isAlreadyRegistered(risultato)) {
 					redir.addFlashAttribute("errore", "Sei già iscritto alla gara");
-				
+
 				} else { 	// Scenario di successo
 					risultatoService.save(risultato);
 					redir.addFlashAttribute("successo", "Sei iscritto alla gara!");
@@ -108,7 +171,7 @@ public class GaraController {
 		}
 		return "redirect:/listGare";
 	}
-	
+
 	@PostMapping("/admin/deleteGara/{id}")
 	public String eliminaGara(@PathVariable("id") Long id, 
 			RedirectAttributes redir, Model model){

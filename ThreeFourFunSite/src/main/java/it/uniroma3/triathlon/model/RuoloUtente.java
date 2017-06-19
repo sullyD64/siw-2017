@@ -22,7 +22,6 @@ public class RuoloUtente {
 	}
 	
 	public RuoloUtente() {
-		
 	}
 
 	public Integer getRuoloUtenteId() {

@@ -11,9 +11,9 @@
 <!-- end: Meta -->
 
 <!-- start: CSS -->
-<link href="../css/bootstrap.css" rel="stylesheet" />
-<link href="../css/bootstrap-responsive.css" rel="stylesheet" />
-<link href="../css/style.css" rel="stylesheet" />
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css"
 	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
@@ -30,7 +30,7 @@
 			<div class="row">
 				<!--start: Logo -->
 				<div class="logo span3">
-					<a class="brand" href="/"><img src="../img/logo.png" alt="Logo" /></a>
+					<a class="brand" href="/"><img src="/img/logo.png" alt="Logo" /></a>
 				</div>
 				<!--end: Logo -->
 				<!--start: Navbar -->
@@ -52,7 +52,7 @@
 										</a>
 											<ul class="dropdown-menu">
 												<li><a th:href="@{/listClassifiche}">Visualizza le classifiche generali</a></li>
-												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/aggiornaClassifica}">Aggiorna
+												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/newClassifica}">Aggiorna
 														le classifiche <b>[Admin]</b>
 												</a></li>
 											</ul></li>
@@ -92,7 +92,8 @@
 												<li sec:authorize="!isAuthenticated()">
 													<div class="actions" align="center">
 														<form th:action="@{/accedi}" method="get">
-															<input id="accedi" type="submit" value="Login/Registrazione" />
+															<input id="accedi" type="submit" class="btn btn-succes btn-small"
+																value="Login/Registrazione" />
 														</form>
 													</div>
 												</li>
@@ -111,7 +112,7 @@
 												Benvenuto, <b sec:authentication="name">[generic user]</b>!
 												<form action="/logout" method="post">
 													<div class="actions">
-														<input id="logout" type="submit" value="Logout" />
+														<input id="logout" type="submit" value="Logout" class="btn btn-succes btn-small" />
 													</div>
 												</form>
 											</div>
@@ -191,7 +192,7 @@
 				<!-- start: Footer Menu Logo -->
 				<div class="span2">
 					<div id="footer-menu-logo">
-						<a href="#"><img src="img/logo-footer-menu.png" alt="logo" /></a>
+						<a href="#"><img src="/img/logo-footer-menu.png" alt="logo" /></a>
 					</div>
 				</div>
 				<!-- end: Footer Menu Logo -->
@@ -263,12 +264,12 @@
 	<!-- start: Java Script -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<div th:fragment="javascript">
-		<script src="../js/jquery-1.8.2.js"></script>
-		<script src="../js/bootstrap.js"></script>
-		<script src="../js/flexslider.js"></script>
-		<script src="../js/carousel.js"></script>
-		<script src="../js/jquery.cslider.js"></script>
-		<script src="../js/slider.js"></script>
+		<script src="/js/jquery-1.8.2.js"></script>
+		<script src="/js/bootstrap.js"></script>
+		<script src="/js/flexslider.js"></script>
+		<script src="/js/carousel.js"></script>
+		<script src="/js/jquery.cslider.js"></script>
+		<script src="/js/slider.js"></script>
 		<script defer="defer" src="../js/custom.js"></script>
 	</div>
 	<!-- end: Java Script -->

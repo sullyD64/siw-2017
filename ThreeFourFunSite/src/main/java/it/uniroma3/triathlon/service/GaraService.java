@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.triathlon.model.Gara;
 import it.uniroma3.triathlon.repository.GaraRepository;
+import it.uniroma3.triathlon.util.Calcolatore;
 
 @Service
 public class GaraService {
@@ -64,6 +65,18 @@ public class GaraService {
 			}
 		}
 		return lastThree;
+	}
+	
+	public List<Gara> getGareDaAggiornare() {
+		Iterable<Gara> allGare = findAll();
+		List<Gara> gareDaAggiornare = new ArrayList<>();
+		
+		for (Gara gara : allGare) {
+			if (Calcolatore.isDataPassata(gara.getDataSvolgimento()) && !gara.isCompletata())
+				gareDaAggiornare.add(gara);
+		}
+		
+		return gareDaAggiornare;
 	}
 
 	@Transactional

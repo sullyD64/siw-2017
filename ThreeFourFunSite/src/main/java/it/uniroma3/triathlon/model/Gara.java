@@ -35,12 +35,16 @@ public class Gara implements Comparable<Gara>{
 	@Column(nullable = false)
 	private LocalDate dataSvolgimento;
 	
+	@Column(nullable = false)
+	private boolean completata;
+	
 	@OneToMany(mappedBy = "gara", cascade={ CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Risultato> risultati;
 	
 	public Gara(String nomeLuogo, LocalDate dataSvolgimento) {
 		this.nomeLuogo = nomeLuogo;
 		this.dataSvolgimento = dataSvolgimento;
+		this.completata = false;
 		this.risultati = new LinkedList<>();
 	}
 	
@@ -52,6 +56,12 @@ public class Gara implements Comparable<Gara>{
 		return id;
 	}
 	
+	public boolean isCompletata() {
+		return completata;
+	}
+	public void setCompletata(boolean effettuata) {
+		this.completata = effettuata;
+	}	
 	public String getNomeLuogo() {
 		return nomeLuogo;
 	}
