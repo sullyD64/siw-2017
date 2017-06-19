@@ -114,7 +114,7 @@
 				<!-- end: Form Registrazione Utente -->
 
 				<!-- start: Riepilogo Utente -->
-				<div class="span4">
+				<div class="span4" th:if="${errore} or ${successo}">
 					<div class="title">
 						<h3>Riepilogo Informazioni</h3>
 					</div>

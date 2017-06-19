@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import it.uniroma3.triathlon.model.RuoloUtente;
 import it.uniroma3.triathlon.model.Utente;
 import it.uniroma3.triathlon.service.RuoloUtenteService;
+import it.uniroma3.triathlon.service.SocietaService;
 import it.uniroma3.triathlon.service.UtenteService;
 
 @Controller
@@ -25,6 +26,8 @@ public class UtenteController {
 
 	@Autowired
 	private UtenteService utenteService;
+	@Autowired
+	private SocietaService societaService;
 
 	@Autowired
 	private RuoloUtenteService ruoloUtenteService;
@@ -33,6 +36,10 @@ public class UtenteController {
 	public String mostraUtente(@PathVariable("username") String user, 
 			@SessionAttribute(name="current_username") String username, Model model){
 		Utente utente = utenteService.findByUsername(username);
+		
+		if (utente.hasAtletaGestito() && utente.getAtletaGestito().getSocieta()==null)
+			model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
+		
 		model.addAttribute("navAccesso", "active");
 		model.addAttribute(utente);
 		return "area_riservata";

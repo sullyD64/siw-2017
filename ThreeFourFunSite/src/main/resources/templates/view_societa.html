@@ -50,10 +50,11 @@
 					<div class="title">
 						<h3 th:text="${societa.nome}"></h3>
 					</div>
-					<h4 th:text="'Regione: ' + ${societa.regione}"></h4>
-					<h4 th:text="'Data di fondazione: ' + ${societa.dataFondazione}"></h4>
-					<h4 th:text="'Presidente: ' + ${societa.presidente.nome} +' '+ ${societa.presidente.cognome}"></h4>
-
+					<div class="clearfix">
+						<h4 th:text="'Regione: ' + ${societa.regione}"></h4>
+						<h4 th:text="'Data di fondazione: ' + ${societa.dataFondazione}"></h4>
+						<h4 th:text="'Presidente: ' + ${societa.presidente.nome} +' '+ ${societa.presidente.cognome}"></h4>
+					</div>
 					<hr />
 					<table th:unless="${#lists.isEmpty(societa.atleti)}">
 						<tr>
@@ -62,7 +63,7 @@
 						</tr>
 						<tr th:each="atleta : ${societa.atleti}">
 							<td><a th:href="@{/atleta/} + ${atleta.id}"
-								th:text="${atleta.nome} +' '+${atleta.cognome}"></a></td>
+								th:text="${atleta.nome} +' '+ ${atleta.cognome}"></a></td>
 							<td th:text="${atleta.categoria}"></td>
 						</tr>
 					</table>

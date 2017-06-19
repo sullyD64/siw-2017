@@ -63,8 +63,8 @@
 										</a>
 											<ul class="dropdown-menu">
 												<li><a th:href="@{/listGare}">Visualizza l'elenco delle gare</a></li>
-												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/newGara}">Registra una
-														nuova gara <b>[Admin]</b>
+												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/newGara}">Registra
+														una nuova gara <b>[Admin]</b>
 												</a></li>
 											</ul></li>
 
@@ -86,8 +86,8 @@
 
 										<!--  Area Utenti -->
 										<li th:class="'dropdown '+ ${navAccesso}"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown"><span th:class="${navAccesso}">Utenti</span><b
-												class="caret"></b> </a>
+											data-toggle="dropdown"><span th:class="${navAccesso}">Utenti</span><b class="caret"></b>
+										</a>
 											<ul class="dropdown-menu">
 												<li sec:authorize="!isAuthenticated()">
 													<div class="actions" align="center">
@@ -98,7 +98,9 @@
 												</li>
 												<li><a th:href="@{/utente/newAtleta}">Registra il tuo profilo atleta</a></li>
 												<li><a th:href="@{/utente/newSocieta}">Registra una nuova società</a></li>
-												<li><a th:if="${current_username}" sec:authorize="hasRole('ROLE_UTENTE')" th:href="@{/utente/} + ${current_username}">Visualizza e gestisci le tue informazioni</a></li>
+												<li><a th:if="${current_username}" sec:authorize="hasRole('ROLE_UTENTE')"
+													th:href="@{/utente/} + ${current_username}">Visualizza e gestisci le tue
+														informazioni</a></li>
 												<li class="text-error" th:text="${erroreNewAtleta}"></li>
 												<li class="text-error" th:text="${erroreNewSocieta}"></li>
 											</ul></li>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <!-- start: Meta -->
 <meta charset="utf-8" />
@@ -181,7 +182,7 @@
 				<!-- end: Form Gara -->
 
 				<!-- start: Riepilogo Info -->
-				<div class="span4">
+				<div class="span4" th:if="${successo} or ${errore}">
 					<div class="title">
 						<h3>Riepilogo Informazioni</h3>
 					</div>
@@ -192,7 +193,8 @@
 						Attualmente non sei iscritto a nessuna società. Puoi comunque modificare i tuoi dati atleta
 						dalla tua area personale e sceglierne una, oppure puoi creare una tua società alla quale
 						risulterai iscritto.<br /> <b>Ricorda che è necessario far parte di una società per
-							iscriversi ad una gara!!!</b>
+							iscriversi ad una gara!!!</b> <br /> <font size="3"><a th:if="${current_username}"
+							th:href="@{/utente/} + ${current_username}">Fallo ora!</a> </font>
 					</div>
 					<div th:if="${successo}">
 						<hr />
@@ -235,7 +237,7 @@
 										th:text="${societa.presidente.nome} +' '+${societa.presidente.cognome}"></span>
 								</h4>
 								<hr />
-								<h4>Ora è possibile aggiungere atleti alla società.</h4>
+								<h4>Ora altri utenti potranno iscriversi alla tua società.</h4>
 							</div>
 							<div th:if="${formGara}">
 								<h4>
@@ -245,7 +247,7 @@
 									<b>Data di Svolgimento</b> <span th:text="${gara.dataSvolgimento}"></span>
 								</h4>
 								<hr />
-								<h4>Ora è possibile iscriversi alla gara</h4>
+								<h4>Ora gli utenti potranno iscriversi alla gara.</h4>
 							</div>
 						</div>
 					</div>
