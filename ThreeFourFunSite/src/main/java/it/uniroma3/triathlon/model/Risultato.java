@@ -2,18 +2,21 @@ package it.uniroma3.triathlon.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="risultati")
+@Table(name="risultati", uniqueConstraints = @UniqueConstraint(columnNames={"atletaPartecipante","gara"}))
 public class Risultato {
 
 	@Id
@@ -21,9 +24,11 @@ public class Risultato {
 	private Long id;
 	@Column(nullable = false)
 	private boolean garaEffettuata;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@JoinColumn(name = "atletaPartecipante")
 	private Atleta atletaPartecipante;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@JoinColumn(name = "gara")
 	private Gara gara;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date tempoNuoto;

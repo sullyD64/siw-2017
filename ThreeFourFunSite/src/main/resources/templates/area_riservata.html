@@ -102,7 +102,7 @@
 					</div>
 					<div class="clearfix" th:if="${successo}">
 						<hr />
-						<font size="3"><span th:text="${successo}"></span></font>
+						<font size="3"><span class="text-success" th:text="${successo}"></span></font>
 						<hr />
 					</div>
 				</div>
@@ -133,26 +133,41 @@
 					</table>
 				</div>
 				<!-- end: Pannello Societa -->
-
-
-
-				<!-- start: Riepilogo Info -->
-				<div class="span4" th:if="${successo}">
-					<div class="title">
-						<h3>Riepilogo Informazioni</h3>
-					</div>
-					<div class="span4">
-						<font size="3"> <span class="text-success" th:text="${successo}"></span>
-						</font>
-					</div>
-				</div>
-				<!-- end: Riepilogo Info -->
 			</div>
 			<!-- end: Row -->
 		</div>
 		<!-- end: Container -->
 	</div>
 	<!-- end: Wrapper  -->
+
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+		<!-- start: Container -->
+		<div class="container">
+			<!-- start: Row -->
+			<div class="row">
+				<!-- start: Pannello Gare  -->
+				<div class="span4" th:if="${utente.atletaGestito}">
+					<div class="title">
+						<h3>Gare e risultati</h3>
+					</div>
+					<table th:if="${elencoRisultati}">
+						<tr th:each="risultato : ${elencoRisultati}">
+							<td th:text="${risultato.atletaPartecipante}"></td>
+						</tr>
+					</table>
+					<div th:unless="${elencoRisultati}">
+						<font size="3">Non hai ancora partecipato ad una gara.</font>
+					</div>
+					<!-- end: Pannello Gare  -->
+				</div>
+			</div>
+			<!-- end: Row -->
+		</div>
+		<!-- end: Container -->
+	</div>
+	<!-- end: Wrapper  -->
+
 
 	<div th:include="layout :: javascript"></div>
 </body>

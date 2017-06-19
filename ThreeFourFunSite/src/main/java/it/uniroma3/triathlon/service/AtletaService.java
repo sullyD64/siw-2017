@@ -40,6 +40,8 @@ public class AtletaService {
 		return false;
     }
     
+    
+    
     public boolean hasUtenteGestore(String username) {
 		return utenteService.findByUsername(username).hasAtletaGestito();
 	}

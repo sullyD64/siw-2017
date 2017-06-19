@@ -20,6 +20,10 @@ public class RuoloUtente {
 		this.utente = utente;
 		this.ruolo = ruolo;
 	}
+	
+	public RuoloUtente() {
+		
+	}
 
 	public Integer getRuoloUtenteId() {
 		return ruoloUtenteId;

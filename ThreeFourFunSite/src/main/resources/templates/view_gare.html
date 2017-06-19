@@ -32,42 +32,52 @@
 			<!-- start: Row -->
 			<div class="row">
 				<!-- start: List Gare -->
-				<div class="span4">
+				<div class="span6">
 					<div class="title">
 						<h3>Lista delle gare</h3>
 					</div>
 					<div class="clearfix">
-						<table th:unless="${#lists.isEmpty(elencoGare)}">
-							<tr>
-								<th><b>Data di svolgimento</b></th>
-								<th><b>Nome dell'evento</b></th>
-								<th sec:authorize="hasRole('ROLE_ADMIN')">[Pannello Amministratore]</th>
-							</tr>
-							<tr th:each="gara : ${elencoGare}">
-								<td th:text="${gara.dataSvolgimento}" align="center"></td>
-								<td th:text="${gara.nomeLuogo}"></td>
-								<td sec:authorize="hasRole('ROLE_UTENTE')" class="text-success">Iscriviti</td>
-								<td sec:authorize="hasRole('ROLE_ADMIN')">
-									<form th:action="@{/admin/deleteGara/} + ${gara.id}" method="post">
-										<div class="input">
-											<input type="submit" value="Elimina evento" />
-										</div>
-									</form>
-								</td>
-							</tr>
-						</table>
-						<span th:if="${#lists.isEmpty(elencoGare)}"><font size="3">Al momento non ci sono gare in programma.</font></span>
+						<font size="3">
+							<table th:unless="${#lists.isEmpty(elencoGare)}">
+								<tr>
+									<th><b>Data di svolgimento</b></th>
+									<th><b>Nome dell'evento</b></th>
+									<th sec:authorize="hasRole('ROLE_ADMIN')">[Pannello Amministratore]</th>
+								</tr>
+								<tr th:each="gara : ${elencoGare}">
+									<td th:text="${gara.dataSvolgimento}" align="center"></td>
+									<td th:text="${gara.nomeLuogo}"></td>
+									<td sec:authorize="hasRole('ROLE_UTENTE')" class="text-success">
+										<form th:action="@{/utente/iscriviAGara/} + ${gara.id}" method="post">
+											<div class="actions">
+												<input type="submit" value="Iscriviti" />
+											</div>
+										</form>
+									</td>
+									<td sec:authorize="hasRole('ROLE_ADMIN')">
+										<form th:action="@{/admin/deleteGara/} + ${gara.id}" method="post">
+											<div class="actions">
+												<input type="submit" value="Elimina evento" />
+											</div>
+										</form>
+									</td>
+								</tr>
+							</table>
+						</font> <span th:if="${#lists.isEmpty(elencoGare)}"><font size="3">Al momento non ci
+								sono gare in programma.</font></span>
 					</div>
 				</div>
 				<!-- end: List Gare -->
 
 				<!-- start: Riepilogo Info -->
-				<div class="span4" th:if="${successo}">
+				<div class="span4" th:if="${successo} or ${errore}">
 					<div class="title">
 						<h3>Riepilogo Informazioni</h3>
 					</div>
 					<div class="span4">
-						<font size="3"> <span class="text-success" th:text="${successo}"></span></font>
+						<font size="3"> <span class="text-success" th:text="${successo}"></span><br /> <span
+							class="text-error" th:text="${errore}"></span><br />
+						</font>
 					</div>
 				</div>
 				<!-- end: Riepilogo Info -->

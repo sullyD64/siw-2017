@@ -67,7 +67,7 @@ public class GaraService {
 	}
 
 	@Transactional
-	public void add(final Gara gara) {
+	public void save(final Gara gara) {
 		this.garaRepository.save(gara);
 	}
 }

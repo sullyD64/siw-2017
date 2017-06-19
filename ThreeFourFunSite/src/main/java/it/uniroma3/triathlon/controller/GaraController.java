@@ -10,11 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.uniroma3.triathlon.model.Atleta;
 import it.uniroma3.triathlon.model.Gara;
+import it.uniroma3.triathlon.model.Risultato;
+import it.uniroma3.triathlon.model.Utente;
 import it.uniroma3.triathlon.service.GaraService;
+import it.uniroma3.triathlon.service.RisultatoService;
+import it.uniroma3.triathlon.service.UtenteService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
@@ -23,6 +29,10 @@ public class GaraController {
 
 	@Autowired
 	private GaraService garaService;
+	@Autowired
+	private RisultatoService risultatoService;
+	@Autowired
+	private UtenteService utenteService;
 	
 	@GetMapping("/listGare")
 	public String mostraListaSocieta(Model model) {
@@ -54,7 +64,7 @@ public class GaraController {
 					/*Attributi manipolati*/
 					gara.setNomeLuogo(gara.getNomeLuogo().toUpperCase());
 
-					garaService.add(gara);
+					garaService.save(gara);
 
 					model.addAttribute(gara);
 					model.addAttribute("successo", "Gara registrata correttamente");
@@ -66,6 +76,37 @@ public class GaraController {
 			}
 		}
 		return nextPage;
+	}
+	
+	@PostMapping("/utente/iscriviAGara/{id}")
+	public String iscriviAtleta(@PathVariable("id") Long id,
+			@SessionAttribute("current_username") String username,
+			RedirectAttributes redir, Model model) {
+		Utente utente = utenteService.findByUsername(username);
+		
+		// Errore: l'utente non ha un profilo atleta registrato
+		if (!utente.hasAtletaGestito()) {
+			redir.addFlashAttribute("errore", "Devi aver registrato un profilo atleta per partecipare alla gara.");
+		} else {
+			Atleta atleta = utente.getAtletaGestito();
+			// Errore: l'atleta non è iscritto ad una società
+			if (atleta.getSocieta()==null) {
+				redir.addFlashAttribute("errore", "Devi essere iscritto ad una società per partecipare alla gara.");
+			} else {
+				Gara gara = garaService.findOne(id);
+				Risultato risultato = new Risultato(atleta, gara);
+				
+				// Errore: l'atleta è già iscritto alla gara
+				if (risultatoService.isAlreadyRegistered(risultato)) {
+					redir.addFlashAttribute("errore", "Sei già iscritto alla gara");
+				
+				} else { 	// Scenario di successo
+					risultatoService.save(risultato);
+					redir.addFlashAttribute("successo", "Sei iscritto alla gara!");
+				}
+			}
+		}
+		return "redirect:/listGare";
 	}
 	
 	@PostMapping("/admin/deleteGara/{id}")
