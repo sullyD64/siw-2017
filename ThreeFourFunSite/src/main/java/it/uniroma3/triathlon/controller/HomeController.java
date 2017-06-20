@@ -31,7 +31,7 @@ public class HomeController {
 		    model.addAttribute("current_username", utente.getUsername());
 		}
 		model.addAttribute("navHome", "active");
-		model.addAttribute("gareRecenti", garaService.getLastThree());
+		model.addAttribute("treGareImminenti", garaService.getPrimeTreGareImminenti());
 		return "home";
 	}
 }

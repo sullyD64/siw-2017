@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import it.uniroma3.triathlon.model.Atleta;
 import it.uniroma3.triathlon.model.RuoloUtente;
 import it.uniroma3.triathlon.model.Utente;
+import it.uniroma3.triathlon.service.RisultatoService;
 import it.uniroma3.triathlon.service.RuoloUtenteService;
 import it.uniroma3.triathlon.service.SocietaService;
 import it.uniroma3.triathlon.service.UtenteService;
@@ -30,6 +32,8 @@ public class UtenteController {
 	private RuoloUtenteService ruoloUtenteService;
 	@Autowired
 	private SocietaService societaService;
+	@Autowired
+	private RisultatoService risultatoService;
 	
 	@GetMapping("/utente/{username}")
 	public String mostraUtente(@PathVariable("username") String user, 
@@ -37,10 +41,13 @@ public class UtenteController {
 		Utente utente = utenteService.findByUsername(username);
 		
 		if (utente.hasAtletaGestito()) {
-			if (utente.getAtletaGestito().getSocieta()==null) {
+			Atleta atleta = utente.getAtletaGestito();
+			
+			if (atleta.getSocieta()==null) {
 				model.addAttribute("elencoSocieta", societaService.groupedByRegione(societaService.findAll()));
-			} else if(!utente.getAtletaGestito().getRisultati().isEmpty()) {
-				model.addAttribute("elencoRisultati", utente.getAtletaGestito().getRisultati());
+			} else if(!atleta.getRisultati().isEmpty()) {
+				model.addAttribute("risultatiGareNonSvolte", risultatoService.getRisultatiGareNonSvolte(atleta.getRisultati()));
+				model.addAttribute("risultatiGareSvolte", risultatoService.getRisultatiGareSvolte(atleta.getRisultati()));
 			}
 		}
 		

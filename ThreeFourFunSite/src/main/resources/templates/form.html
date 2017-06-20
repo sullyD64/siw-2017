@@ -206,18 +206,17 @@ SPAN.td {
 						<hr />
 					</div>
 					<div class="clearfix">
-						<font size="3">
-							<table th:if="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}">
-								<tr>
-									<th><b>Data di svolgimento</b></th>
-									<th><b>Nome dell'evento</b></th>
-								</tr>
-								<tr th:each="gara : ${gareDaAggiornare}">
-									<td th:text="${gara.dataSvolgimento}"></td>
-									<td><a th:href="@{/admin/newClassifica/} + ${gara.id}" th:text="${gara.nomeLuogo}"></a></td>
-								</tr>
-							</table>
-						</font> <span th:unless="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}"> <font
+						<table th:if="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}">
+							<tr>
+								<th><b>Data di svolgimento</b></th>
+								<th><b>Nome dell'evento</b></th>
+							</tr>
+							<tr th:each="gara : ${gareDaAggiornare}">
+								<td th:text="${gara.dataSvolgimento}"></td>
+								<td><a th:href="@{/admin/newClassifica/} + ${gara.id}" th:text="${gara.nomeLuogo}"></a></td>
+							</tr>
+						</table>
+						<span th:unless="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}"> <font
 							size="3">Non c'è nessuna gara da aggiornare.</font>
 						</span>
 					</div>

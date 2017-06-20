@@ -52,12 +52,12 @@ public class GaraService {
 		return gare;
 	}
 
-	public List<Gara> getLastThree(){
-		List<Gara> gare = getSortedByDate();
+	public List<Gara> getPrimeTreGareImminenti(){
+		List<Gara> gareAperte = getGareAperte();
 		List<Gara> lastThree = new ArrayList<>();
-		Iterator<Gara> iter = gare.iterator();
+		Iterator<Gara> iter = gareAperte.iterator();
 
-		if (gare!=null) {
+		if (gareAperte!=null) {
 			for (int i=0; i < 3; i++) {
 				if (iter.hasNext())
 					lastThree.add(iter.next());
@@ -67,15 +67,43 @@ public class GaraService {
 		return lastThree;
 	}
 	
+	public List<Gara> getGareAperte() {
+		Iterable<Gara> allGare = getSortedByDate();
+		List<Gara> gareAperte = new ArrayList<>();
+		for (Gara gara: allGare) {
+			if (!Calcolatore.isDataPassata(gara.getDataSvolgimento()) && (!gara.isCompletata()))
+				gareAperte.add(gara);
+		}
+		return gareAperte;
+	}
+	
+	public List<Gara> getGarePassate() {
+		Iterable<Gara> allGare = getSortedByDate();
+		List<Gara> garePassate = new ArrayList<>();
+		for (Gara gara: allGare) {
+			if (Calcolatore.isDataPassata(gara.getDataSvolgimento()))
+				garePassate.add(gara);
+		}
+		return garePassate;
+	}
+	
+	public List<Gara> getGareCompletate() {
+		Iterable<Gara> allGare = getSortedByDate();
+		List<Gara> gareCompletate = new ArrayList<>();
+		for (Gara gara: allGare) {
+			if (Calcolatore.isDataPassata(gara.getDataSvolgimento()) && (gara.isCompletata()))
+				gareCompletate.add(gara);
+		}
+		return gareCompletate;
+	}
+	
 	public List<Gara> getGareDaAggiornare() {
-		Iterable<Gara> allGare = findAll();
+		Iterable<Gara> allGare = getSortedByDate();
 		List<Gara> gareDaAggiornare = new ArrayList<>();
-		
 		for (Gara gara : allGare) {
 			if (Calcolatore.isDataPassata(gara.getDataSvolgimento()) && !gara.isCompletata())
 				gareDaAggiornare.add(gara);
 		}
-		
 		return gareDaAggiornare;
 	}
 

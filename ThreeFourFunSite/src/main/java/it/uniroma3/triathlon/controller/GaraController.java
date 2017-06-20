@@ -36,9 +36,10 @@ public class GaraController {
 	private UtenteService utenteService;
 
 	@GetMapping("/listGare")
-	public String mostraListaSocieta(Model model) {
+	public String mostraListaGare(Model model) {
 		model.addAttribute("navGare", "active");
-		model.addAttribute("elencoGare", garaService.getSortedByDate());
+		model.addAttribute("gareAperte", garaService.getGareAperte());
+		model.addAttribute("garePassate", garaService.getGarePassate());
 		return "view_gare";
 	}
 
@@ -124,11 +125,8 @@ public class GaraController {
 			
 		// Reset: tutti i risultati vengono scongelati e resettati
 		} else if (comando.equalsIgnoreCase("reset")) {
-			for(Risultato r: gara.getRisultati()) {
-				System.out.println(r.getId());
-				risultatoService.resetRisultati(gara.getRisultati());
-				garaService.save(gara);
-			}
+			risultatoService.resetRisultati(gara.getRisultati());
+			garaService.save(gara);
 		}
 		
 		return nextPage;

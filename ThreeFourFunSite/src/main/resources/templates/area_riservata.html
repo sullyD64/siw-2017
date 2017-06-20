@@ -151,11 +151,42 @@
 					<div class="title">
 						<h3>Gare e risultati</h3>
 					</div>
-					<table th:if="${elencoRisultati}">
-						<tr th:each="risultato : ${elencoRisultati}">
-							<td th:text="${risultato.atletaPartecipante}"></td>
-						</tr>
-					</table>
+					<div class="clearfix" th:if="${risultatiGareSvolte}">
+						<h4>Sei iscritto a queste gare:</h4>
+						<table style="font-size: 3">
+							<tr>
+								<th><b>Data di svolgimento</b></th>
+								<th><b>Nome dell'evento</b></th>
+							</tr>
+							<tr th:each="risultato : ${risultatiGareSvolte}">
+								<td th:text="${risultato.gara.dataSvolgimento}"></td>
+								<td th:text="${risultato.gara.nomeLuogo}"></td>
+							</tr>
+						</table>
+						<hr />
+					</div>
+					<div class="clearfix" th:if="${risultatiGareNonSvolte}">
+						<h4>Hai partecipato a queste gare:</h4>
+						<table style="font-size: 3">
+							<tr>
+								<th><b>Svolta il</b></th>
+								<th><b>Nome dell'evento</b></th>
+								<th><b>Tempo Nuoto</b></th>
+								<th><b>Tempo Bici</b></th>
+								<th><b>Tempo Corsa</b></th>
+								<th><b>Tempo Totale</b></th>
+							</tr>
+							<tr th:each="risultato : ${risultatiGareSvolte}">
+								<td th:text="${risultato.gara.dataSvolgimento}"></td>
+								<td th:text="${risultato.gara.nomeLuogo}"></td>
+								<td th:text="${risultato.tempoSwim}"></td>
+								<td th:text="${risultato.tempoBike}"></td>
+								<td th:text="${risultato.tempoRun}"></td>
+								<td th:text="${risultato.tempoTot}"></td>
+							</tr>
+						</table>
+					</div>
+
 					<div th:unless="${elencoRisultati}">
 						<font size="3">Non hai ancora partecipato ad una gara.</font>
 					</div>

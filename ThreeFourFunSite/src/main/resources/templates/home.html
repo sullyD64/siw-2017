@@ -90,9 +90,9 @@
 			<!-- end: Slogan -->
 
 			<!-- start: Prossime Gare -->
-			<div class="row">
+			<div class="row" th:if="${treGareImminenti}">
 				<h2>Gare imminenti</h2>
-				<div class="span4" th:each="gara : ${gareRecenti}">
+				<div class="span4" th:each="gara : ${treGareImminenti}">
 					<div class="icons-box">
 						<i class="ico-ok circle big"></i>
 						<div class="title">
