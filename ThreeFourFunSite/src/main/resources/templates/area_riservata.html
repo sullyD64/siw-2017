@@ -125,6 +125,9 @@
 							<th align="left">Nome e Cognome</th>
 							<th align="left">Categoria</th>
 						</tr>
+						<tr>
+							<td colspan="2"><hr /></td>
+						</tr>
 						<tr th:each="atleta : *{atleti}">
 							<td><a th:href="@{/atleta/} + ${atleta.id}"
 								th:text="${atleta.nome} +' ' + ${atleta.cognome}"></a></td>
@@ -151,7 +154,8 @@
 					<div class="title">
 						<h3>Gare e risultati</h3>
 					</div>
-					<div class="clearfix" th:if="${risultatiGareSvolte} and !${#lists.isEmpty(risultatiGareSvolte)}">
+					<div class="clearfix"
+						th:if="${risultatiGareNonSvolte} and !${#lists.isEmpty(risultatiGareNonSvolte)}">
 						<h4>Sei iscritto a queste gare:</h4>
 						<table style="font-size: 3">
 							<tr>
@@ -166,7 +170,7 @@
 						<hr />
 					</div>
 					<div class="clearfix"
-						th:if="${risultatiGareNonSvolte} and !${#lists.isEmpty(risultatiGareNonSvolte)}">
+						th:if="${risultatiGareSvolte} and !${#lists.isEmpty(risultatiGareSvolte)}">
 						<h4>Hai partecipato a queste gare:</h4>
 						<table style="font-size: 3">
 							<tr>

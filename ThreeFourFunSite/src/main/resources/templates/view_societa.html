@@ -61,6 +61,9 @@
 							<th align="left">Nome e Cognome</th>
 							<th align="left">Categoria</th>
 						</tr>
+						<tr>
+							<td colspan="2"><hr /></td>
+						</tr>
 						<tr th:each="atleta : ${societa.atleti}">
 							<td><a th:href="@{/atleta/} + ${atleta.id}"
 								th:text="${atleta.nome} +' '+ ${atleta.cognome}"></a></td>

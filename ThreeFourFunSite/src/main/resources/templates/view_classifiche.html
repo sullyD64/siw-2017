@@ -31,6 +31,27 @@
 		<div class="container">
 			<!-- start: Row -->
 			<div class="row">
+				<div class="span4">
+					<div class="title">
+						<h3>Gare completate</h3>
+					</div>
+					<table>
+						<tr>
+							<th>Data</th>
+							<th>Nome dell'evento</th>
+						</tr>
+						<tr th:each="gara : ${gareCompletate}">
+							<td th:text="${gara.dataSvolgimento}"></td>
+							<td th:if="${classificaGaraSingola}" th:text="${gara.nomeLuogo}"></td>
+							<td th:unless="${classificaGaraSingola}"><a th:href="@{classifiche/} + ${gara.id}"
+								th:text="${gara.nomeLuogo}"></a></td>
+						</tr>
+					</table>
+
+
+				</div>
+
+
 				<div class="span10" th:if="${classificaGaraSingola}">
 					<div class="title">
 						<h3 th:text="'Classifica della gara: '+ ${gara.nomeLuogo}"></h3>
@@ -49,7 +70,9 @@
 									<th>Società</th>
 									<th>Regione</th>
 								</tr>
-								<tr><td colspan="9"></td></tr>
+								<tr>
+									<td colspan="9"></td>
+								</tr>
 								<tr th:each="riga : ${classifica.righeClassifica}">
 									<td th:text="${riga.posizione}"></td>
 									<td th:text="${riga.nomeCognomeAtleta}"></td>
@@ -61,7 +84,8 @@
 									<td th:text="${riga.nomeSocietaAtleta}"></td>
 									<td th:text="${riga.regioneSocietaAtleta}"></td>
 								</tr>
-							</table> </font>
+							</table>
+						</font>
 					</div>
 				</div>
 			</div>

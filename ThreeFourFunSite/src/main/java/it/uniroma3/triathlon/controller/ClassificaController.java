@@ -35,8 +35,6 @@ public class ClassificaController {
 	public String mostraclassificheGenerali(Model model) {
 		model.addAttribute("navClassifiche", "active");
 		model.addAttribute("gareCompletate", garaService.getGareCompletate());
-		
-		
 		return "view_classifiche";
 	}
 	
@@ -45,6 +43,7 @@ public class ClassificaController {
 		model.addAttribute("navClassifiche", "active");
 		model.addAttribute("classificaGaraSingola", true);
 		model.addAttribute("gara", garaService.findOne(id));
+		model.addAttribute("gareCompletate", garaService.getGareCompletate());
 		
 		Classifica classifica = new Classifica(garaService.findOne(id));
 		classifica.ordinaClassifica();
