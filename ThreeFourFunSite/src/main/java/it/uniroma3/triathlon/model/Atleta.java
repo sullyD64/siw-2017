@@ -150,4 +150,8 @@ public class Atleta {
 	public void setRisultati(List<Risultato> risultati) {
 		this.risultati = risultati;
 	}	
+	
+	public String getNomeCompleto() {
+		return (this.getNome() +" "+ this.getCognome());
+	}
 }	

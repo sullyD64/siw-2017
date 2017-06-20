@@ -99,9 +99,16 @@ public class Risultato implements Comparable<Risultato> {
 	public void setTempoTot(LocalTime tempoTot) {
 		this.tempoTot = tempoTot;
 	}
+	
+	public void resetTempi() {
+		this.setTempoSwim(null);
+		this.setTempoBike(null);
+		this.setTempoRun(null);
+		this.setTempoTot(null);
+	}
 
 	@Override
 	public int compareTo(Risultato that) {
-		return this.getId().compareTo(that.getId());
+		return this.getAtletaPartecipante().getNomeCompleto().compareTo(that.getAtletaPartecipante().getNomeCompleto());
 	}
 }

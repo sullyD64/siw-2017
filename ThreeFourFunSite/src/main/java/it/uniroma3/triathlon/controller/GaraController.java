@@ -25,7 +25,7 @@ import it.uniroma3.triathlon.service.UtenteService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
-@SessionAttributes({"current_username", "gara"})
+@SessionAttributes({"current_username", "garaEditata"})
 public class GaraController {
 
 	@Autowired
@@ -69,23 +69,25 @@ public class GaraController {
 		model.addAttribute("navClassifiche", "active");
 		model.addAttribute("formClassifica", true);
 		model.addAttribute("editorClassifica", true);
-		model.addAttribute("gara", garaService.findOne(id));
+		model.addAttribute("garaEditata", garaService.findOne(id));
 		return "form";
 	}
 
 	@PostMapping("/admin/newClassifica/addRisultato/{id}")
 	public String addTempiRisultato(@PathVariable("id") Long id,
 			@RequestParam("comando") String comando,
-			@SessionAttribute("gara") Gara gara, 
+			@SessionAttribute("garaEditata") Gara gara, 
 			@Valid @ModelAttribute Risultato ris, 
+			RedirectAttributes redir,
 			BindingResult bindingResult, Model model) {
 		
 		String nextPage = "redirect:/admin/newClassifica/" + gara.getId();
 		Risultato risultato = risultatoService.findOne(id);
 		
+		// Registra: congela il risultato, l'inserimento dei tempi viene bloccato
 		if (comando.equalsIgnoreCase("registra")) {
 			if (bindingResult.hasErrors()) {
-				model.addAttribute("errore", "Inserire un tempo valido");
+				redir.addFlashAttribute("errore", "Inserire un tempo valido");
 				return nextPage;
 			}
 			risultato.setTempoSwim(ris.getTempoSwim());
@@ -95,6 +97,7 @@ public class GaraController {
 			risultato.setValido(true);
 			risultatoService.save(risultato);
 			
+		// Modifica: scongela il risultato, i tempi vengono sbloccati e ritornano modificabili
 		} else if (comando.equalsIgnoreCase("modifica")) {
 			if (risultato.isValido())
 				risultato.setValido(false);
@@ -103,11 +106,30 @@ public class GaraController {
 		return nextPage;
 	}
 	
-	@PostMapping("/admin/newClassifica/confermaRisultati")
-	public String confermaRisultati(@SessionAttribute("gara") Gara gara, Model model) {
+	@PostMapping("/admin/newClassifica/terminaInserimento")
+	public String confermaRisultati(@SessionAttribute("garaEditata") Gara gara, 
+			@RequestParam("comando") String comando, 
+			RedirectAttributes redir, Model model) {
 		String nextPage = "redirect:/admin/newClassifica/" + gara.getId();
 		
-		
+		// Conferma: se tutti i risultati sono confermati, imposta la gara come completata e chiude la form
+		if (comando.equalsIgnoreCase("conferma")) {
+			if (risultatoService.areRisultatiValidi(gara.getRisultati())) {
+				gara.setCompletata(true);
+				garaService.save(gara);
+				redir.addFlashAttribute("successo", "La gara è stata aggiornata con i tempi inseriti.");
+			} else {
+				redir.addFlashAttribute("errore", "Devi registrare tutti i risultati prima di confermare la gara.");
+			}
+			
+		// Reset: tutti i risultati vengono scongelati e resettati
+		} else if (comando.equalsIgnoreCase("reset")) {
+			for(Risultato r: gara.getRisultati()) {
+				System.out.println(r.getId());
+				risultatoService.resetRisultati(gara.getRisultati());
+				garaService.save(gara);
+			}
+		}
 		
 		return nextPage;
 	}
