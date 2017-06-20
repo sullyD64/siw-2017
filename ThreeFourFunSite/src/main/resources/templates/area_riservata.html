@@ -147,11 +147,11 @@
 			<!-- start: Row -->
 			<div class="row">
 				<!-- start: Pannello Gare  -->
-				<div class="span4" th:if="${utente.atletaGestito}">
+				<div class="span8" th:if="${utente.atletaGestito}">
 					<div class="title">
 						<h3>Gare e risultati</h3>
 					</div>
-					<div class="clearfix" th:if="${risultatiGareSvolte}">
+					<div class="clearfix" th:if="${risultatiGareSvolte} and !${#lists.isEmpty(risultatiGareSvolte)}">
 						<h4>Sei iscritto a queste gare:</h4>
 						<table style="font-size: 3">
 							<tr>
@@ -165,7 +165,8 @@
 						</table>
 						<hr />
 					</div>
-					<div class="clearfix" th:if="${risultatiGareNonSvolte}">
+					<div class="clearfix"
+						th:if="${risultatiGareNonSvolte} and !${#lists.isEmpty(risultatiGareNonSvolte)}">
 						<h4>Hai partecipato a queste gare:</h4>
 						<table style="font-size: 3">
 							<tr>
@@ -187,7 +188,7 @@
 						</table>
 					</div>
 
-					<div th:unless="${elencoRisultati}">
+					<div th:unless="${risultatiGareNonSvolte} and !${#lists.isEmpty(risultatiGareNonSvolte)}">
 						<font size="3">Non hai ancora partecipato ad una gara.</font>
 					</div>
 					<!-- end: Pannello Gare  -->

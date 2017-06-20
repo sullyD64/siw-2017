@@ -24,7 +24,7 @@ import it.uniroma3.triathlon.service.UtenteService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
-@SessionAttributes({"current_username", "garaEditata"})
+@SessionAttributes("current_username")
 public class GaraController {
 
 	@Autowired

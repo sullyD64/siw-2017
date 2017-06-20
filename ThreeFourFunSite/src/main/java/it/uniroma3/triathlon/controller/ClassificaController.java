@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.uniroma3.triathlon.classifiche.Classifica;
 import it.uniroma3.triathlon.model.Gara;
 import it.uniroma3.triathlon.model.Risultato;
 import it.uniroma3.triathlon.service.GaraService;
@@ -21,6 +23,7 @@ import it.uniroma3.triathlon.service.RisultatoService;
 import it.uniroma3.triathlon.util.Calcolatore;
 
 @Controller
+@SessionAttributes({"current_username", "garaEditata"})
 public class ClassificaController {
 
 	@Autowired
@@ -33,7 +36,6 @@ public class ClassificaController {
 		model.addAttribute("navClassifiche", "active");
 		model.addAttribute("gareCompletate", garaService.getGareCompletate());
 		
-		//TO-DO
 		
 		return "view_classifiche";
 	}
@@ -41,9 +43,12 @@ public class ClassificaController {
 	@GetMapping("/classifiche/{id}")
 	public String mostraclassificaGara(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("navClassifiche", "active");
+		model.addAttribute("classificaGaraSingola", true);
 		model.addAttribute("gara", garaService.findOne(id));
 		
-		//TO-DO
+		Classifica classifica = new Classifica(garaService.findOne(id));
+		classifica.ordinaClassifica();
+		model.addAttribute(classifica);
 		
 		return "view_classifiche";
 	}
