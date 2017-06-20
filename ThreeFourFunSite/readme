@@ -1,7 +1,9 @@
-Progetto di esame siw giugno 2017: ThreeFourFunSite
+Progetto di esame siw giugno 2017: ThreeFourFunSite [Maria Elena Madon, Lorenzo Guidaldi]
 
-Il progetto realizza un sistema informativo per la gestione di una federazione amatoriale di triathlon di livello nazionale, ThreeFourFun.
-Le specifiche seguite sono in linea con quelle per il progetto AVANZATO per l'appello di Giugno 2017;
+Il progetto realizza un SIW per la gestione di una federazione amatoriale di triathlon di livello nazionale, ThreeFourFun.
+Il triathlon è una disciplina olimpica in cui gli atleti svolgono in immediata successione tre prove: nuoto, ciclismo e corsa. Le prove, seppur basate su distanze diverse a seconda della specialità di gara, sono comuni a tutti gli atleti; Gli atleti partecipanti vengono premiati per il tempo complessivo impiegato, sia tramite raggruppamento assoluto che per categoria di età. L'età minima per partecipare è 14 anni, uomini e donne sono parimenti ammessi alle gare.
+
+Le specifiche seguite per lo sviluppo del SIW sono in linea con quelle per il progetto AVANZATO per l'appello di Giugno 2017;
 Le tecnologie implementate sono:
   - Spring MVC
   - Spring Boot
@@ -9,6 +11,10 @@ Le tecnologie implementate sono:
   - JPA (Hibernate)
   - Thymeleaf
   - Bootstrap
+
+Informazioni tecniche:
+  Il sistema non consente di gestire autonomamente tutti i casi d'uso: in particolare, per creare degli amministratori è necessario un intervento SQL da applicazioni esterne di gestione di database; nel nostro caso da pgAdmin va modificata la colonna ruolo dell'utente che si vuole rendere amministratore sostituendo ROLE_UTENTE con ROLE_ADMIN.
+  A tale proposito si è mostrato utile, in fase di produzione, anche editare da pgAdmin la data di svolgimento delle gare che si volevano rendere "passate" e quindi renderle "da aggiornare" (il sistema da noi realizzato non permette infatti la registrazione di gare nel passato).
   
 Informazioni e regole di dominio:
   Le entità principali del dominio sono gli Atleti, le Società e le Gare.
