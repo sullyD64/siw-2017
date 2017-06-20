@@ -51,7 +51,7 @@
 											data-toggle="dropdown">Classifiche<b class="caret"></b>
 										</a>
 											<ul class="dropdown-menu">
-												<li><a th:href="@{/listClassifiche}">Visualizza le classifiche generali</a></li>
+												<li><a th:href="@{/classifiche}">Visualizza le classifiche generali</a></li>
 												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/newClassifica}">Aggiorna
 														le classifiche <b>[Admin]</b>
 												</a></li>
@@ -226,13 +226,19 @@
 		<div class="container">
 			<div class="row">
 				<!-- start: About -->
-				<div class="span3">
+				<div class="span8">
 					<h3>About Us</h3>
 					<p>
-						Progetto per l'esame di <b>Sistemi Informativi sul Web (AA 2016-2017)</b>, Università degli
-						Studi di Roma Tre - Dipartimento di Ingegneria Informatica<br /> Realizzato da <i>Lorenzo
-							Guidaldi</i> e <i>Maria Elena Madon</i>
+						<font size="3"> Progetto per l'esame di <b>Sistemi Informativi sul Web (AA
+								2016-2017)</b>, Università degli Studi di Roma Tre - Dipartimento di Ingegneria Informatica
+						</font>
 					</p>
+					<p>
+						<font size="4"> <i>©Realizzato da Maria Elena Madon e Lorenzo Guidaldi</i><br/><br/>
+						<a href="https://github.com/sullyD64/siw-2017">github.com/sullyD64/siw-2017</a>
+						</font>
+					</p>
+
 				</div>
 				<!-- end: About -->
 				<!-- start: Where we are -->

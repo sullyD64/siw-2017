@@ -34,4 +34,9 @@ public class HomeController {
 		model.addAttribute("treGareImminenti", garaService.getPrimeTreGareImminenti());
 		return "home";
 	}
+	
+	@GetMapping("/info")
+	public String info() {
+		return "info";
+	}
 }
