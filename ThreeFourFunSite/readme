@@ -95,7 +95,17 @@ Attore primario: amministratore
  9. Il sistema registra la gara aggiornata e "conclusa", dalla quale sarà possibile estrapolare una classifica basata sul miglior tempo assoluto tra gli atleti partecipanti.
  
  UC7: Consultazione delle classifiche
+ Attore primario: qualsiasi visitatore del sito
  
+  Scenario principale di successo
+  1. Il visitatore accede alla pagina "Visualizza le classifiche" e clicca su una tra le gare presenti dalla lista delle gare concluse.
+      1.1: alternativamente, può raggiungere lo stesso percorso anche cliccando su una gara conclusa dalla pagina "Visualizza le gare", presente nella tabella di gare effettuate e concluse.
+  2. Il sistema mostra la classifica con i risultati di tutti gli atleti partecipanti alla gara, ordinata per tempo. È possibile ordinare le linee a seconda dei migliori tempi delle singole frazioni (nuoto/bici/corsa).
   
+  UC8: Consultazione dei dati personali o delle società, gare e atleti del sistema
+  Attore primario: un utente registrato
+  
+  Un utente registrato e loggato può accedere alla pagina "Visualizza il riepilogo delle mie informazioni", anche detta "area riservata". Qui vengono mostrati i dati che l'utente ha inserito nel sistema: il suo profilo atleta, la sua (eventuale) società da lui fondata con la lista degli atleti iscritti, la lista delle gare a cui ha partecipato con i suoi risultati e la lista delle gare a cui è iscritto che devono ancora svolgersi.
+  Se l'utente non ha registrato un profilo atleta, non ha registrato una società, oppure il profilo atleta non è collegato ad una società, il sistema mostra dei link e delle form per compilare i campi rimanenti.
   
   
