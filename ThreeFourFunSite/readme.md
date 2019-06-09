@@ -1,4 +1,5 @@
-# Progetto di esame siw giugno 2017: ThreeFourFunSite [Maria Elena Madon, Lorenzo Guidaldi]
+#ThreeFourFunSite 
+Progetto di esame siw giugno 2017 [Maria Elena Madon, Lorenzo Guidaldi]
 
 Il progetto realizza un SIW per la gestione di una federazione amatoriale di triathlon di livello nazionale, ThreeFourFun.
 Il triathlon è una disciplina olimpica in cui gli atleti svolgono in immediata successione tre prove: nuoto, ciclismo e corsa. Le prove, seppur basate su distanze diverse a seconda della specialità di gara, sono comuni a tutti gli atleti; Gli atleti partecipanti vengono premiati per il tempo complessivo impiegato, sia tramite raggruppamento assoluto che per categoria di età. L'età minima per partecipare è 14 anni, uomini e donne sono parimenti ammessi alle gare.
@@ -107,7 +108,7 @@ Attore primario: amministratore
       1.1: alternativamente, può raggiungere lo stesso percorso anche cliccando su una gara conclusa dalla pagina "Visualizza le gare", presente nella tabella di gare effettuate e concluse.
   2. Il sistema mostra la classifica con i risultati di tutti gli atleti partecipanti alla gara, ordinata per tempo. È possibile ordinare le linee a seconda dei migliori tempi delle singole frazioni (nuoto/bici/corsa).
   
-  UC8: Consultazione dei dati personali o delle società, gare e atleti del sistema
+### UC8: Consultazione dei dati personali o delle società, gare e atleti del sistema
   Attore primario: un utente registrato
   
   Un utente registrato e loggato può accedere alla pagina "Visualizza il riepilogo delle mie informazioni", anche detta "area riservata". Qui vengono mostrati i dati che l'utente ha inserito nel sistema: il suo profilo atleta, la sua (eventuale) società da lui fondata con la lista degli atleti iscritti, la lista delle gare a cui ha partecipato con i suoi risultati e la lista delle gare a cui è iscritto che devono ancora svolgersi.
