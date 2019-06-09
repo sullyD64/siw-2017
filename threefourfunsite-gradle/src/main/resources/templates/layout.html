@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>ThreeFourFun [siw-2017]</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+
+	<!--start: Header -->
+	<header th:fragment="Header">
+		<div class="container">
+			<div class="row">
+				<!--start: Logo -->
+				<div class="logo span3">
+					<a class="brand" href="/"><img src="/img/logo.png" alt="Logo" /></a>
+				</div>
+				<!--end: Logo -->
+				<!--start: Navbar -->
+				<div class="span9">
+					<div class="navbar navbar-inverse">
+						<div class="navbar-inner">
+							<div class="container">
+								<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span
+									class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+								</a>
+								<div class="nav-collapse collapse">
+									<ul class="nav">
+										<!--  Home -->
+										<li th:class="${navHome}"><a href="/">Home</a></li>
+
+										<!--  Classifiche -->
+										<li th:class="'dropdown '+ ${navClassifiche}"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown">Classifiche<b class="caret"></b>
+										</a>
+											<ul class="dropdown-menu">
+												<li><a th:href="@{/classifiche}">Visualizza le classifiche generali</a></li>
+												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/newClassifica}">Aggiorna
+														le classifiche <b>[Admin]</b>
+												</a></li>
+											</ul></li>
+
+										<!--  Gare -->
+										<li th:class="'dropdown '+ ${navGare}"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown">Gare<b class="caret"></b>
+										</a>
+											<ul class="dropdown-menu">
+												<li><a th:href="@{/listGare}">Visualizza l'elenco delle gare</a></li>
+												<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/newGara}">Registra
+														una nuova gara <b>[Admin]</b>
+												</a></li>
+											</ul></li>
+
+										<!--  Atleti -->
+										<!-- <li th:class="'dropdown '+ ${navAtleti}"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown">Atleti<b class="caret"></b>
+										</a>
+											<ul class="dropdown-menu">
+											</ul></li>
+											-->
+
+										<!--  Società -->
+										<li th:class="'dropdown '+ ${navSocieta}"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown">Società<b class="caret"></b>
+										</a>
+											<ul class="dropdown-menu">
+												<li><a href="/listSocieta">Visualizza l'elenco delle società</a></li>
+											</ul></li>
+
+										<!--  Area Utenti -->
+										<li th:class="'dropdown '+ ${navAccesso}"><a href="#" class="dropdown-toggle"
+											data-toggle="dropdown"><span th:class="${navAccesso}">Utenti</span><b class="caret"></b>
+										</a>
+											<ul class="dropdown-menu">
+												<li sec:authorize="!isAuthenticated()">
+													<div class="actions" align="center">
+														<form th:action="@{/accedi}" method="get">
+															<input id="accedi" type="submit" class="btn btn-succes btn-small"
+																value="Login/Registrazione" />
+														</form>
+													</div>
+												</li>
+												<li><a th:href="@{/utente/newAtleta}">Registra il tuo profilo atleta</a></li>
+												<li><a th:href="@{/utente/newSocieta}">Registra una nuova società</a></li>
+												<li><a th:if="${current_username}" sec:authorize="hasRole('ROLE_UTENTE')"
+													th:href="@{/utente/} + ${current_username}">Visualizza e gestisci le tue
+														informazioni</a></li>
+												<li class="text-error" th:text="${erroreNewAtleta}"></li>
+												<li class="text-error" th:text="${erroreNewSocieta}"></li>
+											</ul></li>
+
+										<!--  Utente Autenticato -->
+										<li sec:authorize="isAuthenticated()">
+											<div class="contact-form">
+												Benvenuto, <b sec:authentication="name">[generic user]</b>!
+												<form action="/logout" method="post">
+													<div class="actions">
+														<input id="logout" type="submit" value="Logout" class="btn btn-succes btn-small" />
+													</div>
+												</form>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end: Navbar -->
+			</div>
+		</div>
+	</header>
+	<!--end: Header-->
+
+	<!-- start: InfoBox -->
+	<div class="row" th:fragment="InfoBox">
+		<div class="icons-box-vert-container">
+			<div class="span6">
+				<div class="icons-box-vert">
+					<i class="ico-ok ico-color circle-color big"></i>
+					<div class="icons-box-vert-info">
+						<h3>Triathlon Giovani</h3>
+						<p>Il Settore Giovanile è la piattaforma per la pratica di una attività sportiva
+							divertente e ottimale per lo sviluppo psicofisico dei giovani. È la base da cui nascono,
+							crescono e maturano i futuri campioni.</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="icons-box-vert">
+					<i class="ico-cup  ico-white circle-color-full big-color"></i>
+					<div class="icons-box-vert-info">
+						<h3>Paratriathlon</h3>
+						<p>Il triathlon è sport inclusivo: atleti disabili e normodotati gareggiano insieme e
+							sugli stessi percorsi. Le regole del paratriathlon sono un adattamento delle regole del
+							triathlon alle differenti tipologie di disabilitÃ . La conseguenza è la valorizzazione delle
+							capacità individuali.</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="icons-box-vert">
+					<i class="ico-ipad ico-color circle-color big"></i>
+					<div class="icons-box-vert-info">
+						<h3>Triathlon</h3>
+						<p>Il triathlon è uno sport multidisciplinare individuale o a squadre. Dal 2000 è
+							specialità olimpica maschile e femminile</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="icons-box-vert">
+					<i class="ico-thumbs-up  ico-white circle-color-full big-color"></i>
+					<div class="icons-box-vert-info">
+						<h3>Duathlon</h3>
+						<p>Sport multidisciplinare di resistenza nel quale l'atleta copre nell'ordine una prova di
+							corsa, una di ciclismo e una di corsa, senza interruzione.</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+	<!-- end: Info Box -->
+
+	<!-- start: Footer Menu -->
+	<div th:fragment="FooterMenu" id="footer-menu" class="hidden-tablet hidden-phone">
+		<div class="container">
+			<div class="row">
+				<!-- start: Footer Menu Logo -->
+				<div class="span2">
+					<div id="footer-menu-logo">
+						<a href="#"><img src="/img/logo-footer-menu.png" alt="logo" /></a>
+					</div>
+				</div>
+				<!-- end: Footer Menu Logo -->
+				<!-- start: Footer Menu Links-->
+				<!-- <div class="span9">
+						<div id="footer-menu-links">
+							<ul id="footer-nav">
+								<li><a href="/">Home</a></li>
+								<li><a href="/listClassifiche">Classifiche</a></li>
+								<li><a href="/listSocieta">Società </a></li>
+								<li><a href="/listGare">Gare</a></li>
+							</ul>
+						</div>
+					</div>
+					-->
+				<!-- end: Footer Menu Links-->
+				<!-- start: Footer Menu Back To Top -->
+				<div class="span1">
+					<div id="footer-menu-back-to-top">
+						<a href="#"></a>
+					</div>
+				</div>
+				<!-- end: Footer Menu Back To Top -->
+			</div>
+		</div>
+	</div>
+	<!-- end: Footer Menu -->
+
+	<!-- start: Footer -->
+	<div th:fragment="Footer" id="footer">
+		<div class="container">
+			<div class="row">
+				<!-- start: About -->
+				<div class="span8">
+					<h3>About Us</h3>
+					<p>
+						<font size="3"> Progetto per l'esame di <b>Sistemi Informativi sul Web (AA
+								2016-2017)</b>, Università degli Studi di Roma Tre - Dipartimento di Ingegneria Informatica
+						</font>
+					</p>
+					<p>
+						<font size="4"> <i>©Realizzato da Maria Elena Madon e Lorenzo Guidaldi</i><br/><br/>
+						<a href="https://github.com/sullyD64/siw-2017">github.com/sullyD64/siw-2017</a>
+						</font>
+					</p>
+
+				</div>
+				<!-- end: About -->
+				<!-- start: Where we are -->
+				<div class="span3">
+					<h3>Siamo Qui!</h3>
+					<div id="small-map-container"></div>
+					<iframe id="small-map" width="210" height="210" frameborder="0" scrolling="yes"
+						marginheight="0" marginwidth="0"
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23821.11024250772!2d12.267866462468227!3d41.72831286096268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1325efd9afa2093d%3A0xafc77c4dac72cf41!2sLido+di+Ostia+RM!5e0!3m2!1sit!2sit!4v1497688933501"></iframe>
+				</div>
+				<!-- end: Where we are -->
+			</div>
+		</div>
+	</div>
+	<!-- end: Footer -->
+
+	<!-- start: Copyright -->
+	<div th:fragment="Copyright" id="copyright">
+		<div class="container">
+			<p>
+				&copy; 2013, creativeLabs. <a href="http://bootstrapmaster.com" alt="Bootstrap Themes">Bootstrap
+					Themes</a> designed by BootstrapMaster in Poland <img src="img/poland2.png" alt="Poland"
+					style="margin-top: -4px" />
+			</p>
+		</div>
+	</div>
+	<!-- end: Copyright -->
+
+	<!-- start: Java Script -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<div th:fragment="javascript">
+		<script src="/js/jquery-1.8.2.js"></script>
+		<script src="/js/bootstrap.js"></script>
+		<script src="/js/flexslider.js"></script>
+		<script src="/js/carousel.js"></script>
+		<script src="/js/jquery.cslider.js"></script>
+		<script src="/js/slider.js"></script>
+		<script defer="defer" src="../js/custom.js"></script>
+	</div>
+	<!-- end: Java Script -->
+</body>
+</html>

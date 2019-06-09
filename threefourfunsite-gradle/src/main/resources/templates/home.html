@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>ThreeFourFun [siw-2017]</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+	<header th:include="layout :: Header"></header>
+
+	<!-- start: Slider -->
+	<div class="slider-wrapper">
+		<div id="da-slider" class="da-slider">
+			<div class="da-slide">
+				<h2>Miglior Runner</h2>
+				<p>Tempi - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="http://www.pngmart.com/files/1/Usain-Bolt-PNG-File.png" alt="image01" />
+				</div>
+			</div>
+			<div class="da-slide">
+				<h2>Miglior Biker</h2>
+				<p>Tempi- Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="http://pngimg.com/uploads/bicycle/bicycle_PNG5392.png" alt="image02" />
+				</div>
+			</div>
+			<div class="da-slide">
+				<h2>Miglior Nuotatore</h2>
+				<p>Tempi - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="https://www.abbytriclub.com/wp-content/uploads/2016/09/triathlete-brighton.png"
+						alt="image03" />
+				</div>
+			</div>
+			<div class="da-slide">
+				<h2>Miglior Donna</h2>
+				<p>Tempi - Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+				<a href="#" class="da-link">Pagina Atleta</a>
+				<div class="da-img">
+					<img src="http://pngimg.com/uploads/running_man/running_man_PNG11679.png" alt="image04" />
+				</div>
+			</div>
+			<nav class="da-arrows">
+				<span class="da-arrows-prev"></span> <span class="da-arrows-next"></span>
+			</nav>
+		</div>
+	</div>
+	<!-- end: Slider -->
+
+	<!--start: Wrapper-->
+	<div id="wrapper">
+
+		<!--start: Container -->
+		<div class="container">
+
+			<!-- start: Slogan-->
+			<div class="hero-unit">
+				<p>
+					Benvenuto, atleta, nella federazione di triathlon amatoriale <b>ThreeFourFun!</b> <br /> Unisciti
+					ad una delle società o creane una e partecipa alle nostre gare, ottieni punti rank e porta
+					gloria alla tua società! Le classifiche vengono pubblicate a pochi giorni dallo svolgimento
+					delle gare.
+				</p>
+				<p>
+					<a href="/info" class="btn btn-success btn-large">Scopri di più sul triathlon &raquo;</a>
+				</p>
+			</div>
+			<!-- end: Slogan -->
+
+			<!-- start: Prossime Gare -->
+			<div class="row" th:if="${treGareImminenti}">
+				<h2>Gare imminenti</h2>
+				<div class="span4" th:each="gara : ${treGareImminenti}">
+					<div class="icons-box">
+						<i class="ico-ok circle big"></i>
+						<div class="title">
+							<h3 th:text="${gara.nomeLuogo}"></h3>
+						</div>
+						<h4 th:text="${gara.dataSvolgimento}"></h4>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+			<!-- end: Prossime Gare -->
+
+			<hr></hr>
+			<!-- start: Foto -->
+			<div class="clients-carousel">
+				<ul class="slides clients">
+					<li><img src="img/atleti/a.jpg" alt="" /></li>
+					<li><img src="img/atleti/b.jpg" alt="" /></li>
+					<li><img src="img/atleti/c.jpg" alt="" /></li>
+					<li><img src="img/atleti/d.jpg" alt="" /></li>
+					<li><img src="img/atleti/e.jpg" alt="" /></li>
+					<li><img src="img/atleti/f.jpg" alt="" /></li>
+					<li><img src="img/atleti/g.jpg" alt="" /></li>
+					<li><img src="img/atleti/a.jpg" alt="" /></li>
+					<li><img src="img/atleti/b.jpg" alt="" /></li>
+					<li><img src="img/atleti/c.jpg" alt="" /></li>
+				</ul>
+			</div>
+			<!-- end: Foto -->
+			<hr></hr>
+
+			<div class="row" th:include="layout :: InfoBox"></div>
+			<hr></hr>
+		</div>
+		<!--end: Container-->
+	</div>
+	<!-- end: Wrapper  -->
+
+	<div th:include="layout :: FooterMenu"></div>
+	<div th:include="layout :: Footer"></div>
+	<div th:include="layout :: Copyright"></div>
+	<div th:include="layout :: javascript"></div>
+</body>
+</html>

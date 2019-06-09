@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>Lista società</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+	<header th:include="layout :: Header"></header>
+
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+		<!-- start: Container -->
+		<div class="container">
+			<!-- start: Row -->
+			<div class="row">
+				<!-- start: List Società -->
+				<div class="span4">
+					<div class="title">
+						<h3>Lista delle società</h3>
+					</div>
+					<ul>
+						<li th:each="entry: ${elencoSocieta}"><b th:text="${entry.key}"></b>
+							<ul>
+								<li th:each="soc: ${entry.value}"><a th:href="@{/listSocieta/} + ${soc.id}"
+									th:text="${soc.nome}"></a></li>
+							</ul></li>
+					</ul>
+				</div>
+				<!-- end: List Società -->
+				<!-- start: Società Panel -->
+				<div class="span5" th:if="${societaPanel}">
+					<div class="title">
+						<h3 th:text="${societa.nome}"></h3>
+					</div>
+					<div class="clearfix">
+						<h4 th:text="'Regione: ' + ${societa.regione}"></h4>
+						<h4 th:text="'Data di fondazione: ' + ${societa.dataFondazione}"></h4>
+						<h4 th:text="'Presidente: ' + ${societa.presidente.nome} +' '+ ${societa.presidente.cognome}"></h4>
+					</div>
+					<hr />
+					<table th:unless="${#lists.isEmpty(societa.atleti)}">
+						<tr>
+							<th align="left">Nome e Cognome</th>
+							<th align="left">Categoria</th>
+						</tr>
+						<tr>
+							<td colspan="2"><hr /></td>
+						</tr>
+						<tr th:each="atleta : ${societa.atleti}">
+							<td><a th:href="@{/atleta/} + ${atleta.id}"
+								th:text="${atleta.nome} +' '+ ${atleta.cognome}"></a></td>
+							<td th:text="${atleta.categoria}"></td>
+						</tr>
+					</table>
+					<span th:if="${#lists.isEmpty(societa.atleti)}">Questa società non ha ancora atleti</span>
+					<div class="clearfix" sec:authorize="hasRole('ROLE_ADMIN')">
+						<hr />
+						[Pannello Amministratore]
+						<form th:action="@{/admin/deleteSocieta/} + ${societa.id}" method="post">
+							<div class="input">
+								<input type="submit" value="Elimina società" />
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- end: Società Panel -->
+				<!-- start: Riepilogo Info -->
+				<div class="span4" th:if="${successo}">
+					<div class="title">
+						<h3>Riepilogo Informazioni</h3>
+					</div>
+					<div class="span4">
+						<font size="3"> <span class="text-success" th:text="${successo}"></span></font>
+					</div>
+				</div>
+				<!-- end: Riepilogo Info -->
+			</div>
+			<!-- end: Row -->
+		</div>
+		<!-- end: Container -->
+	</div>
+	<!-- end: Wrapper  -->
+
+	<div th:include="layout :: javascript"></div>
+</body>
+</html>

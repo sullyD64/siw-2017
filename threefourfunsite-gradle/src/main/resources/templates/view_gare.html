@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>Lista Gare</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+	<header th:include="layout :: Header"></header>
+
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+		<!-- start: Container -->
+		<div class="container">
+			<!-- start: Row -->
+			<div class="row">
+				<!-- start: List Gare in Programma -->
+				<div class="span6">
+					<div class="title">
+						<h3>Lista delle gare in programma</h3>
+					</div>
+					<div class="clearfix">
+						<table style="font-size: 3" th:unless="${#lists.isEmpty(gareAperte)}">
+							<tr>
+								<th><b>Data di svolgimento</b></th>
+								<th><b>Nome dell'evento</b></th>
+								<th sec:authorize="hasRole('ROLE_ADMIN')">[Pannello Amministratore]</th>
+							</tr>
+							<tr>
+								<td colspan="2"><hr /></td>
+							</tr>
+							<tr th:each="gara : ${gareAperte}">
+								<td th:text="${gara.dataSvolgimento}" align="center"></td>
+								<td th:text="${gara.nomeLuogo}"></td>
+								<td sec:authorize="hasRole('ROLE_UTENTE')" class="text-success">
+									<form th:action="@{/utente/iscriviAGara/} + ${gara.id}" method="post">
+										<div class="actions">
+											<input type="submit" value="Iscriviti" />
+										</div>
+									</form>
+								</td>
+								<td sec:authorize="hasRole('ROLE_ADMIN')">
+									<form th:action="@{/admin/deleteGara/} + ${gara.id}" method="post">
+										<div class="actions">
+											<input type="submit" value="Elimina evento" />
+										</div>
+									</form>
+								</td>
+							</tr>
+						</table>
+						<span th:if="${#lists.isEmpty(gareAperte)}"><font size="3">Al momento non ci
+								sono gare in programma.</font></span>
+					</div>
+				</div>
+				<!-- end: List Gare in Programma -->
+
+				<!-- start: List Gare Svolte -->
+				<div class="span6">
+					<div class="title">
+						<h3>Lista delle gare svolte</h3>
+					</div>
+					<div class="clearfix">
+						<table style="font-size: 3" th:unless="${#lists.isEmpty(garePassate)}">
+							<tr>
+								<th><b>Data di svolgimento</b></th>
+								<th><b>Nome dell'evento</b></th>
+								<th sec:authorize="hasRole('ROLE_ADMIN')">[Pannello Amministratore]</th>
+							</tr>
+							<tr>
+								<td colspan="2"><hr /></td>
+							</tr>
+							<tr th:each="gara : ${garePassate}">
+								<td th:text="${gara.dataSvolgimento}" align="center"></td>
+								<td th:text="${gara.nomeLuogo}"></td>
+								<td th:if="${gara.completata}" class="text-success"><a
+									th:href="@{/classifiche/} + ${gara.id}">Visualizza la classifica della gara!</a></td>
+								<td sec:authorize="hasRole('ROLE_ADMIN')">
+									<form th:action="@{/admin/deleteGara/} + ${gara.id}" method="post">
+										<div class="actions">
+											<input type="submit" value="Elimina evento" />
+										</div>
+									</form>
+								</td>
+							</tr>
+						</table>
+						<span th:if="${#lists.isEmpty(garePassate)}"><font size="3">Non si sono ancora
+								svolte gare.</font></span>
+					</div>
+				</div>
+				<!-- end: List Gare Svolte -->
+
+				<!-- start: Riepilogo Info -->
+				<div class="span4" th:if="${successo} or ${errore}">
+					<div class="title">
+						<h3>Riepilogo Informazioni</h3>
+					</div>
+					<div class="span4">
+						<font size="3"> <span class="text-success" th:text="${successo}"></span><br /> <span
+							class="text-error" th:text="${errore}"></span><br />
+						</font>
+					</div>
+				</div>
+				<!-- end: Riepilogo Info -->
+			</div>
+			<!-- end: Row -->
+		</div>
+		<!-- end: Container -->
+	</div>
+	<!-- end: Wrapper  -->
+	<div th:include="layout :: javascript"></div>
+</body>
+</html>

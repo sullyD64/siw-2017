@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>Profilo Atleta</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+	<header th:include="layout :: Header"></header>
+
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+		<!-- start: Container -->
+		<div class="container">
+			<!-- start: Row -->
+			<div class="row">
+				<!-- start: Profilo Atleta -->
+				<div class="span5" th:fragment="profiloAtleta">
+					<div class="title">
+						<h3 th:text="${atleta.nome} +' '+ ${atleta.cognome}"></h3>
+					</div>
+					<div class="clearfix">
+						<h4 th:text="'Data di nascita: ' + ${atleta.dataNascita}"></h4>
+						<h4 th:text="'Sesso: ' + ${atleta.sesso}"></h4>
+						<h4 th:text="'Nazione: ' + ${atleta.nazione}"></h4>
+						<h4 th:text="'Età ' + ${atleta.eta}"></h4>
+						<h4 th:text="'Categoria: ' + ${atleta.categoria}"></h4>
+						<h4 th:if="${atleta.societa}" th:text="'Società di appartenenza: ' + ${atleta.societa.nome}"></h4>
+						<h4 th:unless="${atleta.societa}">L'atleta non è ancora iscritto ad una società.</h4>
+					</div>
+					<hr />
+					<div class="clearfix" sec:authorize="hasRole('ROLE_ADMIN')">
+						<hr />
+						[Pannello Amministratore]
+						<form th:action="@{/admin/deleteAtleta/} + ${atleta.id}" method="post">
+							<div class="input">
+								<input type="submit" value="Elimina atleta" />
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- end: Profilo Atleta -->
+				<!-- start: Riepilogo Info -->
+				<div class="span4" th:if="${successo}">
+					<div class="title">
+						<h3>Riepilogo Informazioni</h3>
+					</div>
+					<div class="span4">
+						<font size="3"> <span class="text-success" th:text="${successo}"></span>
+						</font>
+					</div>
+				</div>
+				<!-- end: Riepilogo Info -->
+			</div>
+			<!-- end: Row -->
+		</div>
+		<!-- end: Container -->
+	</div>
+	<!-- end: Wrapper  -->
+
+	<div th:include="layout :: javascript"></div>
+</body>
+</html>

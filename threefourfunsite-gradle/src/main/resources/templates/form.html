@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>Three.Four.Fun [siw-2017]</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+	<style>
+DIV.table {
+	display: table;
+}
+
+FORM.tr, DIV.tr {
+	display: table-row;
+}
+
+SPAN.td {
+	display: table-cell;
+}
+</style>
+	<header th:include="layout :: Header"></header>
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+
+		<!-- start: Container -->
+		<div class="container">
+
+			<!-- start: Row -->
+			<div class="row">
+
+				<!-- start: Form Atleta -->
+				<div th:if="${formAtleta}" class="span5">
+					<div class="title">
+						<h3>Registrazione Atleta</h3>
+					</div>
+					<div id="contact-form">
+						<form action="#" th:action="@{/utente/newAtleta}" th:object="${atleta}" method="post">
+							<fieldset>
+								<div class="clearfix">
+									<label for="nome"><span>Nome*:</span></label>
+									<div class="input">
+										<input tabindex="1" size="25" id="nome" name="nome" type="text" th:field="*{nome}"
+											required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('nome')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="clearfix">
+									<label for="cognome"><span>Cognome*:</span></label>
+									<div class="input">
+										<input tabindex="2" size="25" id="cognome" name="cognome" type="text"
+											th:field="*{cognome}" required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('cognome')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="clearfix">
+									<label for="dataNascita"><span>Data di Nascita*:</span></label>
+									<div class="input">
+										<input tabindex="3" id="dataNascita" name="dataNascita" type="date"
+											th:field="*{dataNascita}" required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('dataNascita')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="clearfix">
+									<label for="sesso"><span>Sesso*:</span></label>
+									<div class="input">
+										<select tabindex="4" id="sesso" name="sesso" th:field="*{sesso}" required="required">
+											<option value="">&lt;seleziona&gt;</option>
+											<option value="M">Uomo</option>
+											<option value="F">Donna</option>
+										</select>
+									</div>
+									<span th:if="${#fields.hasErrors('sesso')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="clearfix">
+									<label for="nazione"><span>Nazione*:</span></label>
+									<div class="input">
+										<select th:replace="selectors :: nationSelect"></select>
+									</div>
+									<span th:if="${#fields.hasErrors('nazione')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="clearfix">
+									<label for="societa"><span>Seleziona una società sportiva:</span></label>
+									<div class="input">
+										<select tabindex="6" id="societa" name="societaID">
+											<option value="">&lt;seleziona&gt;</option>
+											<optgroup th:each="entry: ${elencoSocieta}" th:label="${entry.key}">
+												<option th:each="soc: ${entry.value}" th:value="${soc.id}" th:text="${soc.nome}"></option>
+											</optgroup>
+										</select>
+									</div>
+								</div>
+								<div class="actions">
+									<button tabindex="7" type="submit" class="btn btn-succes btn-large">Conferma</button>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<!-- end: Form Atleta  -->
+
+				<!-- start: Form Società -->
+				<div th:if="${formSocieta}" class="span5">
+					<div class="title">
+						<h3>Registrazione Società</h3>
+					</div>
+					<div class="text-error">
+						<font size="3">N.B: se sei già iscritto ad una società, crearne una nuova comporterà la
+							tua disiscrizione da quella precedente.</font>
+					</div>
+					<div id="contact-form">
+						<form action="#" th:action="@{/utente/newSocieta}" th:object="${societa}" method="post">
+							<fieldset>
+								<div class="clearfix">
+									<label for="nome"><span>Nome della società*:</span></label>
+									<div class="input">
+										<input tabindex="1" size="40" id="nome" name="nome" type="text" th:field="*{nome}"
+											required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('nome')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="clearfix">
+									<label for="dataFondazione"><span>Data di fondazione*:</span></label>
+									<div class="input">
+										<input tabindex="2" id="dataFondazione" name="dataFondazione" type="date"
+											th:field="*{dataFondazione}" required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('dataFondazione')}">Errore</span>
+								</div>
+								<div class="clearfix">
+									<label for="regione"><span>Regione*:</span></label>
+									<div class="input">
+										<select th:replace="selectors :: regionSelect"></select>
+									</div>
+									<span th:if="${#fields.hasErrors('regione')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="actions">
+									<button tabindex="4" type="submit" class="btn btn-succes btn-large">Conferma</button>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<!-- end: Form Società -->
+
+				<!-- start: Form Gara -->
+				<div th:if="${formGara}" class="span5">
+					<div class="title">
+						<h3>Registrazione Gara</h3>
+					</div>
+					<div id="contact-form">
+						<form action="#" th:action="@{/admin/newGara}" th:object="${gara}" method="post">
+							<fieldset>
+								<div class="clearfix">
+									<label for="nomeLuogo"><span>Nome e luogo dell'evento*:</span></label>
+									<div class="input">
+										<input tabindex="1" size="50" id="nomeLuogo" name="nomeLuogo" type="text"
+											th:value="*{nomeLuogo}" required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('nomeLuogo')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="clearfix">
+									<label for="dataSvolgimento"><span>Data di svolgimento*:</span></label>
+									<div class="input">
+										<input tabindex="2" id="dataSvolgimento" name="dataSvolgimento" type="date"
+											th:field="*{dataSvolgimento}" required="required" />
+									</div>
+									<span th:if="${#fields.hasErrors('dataSvolgimento')}">Errore: campo obbligatorio</span>
+								</div>
+								<div class="actions">
+									<button tabindex="3" type="submit" class="btn btn-succes btn-large">Conferma</button>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<!-- end: Form Gara -->
+
+
+				<!-- start: Form Classifica -->
+				<div th:if="${formClassifica} and not ${editorClassifica}" class="span4">
+					<div class="title">
+						<h3>Elenco delle gare svolte</h3>
+					</div>
+					<div class="clearfix">
+						Qui sotto vengono mostrate tutte le gare che sono state svolte, ma per le quali non sono
+						ancora stati registrati risultati. Scegline una per aprire l'editor delle classifiche e
+						aggiornare i risultati di ciascun atleta partecipante.
+						<hr />
+					</div>
+					<div class="clearfix">
+						<table th:if="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}">
+							<tr>
+								<th><b>Data di svolgimento</b></th>
+								<th><b>Nome dell'evento</b></th>
+							</tr>
+							<tr th:each="gara : ${gareDaAggiornare}">
+								<td th:text="${gara.dataSvolgimento}"></td>
+								<td><a th:href="@{/admin/newClassifica/} + ${gara.id}" th:text="${gara.nomeLuogo}"></a></td>
+							</tr>
+						</table>
+						<span th:unless="${gareDaAggiornare} and !${#lists.isEmpty(gareDaAggiornare)}"> <font
+							size="3">Non c'è nessuna gara da aggiornare.</font>
+						</span>
+					</div>
+				</div>
+
+				<div th:if="${editorClassifica}" class="span12">
+					<div class="title">
+						<h3>Editor Classifica</h3>
+					</div>
+					<div class="clearfix">
+						<font size="3">Inserisci i risultati di tutti gli atleti partecipanti alla gara <b><span
+								th:text="${garaEditata.nomeLuogo}"></span></b>:
+						</font>
+						<hr />
+						<div class="table">
+							<div class="tr">
+								<span class="td"> <b>Atleta</b>
+								</span> <span class="td"> <b>Tempo Nuoto</b>
+								</span> <span class="td"> <b>Tempo Bici</b>
+								</span> <span class="td"> <b>Tempo Corsa</b>
+								</span> <span class="td"> <b>Totale</b>
+								</span>
+							</div>
+							<th:block th:each="risultato : ${garaEditata.risultati}">
+								<form class="tr" th:object="${risultato}" th:action="@{addRisultato/} + ${risultato.id}"
+									method="post">
+									<span class="td" th:text="*{atletaPartecipante.nome} +' '+*{atletaPartecipante.cognome}"></span>
+									<span class="td"> <input type="time" step="1" th:disabled="*{valido}" id="tempoSwim"
+										name="tempoSwim" required="required" th:value="*{tempoSwim}"></input>
+									</span> <span class="td"> <input type="time" step="1" th:disabled="*{valido}"
+										id="tempoBike" name="tempoBike" required="required" th:value="*{tempoBike}"></input>
+									</span> <span class="td"> <input type="time" step="1" th:disabled="*{valido}" id="tempoRun"
+										name="tempoRun" required="required" th:value="*{tempoRun}"></input>
+									</span> <span class="td"> <span th:text="*{tempoTot}"></span>
+									</span> <span class="td" th:if="!*{valido}"> <input type="submit"
+										th:disabled="${garaEditata.completata}" name="comando" value="Registra"
+										class="btn btn-succes btn-small" />
+									</span> <span class="td" th:if="*{valido}"> <input type="submit"
+										th:disabled="${garaEditata.completata}" name="comando" value="Modifica"
+										class="btn btn-succes btn-small" />
+									</span>
+								</form>
+							</th:block>
+						</div>
+						<div class="clearfix" align="right">
+							<form class="tr" th:action="@{terminaInserimento}" method="post">
+								<span class="td"> <input type="submit" th:disabled="${garaEditata.completata}"
+									name="comando" value="Conferma" class="btn btn-success btn-large" />
+								</span> <span class="td"> <input type="submit" th:disabled="${garaEditata.completata}"
+									name="comando" value="Reset" class="btn btn-success btn-large" />
+								</span>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- end: Form Classifica -->
+
+				<!-- start: Riepilogo Info -->
+				<div class="span4" th:if="${successo} or ${errore}">
+					<div class="title">
+						<h3>Riepilogo Informazioni</h3>
+					</div>
+					<font size="3"><span class="text-error" th:text="${errore}"></span> <span
+						class="text-success" th:text="${successo}"></span><br /> </font>
+					<div class="text-error" th:if="${societaNonSelezionata}">
+						Attualmente non sei iscritto a nessuna società. Puoi comunque modificare i tuoi dati atleta
+						dalla tua area personale e sceglierne una, oppure puoi creare una tua società alla quale
+						risulterai iscritto.<br /> <b>Ricorda che è necessario far parte di una società per
+							iscriversi ad una gara!!!</b> <br /> <font size="3"><a th:if="${current_username}"
+							th:href="@{/utente/} + ${current_username}">Fallo ora!</a> </font>
+					</div>
+					<div th:if="${successo}">
+						<hr />
+						<div class="clearfix" th:inline="text">
+							<div th:if="${formAtleta}">
+								<h4>
+									<b>Nome:</b> <span th:text="${atleta.nome}"></span>
+								</h4>
+								<h4>
+									<b>Cognome:</b> <span th:text="${atleta.cognome}"></span>
+								</h4>
+								<h4>
+									<b>Sesso:</b> <span th:text="${atleta.sesso}"></span>
+								</h4>
+								<h4>
+									<b>Nazionalità:</b> <span th:text="${atleta.nazione}"></span>
+								</h4>
+								<h4>
+									<b>Età:</b> <span th:text="${atleta.eta}"></span>
+								</h4>
+								<h4>
+									<b>Categoria:</b> <span th:text="${atleta.categoria}"></span>
+								</h4>
+								<h4 th:if="${atleta.societa}">
+									<b>Società:</b> <span th:text="${atleta.societa.nome}"></span>
+								</h4>
+							</div>
+							<div th:if="${formSocieta}">
+								<h4>
+									<b>Nome:</b> <span th:text="${societa.nome}"></span>
+								</h4>
+								<h4>
+									<b>Data di Fondazione:</b> <span th:text="${societa.dataFondazione}"></span>
+								</h4>
+								<h4>
+									<b>Regione:</b> <span th:text="${societa.regione}"></span>
+								</h4>
+								<h4>
+									<b>Presidente:</b> <span
+										th:text="${societa.presidente.nome} +' '+${societa.presidente.cognome}"></span>
+								</h4>
+								<hr />
+								<h4>Ora altri utenti potranno iscriversi alla tua società.</h4>
+							</div>
+							<div th:if="${formGara}">
+								<h4>
+									<b>Nome e Luogo:</b> <span th:text="${gara.nomeLuogo}"></span>
+								</h4>
+								<h4>
+									<b>Data di Svolgimento</b> <span th:text="${gara.dataSvolgimento}"></span>
+								</h4>
+								<hr />
+								<h4>Ora gli utenti potranno iscriversi alla gara.</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end: Riepilogo Info -->
+
+
+			</div>
+			<!-- end: Row -->
+
+		</div>
+		<!-- end: Container -->
+
+	</div>
+	<!-- end: Wrapper  -->
+
+	<div th:include="layout :: javascript"></div>
+
+</body>
+</html>

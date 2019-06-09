@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'eclipse'
+    id 'application'
+    id 'org.springframework.boot' version '1.5.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+}
+
+wrapper { gradleVersion = '5.4.1' }
+
+mainClassName = 'it.uniroma3.triathlon.ThreeFourFunSiteApplication'
+
+dependencies {
+		implementation 'org.springframework.boot:spring-boot-dependencies:1.5.6.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.hibernate:hibernate-java8'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
+    implementation 'mysql:mysql-connector-java:5.1.17'
+    compileOnly 'org.springframework.boot:spring-boot-starter-tomcat'
+	
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'junit:junit:4.12'
+
+     components {
+        withModule('org.springframework:spring-beans') {
+            allVariants {
+                withDependencyConstraints {
+                    // Need to patch constraints because snakeyaml is an optional dependency
+                    it.findAll { it.name == 'snakeyaml' }.each { it.version { strictly '1.19' } }
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    jcenter()
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>Profilo Atleta</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+	<header th:include="layout :: Header"></header>
+
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+		<!-- start: Container -->
+		<div class="container">
+			<!-- start: Row -->
+			<div class="row">
+				<!-- start: Pannello Utente-->
+				<div class="span4">
+					<div class="title">
+						<h3>
+							Pannello utente di <span sec:authentication="name"></span>
+						</h3>
+					</div>
+					<div class="clearfix" th:object="${utente}">
+						<font size="3"> <span th:if="*{atletaGestito}"> Hai registrato un profilo
+								atleta: <br /> <a th:href="@{/atleta/} + ${utente.atletaGestito.id}"
+								th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"> </a> <br /> <br />
+						</span> <span th:unless="${utente.atletaGestito}"> Non hai <b>ancora</b> registrato un profilo
+								atleta. <a th:href="@{/utente/newAtleta}">Registralo ora!</a> <br /></span> <span
+							th:if="${utente.societaGestita}"> Hai registrato una società: <br /> <span
+								th:text="${utente.societaGestita.nome}"></span> <br /></span> <span
+							th:unless="${utente.societaGestita}"> Non hai una società registrata a tuo carico. <a
+								th:href="@{/utente/newSocieta}">Registrala ora!</a> <br /></span>
+						</font>
+						<div th:if="${erroreNewAtleta} or ${erroreNewSocieta}">
+							<hr />
+							<font size="3"><span class="text-error" th:text="${erroreNewAtleta}"></span><br /> <span
+								class="text-error" th:text="${erroreNewSocieta}"></span> </font>
+							<hr />
+						</div>
+					</div>
+				</div>
+				<!-- end: Pannello Utente -->
+
+				<!-- start: Pannello Atleta -->
+				<div class="span4" th:if="${utente.atletaGestito}">
+					<div class="title">
+						<h3 th:text="${utente.atletaGestito.nome} +' '+ ${utente.atletaGestito.cognome}"></h3>
+					</div>
+					<div class="clearfix" th:object="${utente.atletaGestito}">
+						<h4 th:text="'Data di nascita: ' + *{dataNascita}"></h4>
+						<h4 th:text="'Sesso: ' + *{sesso}"></h4>
+						<h4 th:text="'Nazione: ' + *{nazione}"></h4>
+						<h4 th:text="'Età ' + *{eta}"></h4>
+						<h4 th:text="'Categoria: ' + *{categoria}"></h4>
+						<h4>
+							Società di appartenenza: <span th:if="*{societa}" th:text="*{societa.nome}"></span> <span
+								th:unless="*{societa}">-</span>
+						</h4>
+					</div>
+					<div class="clearfix" th:unless="${utente.atletaGestito.societa}">
+						<hr />
+						<div class="text-error">
+							<font size="3">Non sei ancora iscritto ad una società!</font>
+						</div>
+						<div class="contact-form">
+							<form th:action="@{/utente/addAtletaASocieta/} + ${utente.atletaGestito.id}" method="post">
+								<fieldset>
+									<label for="societa"><span>Seleziona una società sportiva:</span></label>
+									<div class="input">
+										<select tabindex="6" id="societa" name="societaID">
+											<option value="">&lt;seleziona&gt;</option>
+											<optgroup th:each="entry: ${elencoSocieta}" th:label="${entry.key}">
+												<option th:each="soc: ${entry.value}" th:value="${soc.id}" th:text="${soc.nome}"></option>
+											</optgroup>
+										</select>
+									</div>
+									<div class="actions">
+										<button tabindex="7" type="submit" class="btn btn-succes btn-large">Conferma</button>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+						<hr />
+					</div>
+					<div class="clearfix" th:if="${successo}">
+						<hr />
+						<font size="3"><span class="text-success" th:text="${successo}"></span></font>
+						<hr />
+					</div>
+				</div>
+				<!-- end: Pannello Atleta -->
+
+				<!-- start: Pannello Societa -->
+				<div class="span4" th:if="${utente.societaGestita}">
+					<div class="title">
+						<h3 th:text="${utente.societaGestita.nome}"></h3>
+					</div>
+					<div class="clearfix" th:object="${utente.societaGestita}">
+						<h4 th:text="'Regione: ' + *{regione}"></h4>
+						<h4 th:text="'Data di fondazione: ' + *{dataFondazione}"></h4>
+						<h4 th:text="'Presidente: ' + *{presidente.nome} +' '+ *{presidente.cognome}"></h4>
+					</div>
+					<hr />
+					<table th:object="${utente.societaGestita}"
+						th:unless="${#lists.isEmpty(utente.societaGestita)}">
+						<tr>
+							<th align="left">Nome e Cognome</th>
+							<th align="left">Categoria</th>
+						</tr>
+						<tr>
+							<td colspan="2"><hr /></td>
+						</tr>
+						<tr th:each="atleta : *{atleti}">
+							<td><a th:href="@{/atleta/} + ${atleta.id}"
+								th:text="${atleta.nome} +' ' + ${atleta.cognome}"></a></td>
+							<td th:text="${atleta.categoria}"></td>
+						</tr>
+					</table>
+				</div>
+				<!-- end: Pannello Societa -->
+			</div>
+			<!-- end: Row -->
+		</div>
+		<!-- end: Container -->
+	</div>
+	<!-- end: Wrapper  -->
+
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+		<!-- start: Container -->
+		<div class="container">
+			<!-- start: Row -->
+			<div class="row">
+				<!-- start: Pannello Gare  -->
+				<div class="span8" th:if="${utente.atletaGestito}">
+					<div class="title">
+						<h3>Gare e risultati</h3>
+					</div>
+					<div class="clearfix"
+						th:if="${risultatiGareNonSvolte} and !${#lists.isEmpty(risultatiGareNonSvolte)}">
+						<h4>Sei iscritto a queste gare:</h4>
+						<table style="font-size: 3">
+							<tr>
+								<th><b>Data di svolgimento</b></th>
+								<th><b>Nome dell'evento</b></th>
+							</tr>
+							<tr th:each="risultato : ${risultatiGareSvolte}">
+								<td th:text="${risultato.gara.dataSvolgimento}"></td>
+								<td th:text="${risultato.gara.nomeLuogo}"></td>
+							</tr>
+						</table>
+						<hr />
+					</div>
+					<div class="clearfix"
+						th:if="${risultatiGareSvolte} and !${#lists.isEmpty(risultatiGareSvolte)}">
+						<h4>Hai partecipato a queste gare:</h4>
+						<table style="font-size: 3">
+							<tr>
+								<th><b>Svolta il</b></th>
+								<th><b>Nome dell'evento</b></th>
+								<th><b>Tempo Nuoto</b></th>
+								<th><b>Tempo Bici</b></th>
+								<th><b>Tempo Corsa</b></th>
+								<th><b>Tempo Totale</b></th>
+							</tr>
+							<tr th:each="risultato : ${risultatiGareSvolte}">
+								<td th:text="${risultato.gara.dataSvolgimento}"></td>
+								<td th:text="${risultato.gara.nomeLuogo}"></td>
+								<td th:text="${risultato.tempoSwim}"></td>
+								<td th:text="${risultato.tempoBike}"></td>
+								<td th:text="${risultato.tempoRun}"></td>
+								<td th:text="${risultato.tempoTot}"></td>
+							</tr>
+						</table>
+					</div>
+
+					<div th:unless="${risultatiGareNonSvolte} and !${#lists.isEmpty(risultatiGareNonSvolte)}">
+						<font size="3">Non hai ancora partecipato ad una gara.</font>
+					</div>
+					<!-- end: Pannello Gare  -->
+				</div>
+			</div>
+			<!-- end: Row -->
+		</div>
+		<!-- end: Container -->
+	</div>
+	<!-- end: Wrapper  -->
+
+
+	<div th:include="layout :: javascript"></div>
+</body>
+</html>

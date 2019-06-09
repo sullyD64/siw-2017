@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!-- start: Meta -->
+<meta charset="utf-8" />
+<title>Classifiche</title>
+<meta name="description" content="GotYa Free Bootstrap Theme" />
+<meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap" />
+<!-- <meta name="author" content="Łukasz Holeczek from creativeLabs" /> -->
+<!-- end: Meta -->
+
+<!-- start: CSS -->
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo" />
+<link rel="stylesheet" type="text/css"
+	href="http://fonts.googleapis.com/css?family=Economica:700,400italic" />
+<!-- end: CSS -->
+</head>
+<body>
+	<header th:include="layout :: Header"></header>
+
+	<!-- start: Wrapper -->
+	<div id="wrapper">
+		<!-- start: Container -->
+		<div class="container">
+			<!-- start: Row -->
+			<div class="row">
+				<div class="span4">
+					<div class="title">
+						<h3>Gare completate</h3>
+					</div>
+					<table>
+						<tr>
+							<th>Data</th>
+							<th>Nome dell'evento</th>
+						</tr>
+						<tr th:each="gara : ${gareCompletate}">
+							<td th:text="${gara.dataSvolgimento}"></td>
+							<td th:if="${classificaGaraSingola}" th:text="${gara.nomeLuogo}"></td>
+							<td th:unless="${classificaGaraSingola}"><a th:href="@{classifiche/} + ${gara.id}"
+								th:text="${gara.nomeLuogo}"></a></td>
+						</tr>
+					</table>
+
+
+				</div>
+
+
+				<div class="span10" th:if="${classificaGaraSingola}">
+					<div class="title">
+						<h3 th:text="'Classifica della gara: '+ ${gara.nomeLuogo}"></h3>
+					</div>
+					<div class="clearfix">
+						<font size="3">
+							<table id="tabella01">
+								<tr>
+									<th onclick="sortTable(0)">Posizione<b class="caret"></b></th>
+									<th>Atleta</th>
+									<th onclick="sortTable(2)">Categoria<b class="caret"></b></th>
+									<th onclick="sortTable(3)">Tempo Nuoto<b class="caret"></b></th>
+									<th onclick="sortTable(4)">Tempo Bici<b class="caret"></b></th>
+									<th onclick="sortTable(5)">Tempo Corsa<b class="caret"></b></th>
+									<th onclick="sortTable(6)">Tempo Totale<b class="caret"></b></th>
+									<th>Società</th>
+									<th>Regione</th>
+								</tr>
+								<tr>
+									<td colspan="9"></td>
+								</tr>
+								<tr th:each="riga : ${classifica.righeClassifica}">
+									<td th:text="${riga.posizione}"></td>
+									<td th:text="${riga.nomeCognomeAtleta}"></td>
+									<td th:text="${riga.categoriaAtleta}"></td>
+									<td th:text="${riga.tempoSwim}"></td>
+									<td th:text="${riga.tempoBike}"></td>
+									<td th:text="${riga.tempoRun}"></td>
+									<td th:text="${riga.tempoTot}"></td>
+									<td th:text="${riga.nomeSocietaAtleta}"></td>
+									<td th:text="${riga.regioneSocietaAtleta}"></td>
+								</tr>
+							</table>
+						</font>
+					</div>
+				</div>
+			</div>
+			<!-- end: Row -->
+		</div>
+		<!-- end: Container -->
+	</div>
+	<!-- end: Wrapper  -->
+
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		function sortTable(n) {
+			var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+			table = document.getElementById("tabella01");
+			switching = true;
+
+			dir = "asc";
+
+			while (switching) {
+
+				switching = false;
+				rows = table.getElementsByTagName("TR");
+
+				for (i = 1; i < (rows.length - 1); i++) {
+
+					shouldSwitch = false;
+
+					x = rows[i].getElementsByTagName("TD")[n];
+					y = rows[i + 1].getElementsByTagName("TD")[n];
+
+					if (dir == "asc") {
+						if (x.innerHTML.toLowerCase() > y.innerHTML
+								.toLowerCase()) {
+
+							shouldSwitch = true;
+							break;
+						}
+					} else if (dir == "desc") {
+						if (x.innerHTML.toLowerCase() < y.innerHTML
+								.toLowerCase()) {
+
+							shouldSwitch = true;
+							break;
+						}
+					}
+				}
+				if (shouldSwitch) {
+
+					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
+
+					switchcount++;
+				} else {
+
+					if (switchcount == 0 && dir == "asc") {
+						dir = "desc";
+						switching = true;
+					}
+				}
+			}
+		}
+		/*]]>*/
+	</script>
+
+
+	<div th:include="layout :: javascript"></div>
+</body>
+</html>
