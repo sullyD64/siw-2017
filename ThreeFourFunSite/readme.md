@@ -1,4 +1,4 @@
-Progetto di esame siw giugno 2017: ThreeFourFunSite [Maria Elena Madon, Lorenzo Guidaldi]
+# Progetto di esame siw giugno 2017: ThreeFourFunSite [Maria Elena Madon, Lorenzo Guidaldi]
 
 Il progetto realizza un SIW per la gestione di una federazione amatoriale di triathlon di livello nazionale, ThreeFourFun.
 Il triathlon è una disciplina olimpica in cui gli atleti svolgono in immediata successione tre prove: nuoto, ciclismo e corsa. Le prove, seppur basate su distanze diverse a seconda della specialità di gara, sono comuni a tutti gli atleti; Gli atleti partecipanti vengono premiati per il tempo complessivo impiegato, sia tramite raggruppamento assoluto che per categoria di età. L'età minima per partecipare è 14 anni, uomini e donne sono parimenti ammessi alle gare.
@@ -12,11 +12,11 @@ Le tecnologie implementate sono:
   - Thymeleaf
   - Bootstrap
 
-Informazioni tecniche:
+## Informazioni tecniche:
   Il sistema non consente di gestire autonomamente tutti i casi d'uso: in particolare, per creare degli amministratori è necessario un intervento SQL da applicazioni esterne di gestione di database; nel nostro caso da pgAdmin va modificata la colonna ruolo dell'utente che si vuole rendere amministratore sostituendo ROLE_UTENTE con ROLE_ADMIN.
   A tale proposito si è mostrato utile, in fase di produzione, anche editare da pgAdmin la data di svolgimento delle gare che si volevano rendere "passate" e quindi renderle "da aggiornare" (il sistema da noi realizzato non permette infatti la registrazione di gare nel passato).
   
-Informazioni e regole di dominio:
+## Informazioni e regole di dominio:
   Le entità principali del dominio sono gli Atleti, le Società e le Gare.
   Gli utenti che si registrano al sistema corrispondono agli atleti del dominio: ogni utente infatti gestisce un profilo atleta che lo rappresenta nel mondo reale. Gli atleti sono categorizzati per età e sesso secondo le normative federali della FITRI (http://www.fitri.it/il-triathlon/categorie.html)
   Una società non è altro che un gruppo di atleti, e viene creata e gestita da un atleta che assume il ruolo di Presidente di società.
@@ -29,10 +29,10 @@ Informazioni e regole di dominio:
   
   Osservazioni: Non sono considerati costi d’iscrizione né pagamenti in alcuna forma né si fa mai riferimento a regolamenti federali e  certificati medico-sportivi. Non sono considerati altri ruoli in una società al di fuori del presidente di società e degli atleti; di   fatto il presidente e un atleta della stessa società sono la stessa persona, con lo stesso profilo sul sistema.
  
-
+## Casi d'uso 
 Di seguito i casi d'uso:
 
-UC1: Registrazione utente
+### UC1: Registrazione utente
 Attore primario: utente non registrato
 
   Scenario principale di successo:
@@ -40,7 +40,7 @@ Attore primario: utente non registrato
   2. L'utente compila i campi di registrazione fornendo uno username e una password;
   3. Il sistema registra l'utente e gli assegna il ruolo di UTENTE;
   
-UC2: Registrazione profilo atleta
+### UC2: Registrazione profilo atleta
 Attore primario: utente registrato
 
   Scenario principale di successo:
@@ -52,7 +52,7 @@ Attore primario: utente registrato
   5. Il sistema registra l'atleta e collega l'atleta all'utente, il sistema registra anche l'eventuale partecipazione dell'atleta nella società: l'atleta comparirà nell'elenco degli atleti della società;
   Da questo momento in poi l'utente non potrà più registrare altri profili atleta.
  
-UC3: Registrazione società
+### UC3: Registrazione società
 Attore primario: utente registrato con profilo atleta registrato
 
   Scenario principale di successo:
@@ -62,8 +62,7 @@ Attore primario: utente registrato con profilo atleta registrato
   4. Il sistema registra la società che da questo momento in poi comparirà nell'elenco delle società registrate al sistema; il sistema collega la società all'utente.
   Da questo momento in poi l'utente non potrà più registrare altri profili atleta.
   
- 
-UC4: Registrazione gara
+### UC4: Registrazione gara
 Attore primario: amministratore
 
   Scenario principale di successo:
@@ -72,7 +71,7 @@ Attore primario: amministratore
   3. L'amministratore compila tutti i campi della gara specificando una data futura;
   4. Il sistema registra la gara, che da questo momento in poi comparirà nell'elenco delle gare registrate al sistema alle quali è possibile iscriversi;
   
-UC5: Iscrizione alla gara
+### UC5: Iscrizione alla gara
 Attore primario: utente registrato con profilo atleta iscritto ad una società
 
   Scenario principale di successo:
@@ -83,7 +82,7 @@ Attore primario: utente registrato con profilo atleta iscritto ad una società
   4. L'utente preme il bottone "iscriviti" relativo ad una delle gare;
   5. Il sistema registra un'istanza di Risultato collegata all'atleta e alla gara; l'utente/atleta da questo momento è iscritto alla gara, e la gara comparirà nella sua "Area riservata" tra le gare a cui è iscritto.
  
-UC6: Inserimento dei risultati di una gara
+### UC6: Inserimento dei risultati di una gara
 Attore primario: amministratore
 
   Scenario principale di successo:
@@ -100,7 +99,7 @@ Attore primario: amministratore
     8.1: L'amministratore può anche azzerare i risultati di ciascun atleta relativi a quella gara cliccando sul bottone "Reset". Inoltre, i dati inseriti permangono nella sessione permettendo all'amministratore loggato di navigare il sito pur mantenendo i risultati atleta già registrati.
  9. Il sistema registra la gara aggiornata e "conclusa", dalla quale sarà possibile estrapolare una classifica basata sul miglior tempo assoluto tra gli atleti partecipanti.
  
- UC7: Consultazione delle classifiche
+### UC7: Consultazione delle classifiche
  Attore primario: qualsiasi visitatore del sito
  
   Scenario principale di successo
